@@ -3,20 +3,13 @@
 include_once 'config.php';
 
 
-
-// var_dump($_SERVER["REQUEST_METHOD"]);
-// var_dump($_SERVER);
-
-
-
-// echo "<br><br><br>";
 $application = new Application();
 $application->handle();
 
 
 class Application {
 
-	public $mysqli;
+	private $mysqli;
 
 	function __construct()
 	{
