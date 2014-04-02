@@ -86,8 +86,6 @@ class ApplicationUI
 		<li><?php echo $beacon["UUID"]." ".$beacon["major"]." ".$beacon["minor"];?></li>
 		<?php }?>
 	</ul>
-
-
 </body>
 </html>
 <?php 		
