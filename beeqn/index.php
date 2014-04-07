@@ -12,7 +12,8 @@ $content = new Content();
 
 
 include_once 'header.html';
-echo "<body>";
+
+echo "<body ". $content->modifiedBodyValues() .">";
 
 new NavigationBarTop(array("Home"=>"?"),array("Login"=>"?login"));
 
@@ -26,13 +27,14 @@ new NavigationBarTop(array("Home"=>"?"),array("Login"=>"?login"));
 		}
 
 		?>
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<div class="col-md-offset-2 main">
 			<?php $content->display();?>
 		</div>
 	</div>
 </div>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/stuff.js"></script>
 </body>
 </html>
 <?php 

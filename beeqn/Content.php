@@ -3,36 +3,73 @@
 
 class Content
 {
+	private $mysqli;
+	private $subcontent = false;
+	
 	function __construct()
 	{
+		include_once 'config.php';
+		$this->mysqli = getConnection();
+		
+		$loggedin = true;
+
+		if($loggedin === true)
+		{
+			include_once 'views/LoggedIn.php';
+			$this->subcontent = new LoggedInContent($this->mysqli);
+		}
+		else
+		{
+			include_once 'views/Infoscreen.php';
+			$this->subcontent = new InfoScreen($this->mysqli);
+		}
 	}
 	function __destruct()
 	{
+		$this->mysqli->close();
 	}
 
 	function display()
 	{
+		
+		if($this->subcontent !== false)
+		{
+			$this->subcontent->display();
+		}
+		else
+		{
 		?>
 		<h1 class="page-header">Hier Default Template</h1>
 		Hier kann auch Text stehen
 		<?php
+		}
 	}
+	
+	function modifiedBodyValues()
+	{
+		if(method_exists($this->subcontent, "modifiedBodyValues"))
+		{
+			return $this->subcontent->modifiedBodyValues();
+		}
+		else return "";
+	}
+	
 
 	function showNavigationBarLeft()
 	{
-		return true;
+		if($this->subcontent !== false)
+		{
+			return $this->subcontent->showNavigationBarLeft();
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	function getNavigationBarLeftContent()
 	{
-		$return = array();
-		array_push($return,
-		array(
-			array("name"=>"Overview","active"=>true,"link"=>"?overview"),
-			array("name"=>"Beacons","link"=>"?mybeacons"),
-			array("name"=>"Floors","link"=>"?floors"))
-		);
-		return $return;
+		return $this->subcontent->getNavigationBarLeftContent();
 	}
 
 }
