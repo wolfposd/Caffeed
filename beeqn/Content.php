@@ -81,14 +81,23 @@ Hier kann auch Text stehen
 	function getNavigationBarTopContent()
 	{
 		global $_SESSION;
+		
+		$leftarr = array("Home"=>"?");
+		if(method_exists($this->subcontent, "getNavigationBarTopContent"))
+		{
+			foreach($this->subcontent->getNavigationBarTopContent() as $key => $value)
+			{
+				$leftarr[$key] = $value;
+			}
+		}
 
 		if(isset($_SESSION["login"]) && $_SESSION["login"])
 		{
-			return array(array("Home"=>"?"),array("Logout"=>"?logout"));
+			return array($leftarr, array("Logout"=>"?logout"));
 		}
 		else
 		{
-			return array(array("Home"=>"?"),array("Login"=>"?login"));
+			return array($leftarr,array("Login"=>"?login"));
 		}
 
 	}

@@ -25,6 +25,11 @@ class InfoScreen
 	function getNavigationBarLeftContent()
 	{
 	}
+	
+	function getNavigationBarTopContent()
+	{
+		return array("Info"=>"?info", "About"=>"?about");
+	}
 
 }
 
