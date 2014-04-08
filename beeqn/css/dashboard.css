@@ -29,6 +29,18 @@ body {
   }
 }
 
+.navbar-blue
+{
+    background-color: #146DC9;
+    border-color: #146DC9;
+}
+.navbar-blue .nav > li > a {
+    color:  #FFFFFF;
+}
+.navbar-blue .navbar-brand {
+    color:  #FFFFFF;
+}
+
 /* Sidebar navigation */
 .nav-sidebar {
   margin-right: -21px; /* 20px padding + 1px border */
