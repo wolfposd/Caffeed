@@ -51,6 +51,8 @@ function showForm()
 				<td><input type="text" name="location" /></td>
 			</tr>
 		</table>
+		<input type="hidden" name="addbeacon">
+		<input type="submit" class="btn btn-primary" value="Add beacon">
 	</form>
 </div>
 

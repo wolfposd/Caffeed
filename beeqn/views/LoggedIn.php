@@ -18,26 +18,26 @@ class LoggedInContent
 
 		if(isset($_GET["mybeacons"]))
 		{
-			include_once 'views/mybeacons.php';
+			include_once 'views/loggedin/mybeacons.php';
 			$this->subcontent = new MyBeaconsOverview($this->mysqli);
 				
 			$this->activeTab = "Beacons";
 		}
 		else if(isset($_GET["addbeacon"]))
 		{
-			include_once 'views/addbeacon.php';
+			include_once 'views/loggedin/addbeacon.php';
 			$this->subcontent = new Addbeacons($this->mysqli);
 			$this->activeTab = "Beacons";
 		}
 		else if(isset($_REQUEST["editbeaconaction"]))
 		{
-			include_once 'views/editbeaconaction.php';
+			include_once 'views/loggedin/editbeaconaction.php';
 			$this->subcontent = new EditBeaconAction($this->mysqli);
 			$this->activeTab = "Beacons";
 		}
 		else if(isset($_GET["myfloors"]))
 		{
-			include_once 'views/myfloors.php';
+			include_once 'views/loggedin/myfloors.php';
 			$this->subcontent = new MyFloorsOverview($this->mysqli);
 			$this->activeTab = "Floors";
 		}
