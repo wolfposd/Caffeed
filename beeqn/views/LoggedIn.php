@@ -23,7 +23,7 @@ class LoggedInContent
 				
 			$this->activeTab = "Beacons";
 		}
-		else if(isset($_GET["addbeacon"]))
+		else if(isset($_REQUEST["addbeacon"]))
 		{
 			include_once 'views/loggedin/addbeacon.php';
 			$this->subcontent = new Addbeacons($this->mysqli);

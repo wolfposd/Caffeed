@@ -33,7 +33,8 @@ class EditBeaconAction
 		if(isset ($_POST["editbeaconaction"]))
 		{
 			$this->showForm = false;
-			$this->modifiedBody = "onLoad=\"JavaScript:reloadPage(3000);\"";
+			include_once 'functions.php';
+			$this->modifiedBody = reloadPageJavascriptTextForBody(4000);
 		}
 
 	}
@@ -67,7 +68,7 @@ class EditBeaconAction
 			
 			$result = $this->mysqli->query($query);
 			
-			if($this->mysqli->errno == 0)
+			if($result !== false)
 			{
 				return true;
 			}
@@ -151,14 +152,12 @@ function show_insert_ok($insertOK)
 
 	if($insertOK)
 	{
-		show_message_dialog_with_text("Success","Update was successfully applied",true,false);
+		show_message_dialog_with_text("Success","Update was successfully applied");
 	}
 	else
 	{
-		show_message_dialog_with_text("Error","Update was not applied",false,false);
+		show_message_dialog_with_text("Error","Update was not applied");
 	}
-
-
 }
 
 ?>

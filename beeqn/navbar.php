@@ -3,7 +3,7 @@
 
 class NavigationBarTop
 {
-	function __construct($leftelements, $rightelements)
+	function __construct($elements)
 	{
 		?>
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -17,13 +17,13 @@ class NavigationBarTop
 		<div class="navbar-collapse collapse">
 
 			<ul class="nav navbar-nav">
-				<?php  foreach ($leftelements as $key => $value) {?>
+				<?php  foreach ($elements[0] as $key => $value) {?>
 				<li><a href="<?php echo $value?>"><?php echo $key?> </a></li>
 				<?php }?>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<?php  foreach ($rightelements as $key => $value) {?>
+				<?php  foreach ($elements[1] as $key => $value) {?>
 				<li><a href="<?php echo $value?>"><?php echo $key?> </a></li>
 				<?php }?>
 			</ul>

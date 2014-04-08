@@ -23,16 +23,21 @@ function decrypt($value)
 }
 
 
-function show_message_dialog_with_text($message, $text="", $successOrError = true ,  $shouldReload = true, $reloadMethod = "reloadPage(2000);")
+function show_message_dialog_with_text($message, $text="", $successOrError = true)
 {
-	if($shouldReload)
-	{
-		echo "<body onLoad='JavaScript:$reloadMethod'>";
-	}
-
 	$type = $successOrError === true  ? "success" : "error";
 	
 	echo "<div class='container alert alert-$type center span4' align='center'><h4>$message</h4><p>$text</p></div>";
+}
+
+/**
+ * The onLoad message for reloading a Page with Javascript
+ * @param number $reloadtime
+ * @return string
+ */
+function reloadPageJavascriptTextForBody($reloadtime = 2000)
+{
+	return "onLoad=\"JavaScript:reloadPage($reloadtime);\"";
 }
 
 ?>

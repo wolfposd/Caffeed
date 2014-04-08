@@ -1,4 +1,7 @@
 <?php
+session_start();
+
+
 $isCookiesSet = false;
 if($isCookiesSet !== false)
 {
@@ -15,7 +18,11 @@ include_once 'header.html';
 
 echo "<body ". $content->modifiedBodyValues() .">";
 
-new NavigationBarTop(array("Home"=>"?"),array("Login"=>"?login"));
+
+$maindiv = $content->showNavigationBarLeft() ? "col-md-offset-2 main" : "main"; 
+
+
+new NavigationBarTop($content->getNavigationBarTopContent());
 
 ?>
 <div class="container-fluid">
@@ -27,7 +34,7 @@ new NavigationBarTop(array("Home"=>"?"),array("Login"=>"?login"));
 		}
 
 		?>
-		<div class="col-md-offset-2 main">
+		<div class="<?php echo $maindiv?>">
 			<?php $content->display();?>
 		</div>
 	</div>

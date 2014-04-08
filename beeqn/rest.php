@@ -61,7 +61,7 @@ class Application {
 		while($row = $result->fetch_assoc())
 		{
 			unset($row["id"]);
-			array_push($returnval, $row);
+			$returnval = $row;
 		}
 
 		$result->close();

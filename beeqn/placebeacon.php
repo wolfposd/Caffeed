@@ -16,7 +16,7 @@ class Application {
 	function __construct()
 	{
 		$this->mysqli = getConnection();
-		$this->owner = 0; // TODO Change Owner
+		$this->owner = 1; // TODO Change Owner
 	}
 
 	function __destruct()

@@ -14,10 +14,7 @@ class InfoScreen
 
 	function display()
 	{
-		?>
-<h1 class="page-header">Hier Default Template</h1>
-Hier kann auch Text stehen
-<?php
+		show();
 	}
 
 	function showNavigationBarLeft()
@@ -29,6 +26,19 @@ Hier kann auch Text stehen
 	{
 	}
 
+}
+
+
+
+function show()
+{
+	?>
+<h1 class="page-header">Welcome to BeeQn</h1>
+BeeQn is an exciting project for the new iBeacon Technology based on Bluetooth LE.
+
+
+
+<?php
 }
 
 
