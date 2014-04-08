@@ -47,10 +47,11 @@ class Addbeacons
 	
 	function addBeaconToDB()
 	{
-		//TODO Change Owner
-		$owner = 1;
-		
+		global $_SESSION;
 		global $_POST;
+
+		$owner = $_SESSION["ownerid"];
+		
 		$uuid = $this->mysqli->real_escape_string($_POST["uuid"]);
 		$major = $this->mysqli->real_escape_string($_POST["major"]);
 		$minor = $this->mysqli->real_escape_string($_POST["minor"]);

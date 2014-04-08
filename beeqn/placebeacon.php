@@ -15,8 +15,9 @@ class Application {
 
 	function __construct()
 	{
+		global $_SESSION;
 		$this->mysqli = getConnection();
-		$this->owner = 1; // TODO Change Owner
+		$this->owner = $_SESSION["ownerid"];
 	}
 
 	function __destruct()

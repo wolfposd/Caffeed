@@ -72,8 +72,9 @@ class MyBeaconsOverview
 
 	function showBeaconTable()
 	{
-		//TODO Change owner
-		$owner = 1;
+		global $_SESSION;
+		
+		$owner = $_SESSION["ownerid"];
 		$query = "SELECT * FROM ibeacons WHERE owner_id = $owner";
 
 		$result = $this->mysqli->query($query);
@@ -93,15 +94,7 @@ class MyBeaconsOverview
 function show_delete_ok($insertOK)
 {
 	include_once 'functions.php';
-
-	if($insertOK)
-	{
-		show_message_dialog_with_text("Success","iBeacon was successfully deleted", $insertOK);
-	}
-	else
-	{
-		show_message_dialog_with_text("Error","The iBeacon couldn't be deleted", $insertOK);
-	}
+	show_succes_or_error($insertOK, "Success", "iBeacon was successfully deleted", "Error", "The iBeacon couldn't be deleted");
 }
 
 

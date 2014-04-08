@@ -6,8 +6,9 @@ class LoggedInContent
 
 	private $subcontent = false;
 
-
 	private $activeTab = false;
+	
+	private $showNavBarLeft = true;
 
 	function __construct(&$mysqli)
 	{
@@ -41,6 +42,12 @@ class LoggedInContent
 			$this->subcontent = new MyFloorsOverview($this->mysqli);
 			$this->activeTab = "Floors";
 		}
+		else if(isset($_GET["logout"]))
+		{
+			include_once 'views/normal/logout.php';
+			$this->showNavBarLeft = false;
+			$this->subcontent = new Logout($this->mysqli);
+		}
 		else
 		{
 			$this->activeTab = "Overview";
@@ -62,11 +69,9 @@ class LoggedInContent
 		}
 	}
 
-
-
 	function showNavigationBarLeft()
 	{
-		return true;
+		return $this->showNavBarLeft;
 	}
 
 	function getNavigationBarLeftContent()

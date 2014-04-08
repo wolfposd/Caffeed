@@ -22,6 +22,23 @@ function decrypt($value)
 	return $val;
 }
 
+function hash_SHA265($message)
+{
+	global $encryptionKey;
+	return hash_hmac('SHA256', $message, $encryptionKey);
+}
+
+function show_succes_or_error($success, $successTitle, $successMessage, $errorTitle,$errorMessage)
+{
+	if($success)
+	{
+		show_message_dialog_with_text($successTitle,$successMessage, $success);
+	}
+	else
+	{
+		show_message_dialog_with_text($errorTitle,$errorMessage, $success);
+	}
+}
 
 function show_message_dialog_with_text($message, $text="", $successOrError = true)
 {
@@ -35,9 +52,14 @@ function show_message_dialog_with_text($message, $text="", $successOrError = tru
  * @param number $reloadtime
  * @return string
  */
-function reloadPageJavascriptTextForBody($reloadtime = 2000)
+function reloadPageJavascriptTextForBody($reloadtime = 3000)
 {
 	return "onLoad=\"JavaScript:reloadPage($reloadtime);\"";
+}
+
+function redirectPageJavaScriptTextForBody($reloadtime, $destination = "")
+{
+	return "onLoad=\"JavaScript:changeURL($reloadtime, '$destination');\""; 
 }
 
 ?>

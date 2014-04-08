@@ -13,7 +13,7 @@ class Content
 
 
 		global $_SESSION;
-		$loggedin = $_SESSION["login"];
+		$loggedin = isset($_SESSION["login"]) ? $_SESSION["login"] : false;
 
 		if($loggedin === true)
 		{
@@ -82,7 +82,7 @@ Hier kann auch Text stehen
 	{
 		global $_SESSION;
 
-		if($_SESSION["login"])
+		if(isset($_SESSION["login"]) && $_SESSION["login"])
 		{
 			return array(array("Home"=>"?"),array("Logout"=>"?logout"));
 		}
