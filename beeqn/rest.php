@@ -46,8 +46,6 @@ class Application {
 			{
 				$major = $this->mysqli->real_escape_string($arrayvalue[$index+1]);
 				
-				echo "WHAT -$major-";
-				
 				if(int_ok($major))
 				{
 					$query .= " AND major = $major ";
