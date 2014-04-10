@@ -105,9 +105,9 @@ function showBeaconTable($beacons)
 {
 	?>
 <div class="row">
-	<div class="col-md-8">
+	<div class="">
 		<table class="table">
-			<tr>
+			<tr >
 				<th class="text-center">UUID</th>
 				<th class="text-center">Major</th>
 				<th class="text-center">Minor</th>
@@ -119,14 +119,14 @@ function showBeaconTable($beacons)
 			</tr>
 			<?php foreach ($beacons as $beacon) { ?>
 			<tr>
-				<td><?php echo $beacon["UUID"]?></td>
-				<td><?php echo $beacon["major"]?></td>
-				<td><?php echo $beacon["minor"]?></td>
-				<td><?php echo $beacon["description"]?></td>
-				<td><?php echo $beacon["location"]?></td>
-				<td><?php echo $beacon["longitude"]." , ".$beacon["latitude"]?></td>
-				<td><?php edit_action($beacon); ?></td>
-				<td><?php remove_beacon($beacon); ?></td>
+				<td align="center"><?php echo $beacon["UUID"]?></td>
+				<td align="center"><?php echo $beacon["major"]?></td>
+				<td align="center"><?php echo $beacon["minor"]?></td>
+				<td align="center"><?php echo $beacon["description"]?></td>
+				<td align="center"><?php echo $beacon["location"]?></td>
+				<td align="center"><?php echo $beacon["longitude"]." , ".$beacon["latitude"]?></td>
+				<td align="center"><?php edit_action($beacon); ?></td>
+				<td align="center"><?php remove_beacon($beacon); ?></td>
 			</tr>
 			<?php 	}	?>
 
