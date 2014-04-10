@@ -40,7 +40,7 @@
     [super viewDidLoad];
     
     self.activityIndicator.hidden = YES;
-    self.activityIndicator.color = [UIColor blackColor];
+    self.activityIndicator.color = [UIColor blueColor];
     
    self.activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
     
