@@ -1,0 +1,547 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		37C6501BBC2F3EFDCEBE1F0D /* BeeQnListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C659887CA382709C1D3246 /* BeeQnListItem.m */; };
+		37C6534B216D74F38FB9D2B2 /* BeeQnError.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C653EEA62FF97CF4330F77 /* BeeQnError.m */; };
+		37C653531A307044ADDA5041 /* BeeQnService.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C6594AF4B6E588FACBD38F /* BeeQnService.m */; };
+		37C653D53478709650020289 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C654586442A730CED7777D /* NSString+Base64.m */; };
+		37C65B7E5B42B95B6C9936DC /* BeeQnLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 37C659CC9541C05C52FE0CD7 /* BeeQnLocationManager.m */; };
+		79092DE718F54B1D00EA63D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79092DE618F54B1D00EA63D5 /* Foundation.framework */; };
+		79092DE918F54B1D00EA63D5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79092DE818F54B1D00EA63D5 /* CoreGraphics.framework */; };
+		79092DEB18F54B1D00EA63D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79092DEA18F54B1D00EA63D5 /* UIKit.framework */; };
+		79092DF118F54B1D00EA63D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79092DEF18F54B1D00EA63D5 /* InfoPlist.strings */; };
+		79092DF318F54B1D00EA63D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 79092DF218F54B1D00EA63D5 /* main.m */; };
+		79092DF718F54B1D00EA63D5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 79092DF618F54B1D00EA63D5 /* AppDelegate.m */; };
+		79092DF918F54B1D00EA63D5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79092DF818F54B1D00EA63D5 /* Images.xcassets */; };
+		79092E0018F54B1E00EA63D5 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79092DFF18F54B1E00EA63D5 /* XCTest.framework */; };
+		79092E0118F54B1E00EA63D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79092DE618F54B1D00EA63D5 /* Foundation.framework */; };
+		79092E0218F54B1E00EA63D5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79092DEA18F54B1D00EA63D5 /* UIKit.framework */; };
+		79092E0A18F54B1E00EA63D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 79092E0818F54B1E00EA63D5 /* InfoPlist.strings */; };
+		79092E0C18F54B1E00EA63D5 /* BeeQnTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79092E0B18F54B1E00EA63D5 /* BeeQnTests.m */; };
+		79092E1818F54B9500EA63D5 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79092E1618F54B9500EA63D5 /* MainViewController.m */; };
+		79092E1918F54B9500EA63D5 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79092E1718F54B9500EA63D5 /* MainViewController.xib */; };
+		79092E1B18F54BFA00EA63D5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79092E1A18F54BFA00EA63D5 /* CoreLocation.framework */; };
+		79092E1F18F55B9600EA63D5 /* BQListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79092E1D18F55B9600EA63D5 /* BQListViewController.m */; };
+		79092E2018F55B9600EA63D5 /* BQListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79092E1E18F55B9600EA63D5 /* BQListViewController.xib */; };
+		79B60CFF18F692E70008BE61 /* CLBeacon+Equals.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B60CFE18F692E70008BE61 /* CLBeacon+Equals.m */; };
+		79B60D0118F6A1B20008BE61 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B60D0018F6A1B20008BE61 /* CoreBluetooth.framework */; };
+		79B60D0418F6D8930008BE61 /* BeeQnCellBig.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B60D0318F6D8930008BE61 /* BeeQnCellBig.xib */; };
+		79B60D0718F6D9750008BE61 /* BeeQnCellBig.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B60D0618F6D9750008BE61 /* BeeQnCellBig.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		79092E0318F54B1E00EA63D5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79092DDB18F54B1D00EA63D5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 79092DE218F54B1D00EA63D5;
+			remoteInfo = BeeQn;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		37C6507A324CA03E20AEA6F7 /* BeeQnLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeQnLocationManager.h; sourceTree = "<group>"; };
+		37C65303D4D0C2773362D0E3 /* BeeQnError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeQnError.h; sourceTree = "<group>"; };
+		37C653EEA62FF97CF4330F77 /* BeeQnError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeQnError.m; sourceTree = "<group>"; };
+		37C654586442A730CED7777D /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
+		37C6594AF4B6E588FACBD38F /* BeeQnService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeQnService.m; sourceTree = "<group>"; };
+		37C659887CA382709C1D3246 /* BeeQnListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeQnListItem.m; sourceTree = "<group>"; };
+		37C659CC9541C05C52FE0CD7 /* BeeQnLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeQnLocationManager.m; sourceTree = "<group>"; };
+		37C65AF28CE2AC0F37C9729B /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
+		37C65D9F3713EEFB95F29271 /* BeeQnListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeQnListItem.h; sourceTree = "<group>"; };
+		37C65E034690C414A655F513 /* BeeQnService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeQnService.h; sourceTree = "<group>"; };
+		79092DE318F54B1D00EA63D5 /* BeeQn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BeeQn.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		79092DE618F54B1D00EA63D5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		79092DE818F54B1D00EA63D5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		79092DEA18F54B1D00EA63D5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		79092DEE18F54B1D00EA63D5 /* BeeQn-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BeeQn-Info.plist"; sourceTree = "<group>"; };
+		79092DF018F54B1D00EA63D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		79092DF218F54B1D00EA63D5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		79092DF418F54B1D00EA63D5 /* BeeQn-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BeeQn-Prefix.pch"; sourceTree = "<group>"; };
+		79092DF518F54B1D00EA63D5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		79092DF618F54B1D00EA63D5 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		79092DF818F54B1D00EA63D5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		79092DFE18F54B1E00EA63D5 /* BeeQnTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeeQnTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		79092DFF18F54B1E00EA63D5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		79092E0718F54B1E00EA63D5 /* BeeQnTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BeeQnTests-Info.plist"; sourceTree = "<group>"; };
+		79092E0918F54B1E00EA63D5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		79092E0B18F54B1E00EA63D5 /* BeeQnTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BeeQnTests.m; sourceTree = "<group>"; };
+		79092E1518F54B9500EA63D5 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		79092E1618F54B9500EA63D5 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		79092E1718F54B9500EA63D5 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		79092E1A18F54BFA00EA63D5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		79092E1C18F55B9600EA63D5 /* BQListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BQListViewController.h; sourceTree = "<group>"; };
+		79092E1D18F55B9600EA63D5 /* BQListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BQListViewController.m; sourceTree = "<group>"; };
+		79092E1E18F55B9600EA63D5 /* BQListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BQListViewController.xib; sourceTree = "<group>"; };
+		79B60CFD18F692E70008BE61 /* CLBeacon+Equals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLBeacon+Equals.h"; sourceTree = "<group>"; };
+		79B60CFE18F692E70008BE61 /* CLBeacon+Equals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLBeacon+Equals.m"; sourceTree = "<group>"; };
+		79B60D0018F6A1B20008BE61 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		79B60D0318F6D8930008BE61 /* BeeQnCellBig.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BeeQnCellBig.xib; sourceTree = "<group>"; };
+		79B60D0518F6D9750008BE61 /* BeeQnCellBig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeQnCellBig.h; sourceTree = "<group>"; };
+		79B60D0618F6D9750008BE61 /* BeeQnCellBig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeQnCellBig.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		79092DE018F54B1D00EA63D5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79B60D0118F6A1B20008BE61 /* CoreBluetooth.framework in Frameworks */,
+				79092E1B18F54BFA00EA63D5 /* CoreLocation.framework in Frameworks */,
+				79092DE918F54B1D00EA63D5 /* CoreGraphics.framework in Frameworks */,
+				79092DEB18F54B1D00EA63D5 /* UIKit.framework in Frameworks */,
+				79092DE718F54B1D00EA63D5 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79092DFB18F54B1E00EA63D5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79092E0018F54B1E00EA63D5 /* XCTest.framework in Frameworks */,
+				79092E0218F54B1E00EA63D5 /* UIKit.framework in Frameworks */,
+				79092E0118F54B1E00EA63D5 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		79092DDA18F54B1D00EA63D5 = {
+			isa = PBXGroup;
+			children = (
+				79092DEC18F54B1D00EA63D5 /* BeeQn */,
+				79092E0518F54B1E00EA63D5 /* BeeQnTests */,
+				79092DE518F54B1D00EA63D5 /* Frameworks */,
+				79092DE418F54B1D00EA63D5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		79092DE418F54B1D00EA63D5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				79092DE318F54B1D00EA63D5 /* BeeQn.app */,
+				79092DFE18F54B1E00EA63D5 /* BeeQnTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		79092DE518F54B1D00EA63D5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				79B60D0018F6A1B20008BE61 /* CoreBluetooth.framework */,
+				79092E1A18F54BFA00EA63D5 /* CoreLocation.framework */,
+				79092DE618F54B1D00EA63D5 /* Foundation.framework */,
+				79092DE818F54B1D00EA63D5 /* CoreGraphics.framework */,
+				79092DEA18F54B1D00EA63D5 /* UIKit.framework */,
+				79092DFF18F54B1E00EA63D5 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		79092DEC18F54B1D00EA63D5 /* BeeQn */ = {
+			isa = PBXGroup;
+			children = (
+				79092DED18F54B1D00EA63D5 /* Supporting Files */,
+				79B60D0218F6C2530008BE61 /* BeeQn */,
+				79092DF818F54B1D00EA63D5 /* Images.xcassets */,
+				79092DF518F54B1D00EA63D5 /* AppDelegate.h */,
+				79092DF618F54B1D00EA63D5 /* AppDelegate.m */,
+				79092E1518F54B9500EA63D5 /* MainViewController.h */,
+				79092E1618F54B9500EA63D5 /* MainViewController.m */,
+				79092E1718F54B9500EA63D5 /* MainViewController.xib */,
+				79092E1C18F55B9600EA63D5 /* BQListViewController.h */,
+				79092E1D18F55B9600EA63D5 /* BQListViewController.m */,
+				79092E1E18F55B9600EA63D5 /* BQListViewController.xib */,
+			);
+			path = BeeQn;
+			sourceTree = "<group>";
+		};
+		79092DED18F54B1D00EA63D5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				79092DEE18F54B1D00EA63D5 /* BeeQn-Info.plist */,
+				79092DEF18F54B1D00EA63D5 /* InfoPlist.strings */,
+				79092DF218F54B1D00EA63D5 /* main.m */,
+				79092DF418F54B1D00EA63D5 /* BeeQn-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		79092E0518F54B1E00EA63D5 /* BeeQnTests */ = {
+			isa = PBXGroup;
+			children = (
+				79092E0B18F54B1E00EA63D5 /* BeeQnTests.m */,
+				79092E0618F54B1E00EA63D5 /* Supporting Files */,
+			);
+			path = BeeQnTests;
+			sourceTree = "<group>";
+		};
+		79092E0618F54B1E00EA63D5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				79092E0718F54B1E00EA63D5 /* BeeQnTests-Info.plist */,
+				79092E0818F54B1E00EA63D5 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		79B60D0218F6C2530008BE61 /* BeeQn */ = {
+			isa = PBXGroup;
+			children = (
+				37C659887CA382709C1D3246 /* BeeQnListItem.m */,
+				37C65D9F3713EEFB95F29271 /* BeeQnListItem.h */,
+				37C65E034690C414A655F513 /* BeeQnService.h */,
+				37C6594AF4B6E588FACBD38F /* BeeQnService.m */,
+				37C659CC9541C05C52FE0CD7 /* BeeQnLocationManager.m */,
+				37C6507A324CA03E20AEA6F7 /* BeeQnLocationManager.h */,
+				79B60CFD18F692E70008BE61 /* CLBeacon+Equals.h */,
+				79B60CFE18F692E70008BE61 /* CLBeacon+Equals.m */,
+				37C653EEA62FF97CF4330F77 /* BeeQnError.m */,
+				37C65303D4D0C2773362D0E3 /* BeeQnError.h */,
+				37C654586442A730CED7777D /* NSString+Base64.m */,
+				37C65AF28CE2AC0F37C9729B /* NSString+Base64.h */,
+				79B60D0518F6D9750008BE61 /* BeeQnCellBig.h */,
+				79B60D0618F6D9750008BE61 /* BeeQnCellBig.m */,
+				79B60D0318F6D8930008BE61 /* BeeQnCellBig.xib */,
+			);
+			name = BeeQn;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		79092DE218F54B1D00EA63D5 /* BeeQn */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79092E0F18F54B1E00EA63D5 /* Build configuration list for PBXNativeTarget "BeeQn" */;
+			buildPhases = (
+				79092DDF18F54B1D00EA63D5 /* Sources */,
+				79092DE018F54B1D00EA63D5 /* Frameworks */,
+				79092DE118F54B1D00EA63D5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BeeQn;
+			productName = BeeQn;
+			productReference = 79092DE318F54B1D00EA63D5 /* BeeQn.app */;
+			productType = "com.apple.product-type.application";
+		};
+		79092DFD18F54B1E00EA63D5 /* BeeQnTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79092E1218F54B1E00EA63D5 /* Build configuration list for PBXNativeTarget "BeeQnTests" */;
+			buildPhases = (
+				79092DFA18F54B1E00EA63D5 /* Sources */,
+				79092DFB18F54B1E00EA63D5 /* Frameworks */,
+				79092DFC18F54B1E00EA63D5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				79092E0418F54B1E00EA63D5 /* PBXTargetDependency */,
+			);
+			name = BeeQnTests;
+			productName = BeeQnTests;
+			productReference = 79092DFE18F54B1E00EA63D5 /* BeeQnTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		79092DDB18F54B1D00EA63D5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Wolf Posdorfer";
+				TargetAttributes = {
+					79092DE218F54B1D00EA63D5 = {
+						DevelopmentTeam = U34SG283KY;
+					};
+					79092DFD18F54B1E00EA63D5 = {
+						TestTargetID = 79092DE218F54B1D00EA63D5;
+					};
+				};
+			};
+			buildConfigurationList = 79092DDE18F54B1D00EA63D5 /* Build configuration list for PBXProject "BeeQn" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 79092DDA18F54B1D00EA63D5;
+			productRefGroup = 79092DE418F54B1D00EA63D5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				79092DE218F54B1D00EA63D5 /* BeeQn */,
+				79092DFD18F54B1E00EA63D5 /* BeeQnTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		79092DE118F54B1D00EA63D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79B60D0418F6D8930008BE61 /* BeeQnCellBig.xib in Resources */,
+				79092DF118F54B1D00EA63D5 /* InfoPlist.strings in Resources */,
+				79092E1918F54B9500EA63D5 /* MainViewController.xib in Resources */,
+				79092DF918F54B1D00EA63D5 /* Images.xcassets in Resources */,
+				79092E2018F55B9600EA63D5 /* BQListViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79092DFC18F54B1E00EA63D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79092E0A18F54B1E00EA63D5 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		79092DDF18F54B1D00EA63D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79092DF718F54B1D00EA63D5 /* AppDelegate.m in Sources */,
+				79B60CFF18F692E70008BE61 /* CLBeacon+Equals.m in Sources */,
+				79092E1818F54B9500EA63D5 /* MainViewController.m in Sources */,
+				79092DF318F54B1D00EA63D5 /* main.m in Sources */,
+				79092E1F18F55B9600EA63D5 /* BQListViewController.m in Sources */,
+				37C6501BBC2F3EFDCEBE1F0D /* BeeQnListItem.m in Sources */,
+				37C653531A307044ADDA5041 /* BeeQnService.m in Sources */,
+				79B60D0718F6D9750008BE61 /* BeeQnCellBig.m in Sources */,
+				37C65B7E5B42B95B6C9936DC /* BeeQnLocationManager.m in Sources */,
+				37C6534B216D74F38FB9D2B2 /* BeeQnError.m in Sources */,
+				37C653D53478709650020289 /* NSString+Base64.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79092DFA18F54B1E00EA63D5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79092E0C18F54B1E00EA63D5 /* BeeQnTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		79092E0418F54B1E00EA63D5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 79092DE218F54B1D00EA63D5 /* BeeQn */;
+			targetProxy = 79092E0318F54B1E00EA63D5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		79092DEF18F54B1D00EA63D5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				79092DF018F54B1D00EA63D5 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		79092E0818F54B1E00EA63D5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				79092E0918F54B1E00EA63D5 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		79092E0D18F54B1E00EA63D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		79092E0E18F54B1E00EA63D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		79092E1018F54B1E00EA63D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BeeQn/BeeQn-Prefix.pch";
+				INFOPLIST_FILE = "BeeQn/BeeQn-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		79092E1118F54B1E00EA63D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BeeQn/BeeQn-Prefix.pch";
+				INFOPLIST_FILE = "BeeQn/BeeQn-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		79092E1318F54B1E00EA63D5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BeeQn.app/BeeQn";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BeeQn/BeeQn-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "BeeQnTests/BeeQnTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		79092E1418F54B1E00EA63D5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/BeeQn.app/BeeQn";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "BeeQn/BeeQn-Prefix.pch";
+				INFOPLIST_FILE = "BeeQnTests/BeeQnTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		79092DDE18F54B1D00EA63D5 /* Build configuration list for PBXProject "BeeQn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79092E0D18F54B1E00EA63D5 /* Debug */,
+				79092E0E18F54B1E00EA63D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79092E0F18F54B1E00EA63D5 /* Build configuration list for PBXNativeTarget "BeeQn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79092E1018F54B1E00EA63D5 /* Debug */,
+				79092E1118F54B1E00EA63D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79092E1218F54B1E00EA63D5 /* Build configuration list for PBXNativeTarget "BeeQnTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79092E1318F54B1E00EA63D5 /* Debug */,
+				79092E1418F54B1E00EA63D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 79092DDB18F54B1D00EA63D5 /* Project object */;
+}
