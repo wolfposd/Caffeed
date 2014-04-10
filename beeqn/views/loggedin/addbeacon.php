@@ -57,8 +57,10 @@ class Addbeacons
 		$minor = $this->mysqli->real_escape_string($_POST["minor"]);
 		$descr = $this->mysqli->real_escape_string($_POST["description"]);
 		$loc = $this->mysqli->real_escape_string($_POST["location"]);
+		$longi = $this->mysqli->real_escape_string($_POST["longitude"]);
+		$lati = $this->mysqli->real_escape_string($_POST["latitude"]);
 		
-		$query = "INSERT INTO ibeacons (owner_id, UUID, major, minor, description, location) values ($owner, '$uuid', $major, $minor, '$descr', '$loc')";
+		$query = "INSERT INTO ibeacons (owner_id, UUID, major, minor, description, location, longitude, latitude) values ($owner, '$uuid', $major, $minor, '$descr', '$loc','$longi','$lati')";
 		
 		$result = $this->mysqli->query($query);
 		
@@ -131,6 +133,14 @@ function showForm()
 			<tr>
 				<td>Location</td>
 				<td><input type="text" name="location" /></td>
+			</tr>
+			<tr>
+				<td>Longitude</td>
+				<td><input type="text" name="longitude" /></td>
+			</tr>
+			<tr>
+				<td>Latitude</td>
+				<td><input type="text" name="latitude" /></td>
 			</tr>
 		</table>
 		<input type="hidden" name="addbeacon">

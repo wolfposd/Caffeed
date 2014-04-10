@@ -39,9 +39,9 @@ class EditBeaconAction
 
 	}
 
-	function getActionForBeacon()
+	function getInfosForBeacon()
 	{
-		$query = "SELECT action_type as type, action_info as info FROM ibeacons, ibeacon_actions 
+		$query = "SELECT action_type as type, action_info as info, description, location, longitude, latitude FROM ibeacons, ibeacon_actions 
 		WHERE ibeacons.id = ibeacon_actions.id AND UUID = '{$this->beacon["UUID"]}' AND major = {$this->beacon["major"]} AND minor = {$this->beacon["minor"]}";
 
 		$result = $this->mysqli->query($query);
@@ -56,13 +56,19 @@ class EditBeaconAction
 	function updateAction()
 	{
 		global $_POST;
+		// TODO CHECK PARAMS FOR VALIDITY
 		if(isset($_POST["type"]) && isset($_POST["info"]))
 		{
 			$type = $this->mysqli->real_escape_string($_POST["type"]);
 			$info = $this->mysqli->real_escape_string($_POST["info"]);
+			$desc = $this->mysqli->real_escape_string($_POST["Description"]);
+			$loca = $this->mysqli->real_escape_string($_POST["Location"]);
+			$longi = $this->mysqli->real_escape_string($_POST["Longitude"]);
+			$lati = $this->mysqli->real_escape_string($_POST["Latitude"]);
 			
 			$query = "UPDATE ibeacon_actions JOIN ibeacons ON ibeacon_actions.id = ibeacons.id 
-			SET ibeacon_actions.action_type = '$type', ibeacon_actions.action_info = '$info' 
+			SET ibeacon_actions.action_type = '$type', ibeacon_actions.action_info = '$info',
+			ibeacons.description = '$desc', ibeacons.location = '$loca' , ibeacons.longitude = $longi , ibeacons.latitude = $lati
 			WHERE UUID = '{$this->beacon["UUID"]}' AND major = {$this->beacon["major"]} AND minor = {$this->beacon["minor"]}";
 			
 			
@@ -90,7 +96,7 @@ class EditBeaconAction
 	{
 		if($this->showForm)
 		{
-			$action = $this->getActionForBeacon();
+			$action = $this->getInfosForBeacon();
 			show_form($action);
 		}
 		else
@@ -107,10 +113,14 @@ function show_form($action)
 {
 	global $_GET;
 	?>
-<h2>Edit Beacon Action</h2>
+<h2>Edit Beacon Infos</h2>
 
 <form method="post">
 	<div class="col-md-4 form-group">
+		<?php echo show_field("Description",$action["description"]);?>
+		<?php echo show_field("Location",$action["location"]);?>
+		<?php echo show_field("Longitude",$action["longitude"]);?>
+		<?php echo show_field("Latitude",$action["latitude"]);?>
 		<?php echo show_action_type($action["type"]);?>
 		<?php echo show_action_info($action["info"]);?>
 		<p></p>
@@ -121,6 +131,15 @@ function show_form($action)
 </form>
 
 <?php 
+}
+
+
+function show_field($name, $value)
+{
+	?>
+<p><?php echo $name?>:</p>
+	<input type="text" class="form-control" name="<?php echo $name?>" value="<?php echo $value?>">
+	<?php 
 }
 
 

@@ -45,7 +45,7 @@ class Application {
 			if($index + 1 < count($arrayvalue))
 			{
 				$major = $this->mysqli->real_escape_string($arrayvalue[$index+1]);
-				
+
 				if(int_ok($major))
 				{
 					$query .= " AND major = $major ";
@@ -66,7 +66,7 @@ class Application {
 		}
 
 		$query .= " LIMIT 1";
-		
+
 		$result = $this->mysqli->query($query, MYSQLI_USE_RESULT);
 
 		$returnval = array();
@@ -82,19 +82,70 @@ class Application {
 
 		if(count($returnval) == 0)
 		{
-			array_push($returnval, array("error"=>"noinfo"));
+			$returnval = $this->error_msg();
 		}
 
 		echo json_encode($returnval);
 	}
 
+
+	function rest_get_uuidbylocation($arrayvalue)
+	{
+		$returnval = $this->error_msg();
+		
+		$longitude = $this->retrieveValueFromRequest("longitude",$arrayvalue);
+		$latitude = $this->retrieveValueFromRequest("latitude",$arrayvalue);
+
+		if(is_numeric($longitude) && is_numeric($latitude))
+		{
+			$query = "SELECT * FROM
+					(SELECT sqrt(pow(longitude-$longitude,2) + pow(latitude-$latitude,2)) AS distance, UUID FROM ibeacons ORDER BY DISTANCE ASC) as temp
+					GROUP BY UUID ORDER BY distance ASC LIMIT 20";
+
+			$result= $this->mysqli->query($query);
+				
+				
+			if($result !== false)
+			{
+				$resultUUIDS = array();
+
+				while($row = $result->fetch_assoc())
+				{
+					array_push($resultUUIDS, $row["UUID"]);
+				}
+				$result->free();
+				$returnval = $resultUUIDS;
+			}
+		}
+
+		echo  json_encode($returnval);
+	}
+
+	function retrieveValueFromRequest($value, &$requestArr)
+	{
+		if(in_array($value, $requestArr))
+		{
+			$index = array_search($value, $requestArr);
+			if($index + 1 < count($requestArr))
+			{
+				$possible = $this->mysqli->real_escape_string($requestArr[$index+1]);
+				return $possible;
+			}
+		}
+	}
+
+	function error_msg()
+	{
+		return array("error"=>"noinfo");
+	}
+
+	
 }
 
 function int_ok($val)
 {
 	return ($val !== true) && ((string)(int) $val) === ((string) $val);
 }
-
 
 
 

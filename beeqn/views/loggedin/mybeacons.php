@@ -113,6 +113,7 @@ function showBeaconTable($beacons)
 				<th class="text-center">Minor</th>
 				<th class="text-center">Description</th>
 				<th class="text-center">Location</th>
+				<th class="text-center">GPS</th>
 				<th class="text-center">Action</th>
 				<th class="text-center">Delete</th>
 			</tr>
@@ -123,6 +124,7 @@ function showBeaconTable($beacons)
 				<td><?php echo $beacon["minor"]?></td>
 				<td><?php echo $beacon["description"]?></td>
 				<td><?php echo $beacon["location"]?></td>
+				<td><?php echo $beacon["longitude"]." , ".$beacon["latitude"]?></td>
 				<td><?php edit_action($beacon); ?></td>
 				<td><?php remove_beacon($beacon); ?></td>
 			</tr>
@@ -141,7 +143,7 @@ function edit_action($beacon)
 	?>
 	<form method="get">
 		<input type="hidden" name="editbeaconaction" value="<?php echo encrypt($beacon["UUID"].";".$beacon["major"].";".$beacon["minor"])?>"/>
-		<input type="submit" class="btn btn-info btn-small" value="Edit Action" />
+		<input type="submit" class="btn btn-info btn-small" value="Edit Beacon" />
 	</form>
 	<?php 
 }
