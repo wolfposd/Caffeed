@@ -3,6 +3,7 @@
 // Copyright (c) 2014 Wolf Posdorfer. All rights reserved.
 //
 
+#import <CoreLocation/CoreLocation.h>
 #import "BeeQnService.h"
 #import "BeeQnListItem.h"
 #import "BeeQnError.h"
@@ -15,6 +16,9 @@
 static NSString* ACTION_INFO = @"action_info";
 static NSString* ACTION_TYPE = @"action_type";
 static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
+
+
+#pragma mark - Beacon information by uuid/major/minor
 
 - (void)fetchBeeQnInformation:(NSString*)UUID major:(NSNumber*)major minor:(NSNumber*)minor
 {
@@ -39,6 +43,7 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
             }];
 
 }
+
 
 - (void)handleData:(NSData*)data
 {
@@ -88,12 +93,33 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
             {
                 [self handleURL:dictionary];
             }
+            else if ([actiontype isEqualToString:@"alert"])
+            {
+                [self handleAlert:dictionary];
+            }
             else
             {
                 [self handleCustom:dictionary];
             }
         }
     }
+}
+
+- (void)handleAlert:(NSDictionary*)dictionary
+{
+    NSDictionary* alert = [self makeJSON:[dictionary objectForKey:ACTION_INFO]];
+
+    NSString* title = [alert objectForKey:@"title"];
+    NSString* message = [alert objectForKey:@"message"];
+
+    if([self.delegate respondsToSelector:@selector(service:foundAlert:message:)])
+    {
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [self.delegate service:self foundAlert:title message:message];
+        });
+    }
+
 }
 
 - (void)handleListItems:(NSDictionary*)dictionary
@@ -130,8 +156,6 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
 
             [listitems addObject:listItem];
         }
-
-        NSLog(@"%@", listitems);
 
         if ([self.delegate respondsToSelector:@selector(service:foundList:withTitle:andSize:)])
         {
@@ -174,6 +198,91 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
 
 }
 
+
+
+#pragma mark - UUID by GPS
+
+- (void)fetchBeaconListForLocation:(CLLocation*)location
+{
+    NSString* path = [NSString stringWithFormat:@"%@uuidbylocation/longitude/%f/latitude/%f", baseURL, location.coordinate.longitude, location.coordinate.latitude];
+
+    NSURLRequest* request = [NSURLRequest requestWithURL:[[NSURL alloc] initWithString:path] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:20];
+    NSOperationQueue* queue = [[NSOperationQueue alloc] init];
+
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:
+            ^(NSURLResponse* response, NSData* data, NSError* connectionError)
+            {
+                if (!connectionError && data)
+                {
+                    [self handleGPSData:data];
+                }
+                else
+                {
+                    [self sendError:connectionError];
+                }
+            }];
+
+}
+
+- (void)handleGPSData:(NSData*)gpsdata
+{
+
+    NSArray* uuids = [self makeJSONArray:gpsdata];
+
+    if (uuids && [self.delegate respondsToSelector:@selector(service:foundBeaconsUUIDs:)])
+    {
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            [self.delegate service:self foundBeaconsUUIDs:uuids];
+        });
+    }
+}
+
+
+
+
+#pragma mark - Additional
+
+- (NSArray*)makeJSONArray:(id)possibleArray
+{
+    NSError* error;
+    if ([[possibleArray class] isSubclassOfClass:[NSString class]])
+    {
+
+        NSArray* array = [NSJSONSerialization JSONObjectWithData:[possibleArray dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
+
+        if (!error)
+        {
+            return array;
+        }
+        else
+        {
+            return nil;
+        }
+
+    }
+    else if ([[possibleArray class] isSubclassOfClass:[NSData class]])
+    {
+        NSArray* array = [NSJSONSerialization JSONObjectWithData:possibleArray options:kNilOptions error:&error];
+        if (!error)
+        {
+            return array;
+        }
+        else
+        {
+            return nil;
+        }
+    }
+    else if ([[possibleArray class] isSubclassOfClass:[NSArray class]])
+    {
+        return possibleArray;
+    }
+    else
+    {
+        return nil;
+    }
+
+}
 
 - (NSDictionary*)makeJSON:(id)possibleDictionary
 {

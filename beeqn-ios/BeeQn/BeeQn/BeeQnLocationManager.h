@@ -5,12 +5,17 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "BQBeaconCounter.h"
 
 @protocol BeeQnLocationManagerProtocol;
 
 @interface BeeQnLocationManager : NSObject
 
 @property (nonatomic, weak) NSObject <BeeQnLocationManagerProtocol>* delegate;
+
+@property(nonatomic, readonly) BOOL isBeaconFetchInProgress;
+
+@property (nonatomic, retain) BQBeaconCounter* beaconCounter;
 
 - (BOOL)isBluetoothOn;
 
@@ -22,6 +27,10 @@
 
 - (void)stopFindingBeacons;
 
+/**
+ *  Starts finding GPS
+ *  Callbacks will be made to manager:hasFoundGPS:
+ */
 - (void)startFindingGPS;
 
 - (void)stopFindingGPS;

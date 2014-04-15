@@ -4,6 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 
 typedef enum
 {
@@ -21,9 +22,19 @@ typedef enum
 
 - (void)service:(id)beeqnservice foundCustom:(NSString*)custom;
 
-- (void)service:(id)beeqnservice foundList:(NSArray*)listItems withTitle:(NSString*)title andSize:(BeeQnListSize) size;
+- (void)service:(id)beeqnservice foundList:(NSArray*)listItems withTitle:(NSString*)title andSize:(BeeQnListSize)size;
 
 - (void)service:(id)beeqnservice foundURL:(NSURL*)url;
+
+/**
+ *  Service has found a List of UUIDS
+ *
+ *  @param beeqnservice the service
+ *  @param uuids        NSArray of NSString
+ */
+- (void)service:(id)beeqnservice foundBeaconsUUIDs:(NSArray*)uuids;
+
+- (void)service:(id)beeqnservice foundAlert:(NSString*) title message:(NSString*) message;
 
 @end
 
@@ -32,6 +43,15 @@ typedef enum
 
 
 @property (nonatomic, weak) NSObject <BeeQnServiceProtocol>* delegate;
+
+/**
+ *  Fetches a UUID List for the closest locatons
+ *
+ *  Callbacks will be made to service:foundBeaconsUUIDs:
+ *
+ *  @param location the GPS-Location
+ */
+- (void)fetchBeaconListForLocation:(CLLocation*)location;
 
 
 - (void)fetchBeeQnInformation:(NSString*)UUID major:(NSNumber*)major minor:(NSNumber*)minor;

@@ -11,15 +11,20 @@
 #import "BQListViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "BeeQnLocationManager.h"
+#import "BQAlert.h"
 
 @interface MainViewController () <BeeQnServiceProtocol, BeeQnLocationManagerProtocol>
 @property (weak, nonatomic) IBOutlet UILabel* textlabel;
-@property (weak, nonatomic) IBOutlet UILabel *longitudeTextLabel;
-@property (weak, nonatomic) IBOutlet UILabel *latitudeTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel* longitudeTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel* latitudeTextLabel;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @property (retain, nonatomic) BeeQnService* beeqnService;
 @property (retain, nonatomic) BeeQnLocationManager* beeqnLocation;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView* activityIndicator;
+
+
+@property (nonatomic,retain) id bqAlert;
 
 @end
 
@@ -38,12 +43,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
     self.activityIndicator.hidden = YES;
     self.activityIndicator.color = [UIColor blueColor];
-    
-   self.activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
-    
+
+    self.activityIndicator.transform = CGAffineTransformMakeScale(2.0, 2.0);
+
     self.beeqnService = [[BeeQnService alloc] init];
     self.beeqnService.delegate = self;
 
@@ -52,10 +57,10 @@
     self.beeqnLocation.delegate = self;
 
 
-    // FETCH UUID FOR GPS
-    NSString* uuid = @"B9407F30-F5F8-466E-AFF9-25556B57FE6D";
-    [self.beeqnLocation updateRegions:@[uuid]];
+    UIBarButtonItem* scan = [[UIBarButtonItem alloc] initWithTitle:@"Scan" style:UIBarButtonItemStyleBordered target:self
+                                                            action:@selector(barButtonItemScan:)];
 
+    self.navigationItem.leftBarButtonItem = scan;
 }
 
 
@@ -68,30 +73,57 @@
     if (self.beeqnLocation.isBluetoothOn && self.beeqnLocation.isFindingBeaconsPossible
             && self.beeqnLocation.isLocationServicesEnabled)
     {
-        
+
         self.activityIndicator.hidden = NO;
         [self.activityIndicator startAnimating];
-        [self.beeqnLocation startFindingBeacons];
-
         [self.beeqnLocation startFindingGPS];
+        self.statusLabel.text = @"Finding GPS Location";
     }
     else
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enable Location Services" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        if(!self.beeqnLocation.isBluetoothOn)
+        {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enable Bluetooth" delegate:self
+                              cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
+        else if(!self.beeqnLocation.isFindingBeaconsPossible)
+        {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enable Location Services" delegate:self
+                              cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
+        else if(!self.beeqnLocation.isLocationServicesEnabled)
+        {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enable GPS" delegate:self
+                              cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
     }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-
     NSLog(@"%@", @"view did disappear");
 
-    [super viewDidDisappear:animated];
     [self.beeqnLocation stopFindingBeacons];
+    [super viewDidDisappear:animated];
 }
 
 
+-(void) barButtonItemScan:(id) sender
+{
+
+    if(self.beeqnLocation.isBeaconFetchInProgress)
+    {
+         self.statusLabel.text = @"Nothing in Progress";
+        [self.beeqnLocation stopFindingBeacons];
+        [self.activityIndicator stopAnimating];
+    }
+    else
+    {
+        [self.beeqnLocation startFindingGPS];
+        self.statusLabel.text = @"Finding GPS Location";
+        [self.activityIndicator startAnimating];
+    }
+}
 
 #pragma mark BeeQnLocationManagerProtocol
 
@@ -100,6 +132,7 @@
     NSLog(@"FOUND BEACON: %@\n %f", beacon, beacon.accuracy);
     [self.beeqnLocation stopFindingBeacons];
     [self.beeqnService fetchBeeQnInformation:beacon.proximityUUID.UUIDString major:beacon.major minor:beacon.minor];
+    [self.activityIndicator stopAnimating];
 }
 
 - (void)manager:(BeeQnLocationManager*)manager hasFoundGPS:(CLLocation*)gpslocation
@@ -107,15 +140,23 @@
     [manager stopFindingGPS];
     self.longitudeTextLabel.text = [NSString stringWithFormat:@"Longitude: %f", gpslocation.coordinate.longitude];
     self.latitudeTextLabel.text = [NSString stringWithFormat:@"Latitude: %f", gpslocation.coordinate.latitude];
+
+
+     self.statusLabel.text = @"Finding UUIDs";
+    [self.beeqnService fetchBeaconListForLocation:gpslocation];
 }
 
 - (void)manager:(BeeQnLocationManager*)manager hasFoundBeacons:(NSArray*)beacons
 {
+
+    NSLog(@"%@ %lu", @"has found beacons", (unsigned long) beacons.count);
     NSMutableString* mutable = [[NSMutableString alloc] initWithString:@""];
 
     for (CLBeacon* beacon in beacons)
     {
-        [mutable appendFormat:@"%@, %@, %ld, acc:%f\n", beacon.major, beacon.minor, (long) beacon.rssi, beacon.accuracy];
+        NSInteger rss = [self.beeqnLocation.beaconCounter meanRSSI:beacon];
+        
+        [mutable appendFormat:@"%@, %@, %ld, acc:%f\n", beacon.major, beacon.minor, rss, beacon.accuracy];
     }
     self.textlabel.text = [NSString stringWithFormat:@"Found :%lu beacons\n%@", (unsigned long) beacons.count, mutable];
 }
@@ -133,17 +174,52 @@
 - (void)service:(id)beeqnservice didFailWithError:(NSError*)error
 {
     [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't fetch stuff" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    NSLog(@"%@", error);
 }
 
-- (void)service:(id)beeqnservice foundList:(NSArray*)listItems withTitle:(NSString*)title andSize:(BeeQnListSize) size;
+- (void)service:(id)beeqnservice foundList:(NSArray*)listItems withTitle:(NSString*)title andSize:(BeeQnListSize)size;
 {
     self.activityIndicator.hidden = YES;
     [self.activityIndicator stopAnimating];
-    
-    
+
+
     BQListViewController* con = [[BQListViewController alloc] initWith:listItems title:title size:size];
     [self.navigationController pushViewController:con animated:YES];
     //automatically disables ranging beacons
+}
+
+- (void)service:(id)beeqnservice foundBeaconsUUIDs:(NSArray*)uuids
+{
+    self.statusLabel.text = @"Looking for Beacons";
+    [self.beeqnLocation updateRegions:uuids];
+
+    if (!self.beeqnLocation.isBeaconFetchInProgress)
+    {
+        [self.beeqnLocation startFindingBeacons];
+    }
+}
+
+
+- (void)service:(id)beeqnservice foundAlert:(NSString*)title message:(NSString*)message
+{
+    self.bqAlert = [BQAlert showAlert:title message:message action:^(NSInteger index)
+                    {
+                        NSLog(@"clicked button: %ld", (long)index );
+                        self.bqAlert = nil;
+                    }
+                    cancelButtonTitle:@"OK" others:@"Yes", nil];
+}
+
+
+- (void)service:(id)beeqnservice foundURL:(NSURL*)url
+{
+    NSLog(@"URL: %@", url);
+}
+
+- (void)service:(id)beeqnservice foundCustom:(NSString*)custom
+{
+    NSLog(@"CUSTOM: %@", custom);
+
 }
 
 
