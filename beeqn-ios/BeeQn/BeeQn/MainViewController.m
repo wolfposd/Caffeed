@@ -127,11 +127,11 @@
 
 #pragma mark BeeQnLocationManagerProtocol
 
-- (void)manager:(BeeQnLocationManager*)manager hasFoundBeacon:(CLBeacon*)beacon
+- (void)manager:(BeeQnLocationManager*)manager hasFoundBeacon:(BQBeacon*)beacon
 {
     NSLog(@"FOUND BEACON: %@\n %f", beacon, beacon.accuracy);
     [self.beeqnLocation stopFindingBeacons];
-    [self.beeqnService fetchBeeQnInformation:beacon.proximityUUID.UUIDString major:beacon.major minor:beacon.minor];
+    [self.beeqnService fetchBeeQnInformation:beacon.UUID major:beacon.major minor:beacon.minor];
     [self.activityIndicator stopAnimating];
 }
 
@@ -152,7 +152,7 @@
     NSLog(@"%@ %lu", @"has found beacons", (unsigned long) beacons.count);
     NSMutableString* mutable = [[NSMutableString alloc] initWithString:@""];
 
-    for (CLBeacon* beacon in beacons)
+    for (BQBeacon* beacon in beacons)
     {
         NSInteger rss = [self.beeqnLocation.beaconCounter meanRSSI:beacon];
         
@@ -173,7 +173,9 @@
 
 - (void)service:(id)beeqnservice didFailWithError:(NSError*)error
 {
-    [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Couldn't fetch stuff" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    
+    [[[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    
     NSLog(@"%@", error);
 }
 
@@ -204,10 +206,9 @@
 {
     self.bqAlert = [BQAlert showAlert:title message:message action:^(NSInteger index)
                     {
-                        NSLog(@"clicked button: %ld", (long)index );
                         self.bqAlert = nil;
                     }
-                    cancelButtonTitle:@"OK" others:@"Yes", nil];
+                    cancelButtonTitle:@"OK" others:nil];
 }
 
 

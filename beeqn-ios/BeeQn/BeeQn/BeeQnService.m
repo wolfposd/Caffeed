@@ -78,7 +78,7 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
 
     if ([dictionary objectForKey:@"error"])
     {
-        [self sendError:[NSError errorWithDomain:@"com.beeqn" code:100 userInfo:nil]];
+        [self sendError:[BeeQnError errorWith:100 message:@"No information for this iBeacon specified"]];
     }
     else
     {

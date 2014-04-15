@@ -36,7 +36,6 @@
 
 - (void)alertView:(UIAlertView*)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    NSLog(@"%@", @"ATTACK");
     if (self.block)
     {
         self.block(buttonIndex);

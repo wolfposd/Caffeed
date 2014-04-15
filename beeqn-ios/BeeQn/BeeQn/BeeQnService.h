@@ -8,6 +8,15 @@
 
 typedef enum
 {
+    kNoError = 0,
+    kNoInfoOnServerForBeacon = 100
+}
+BeeQnErrorCodes;
+
+
+
+typedef enum
+{
     kListSizeSmall = 44,
     kListSizeBig = 80
 } BeeQnListSize;

@@ -6,6 +6,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "BQBeaconCounter.h"
+#import "BQBeacon.h"
 
 @protocol BeeQnLocationManagerProtocol;
 
@@ -55,7 +56,7 @@
  *  @param manager the manager
  *  @param beacon  the beacon found
  */
-- (void)manager:(BeeQnLocationManager*)manager hasFoundBeacon:(CLBeacon*)beacon;
+- (void)manager:(BeeQnLocationManager*)manager hasFoundBeacon:(BQBeacon*)beacon;
 
 /**
  *  the manager has found a GPS-Location
@@ -67,7 +68,7 @@
 
 @optional
 /**
- *  the manager has found multiple beacons
+ *  the manager has found multiple beacons of type BQBeacon
  *
  *  @param manager the manager
  *  @param beacon  the beacons

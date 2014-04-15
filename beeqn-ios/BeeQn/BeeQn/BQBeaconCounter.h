@@ -7,17 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
+#import "BQBeacon.h"
 
 @interface BQBeaconCounter : NSObject
 
 -(void) increaseCountFor:(NSArray*) beacons;
 
--(CLBeacon*) closestBeaconFrom:(NSArray*) beacons;
+-(BQBeacon*) closestBeaconFrom:(NSArray*) beacons;
 
+-(BQBeacon*) closestBeacon;
 
 -(void) resetCount;
 
--(NSInteger) meanRSSI:(CLBeacon*) beacon;
+-(NSInteger) meanRSSI:(BQBeacon*) beacon;
 
 @end

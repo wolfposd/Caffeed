@@ -4,7 +4,6 @@
 //
 
 #import "BeeQnLocationManager.h"
-#import "CLBeacon+Equals.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 
 @interface BeeQnLocationManager () <CLLocationManagerDelegate, CBCentralManagerDelegate>
@@ -27,7 +26,7 @@
 @implementation BeeQnLocationManager
 
 
-static const int MAX_COUNT_FOR_BEACON_FIND = 20;
+static const int FACTOR_FOR_BEACON_FIND = 5;
 
 - (id)init
 {
@@ -53,7 +52,6 @@ static const int MAX_COUNT_FOR_BEACON_FIND = 20;
 
 - (BOOL)isBluetoothOn
 {
-    NSLog(@"%ld", self.bluetoothstate);
     return self.bluetoothstate == CBCentralManagerStatePoweredOn || self.bluetoothstate == CBCentralManagerStateUnknown;
 }
 
@@ -75,7 +73,6 @@ static const int MAX_COUNT_FOR_BEACON_FIND = 20;
     for (NSString* uuid in self.uuidRegions)
     {
         NSUUID* nsuuid = [[NSUUID alloc] initWithUUIDString:uuid];
-        
         NSString* identi = [NSString stringWithFormat:@"de.beeqn.%@",uuid];
         [self.locationManager startRangingBeaconsInRegion:[[CLBeaconRegion alloc] initWithProximityUUID:nsuuid identifier:identi]];
     }
@@ -142,12 +139,33 @@ static const int MAX_COUNT_FOR_BEACON_FIND = 20;
 - (void)locationManager:(CLLocationManager*)manager didRangeBeacons:(NSArray*)beacons inRegion:(CLBeaconRegion*)region
 {
     
-    beacons = [beacons sortedArrayUsingComparator:^(id obj1, id obj2)
+    // Convert CLBeacon to BQBeacon because of equalsBullshit
+    NSMutableArray* newBQ = [NSMutableArray new];
+    for(CLBeacon* beacon in beacons)
+    {
+        [newBQ addObject:[BQBeacon beacon:beacon]];
+    }
+    
+    [self.beaconCounter increaseCountFor:newBQ];
+    
+    if ([self.delegate respondsToSelector:@selector(manager:hasFoundBeacons:)] && beacons.count > 0)
+    {
+        // notify on beacons array found
+        [self.delegate manager:self hasFoundBeacons:newBQ];
+    }
+    
+    if(beacons && beacons.count > 0)
+    {
+        [self checkIfNumberDetectionsNeedNotify:beacons];
+    }
+}
+
+-(NSArray*) sortBeaconArray:(NSArray*) array
+{
+    return [array sortedArrayUsingComparator:^(id obj1, id obj2)
                {
-                   CLBeacon* beacon1 = obj1;
-                   CLBeacon* beacon2 = obj2;
-                   NSInteger rss1 = beacon1.rssi == 0 ? NSIntegerMin : beacon1.rssi;
-                   NSInteger rss2 = beacon2.rssi == 0 ? NSIntegerMin : beacon2.rssi;
+                   NSInteger rss1 = [self.beaconCounter meanRSSI:obj1];
+                   NSInteger rss2 = [self.beaconCounter meanRSSI:obj2];
                    if (rss1 <  rss2)
                    {
                        return (NSComparisonResult)NSOrderedDescending;
@@ -161,21 +179,6 @@ static const int MAX_COUNT_FOR_BEACON_FIND = 20;
                        return (NSComparisonResult)NSOrderedSame;
                    }
                }];
-    
-    
-    [self.beaconCounter increaseCountFor:beacons];
-    
-    if ([self.delegate respondsToSelector:@selector(manager:hasFoundBeacons:)] && beacons.count > 0)
-    {
-        // notify on beacons array found
-        [self.delegate manager:self hasFoundBeacons:beacons];
-    }
-    
-    if(beacons)
-    {
-        [self increaseBeaconFoundCount:beacons];
-        
-    }
 }
 
 
@@ -190,14 +193,14 @@ static const int MAX_COUNT_FOR_BEACON_FIND = 20;
 }
 
 
-- (void)increaseBeaconFoundCount:(NSArray*) beacons
+- (void)checkIfNumberDetectionsNeedNotify:(NSArray*) beacons
 {
     self.numDetections = self.numDetections + 1;
     
-    if (self.numDetections > MAX_COUNT_FOR_BEACON_FIND && self.isBeaconFetchInProgress)
+    if (self.numDetections > beacons.count * FACTOR_FOR_BEACON_FIND && self.isBeaconFetchInProgress)
     {
         // notify delegate about beacon found
-        CLBeacon* beacon =[self.beaconCounter closestBeaconFrom:beacons];
+        BQBeacon* beacon =[self.beaconCounter closestBeacon];
         if(beacon)
         {
             [self.delegate manager:self hasFoundBeacon:beacon];

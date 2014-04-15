@@ -30,8 +30,8 @@
 		79092E1B18F54BFA00EA63D5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79092E1A18F54BFA00EA63D5 /* CoreLocation.framework */; };
 		79092E1F18F55B9600EA63D5 /* BQListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79092E1D18F55B9600EA63D5 /* BQListViewController.m */; };
 		79092E2018F55B9600EA63D5 /* BQListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79092E1E18F55B9600EA63D5 /* BQListViewController.xib */; };
+		79257F6D18FD8FA0009B7CAC /* BQBeacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 79257F6C18FD8FA0009B7CAC /* BQBeacon.m */; };
 		79A6C65118FD624300D2850A /* BQBeaconCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A6C65018FD624300D2850A /* BQBeaconCounter.m */; };
-		79B60CFF18F692E70008BE61 /* CLBeacon+Equals.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B60CFE18F692E70008BE61 /* CLBeacon+Equals.m */; };
 		79B60D0118F6A1B20008BE61 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B60D0018F6A1B20008BE61 /* CoreBluetooth.framework */; };
 		79B60D0418F6D8930008BE61 /* BeeQnCellBig.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B60D0318F6D8930008BE61 /* BeeQnCellBig.xib */; };
 		79B60D0718F6D9750008BE61 /* BeeQnCellBig.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B60D0618F6D9750008BE61 /* BeeQnCellBig.m */; };
@@ -83,10 +83,10 @@
 		79092E1C18F55B9600EA63D5 /* BQListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BQListViewController.h; sourceTree = "<group>"; };
 		79092E1D18F55B9600EA63D5 /* BQListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BQListViewController.m; sourceTree = "<group>"; };
 		79092E1E18F55B9600EA63D5 /* BQListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BQListViewController.xib; sourceTree = "<group>"; };
+		79257F6B18FD8FA0009B7CAC /* BQBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BQBeacon.h; sourceTree = "<group>"; };
+		79257F6C18FD8FA0009B7CAC /* BQBeacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BQBeacon.m; sourceTree = "<group>"; };
 		79A6C64F18FD624300D2850A /* BQBeaconCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BQBeaconCounter.h; sourceTree = "<group>"; };
 		79A6C65018FD624300D2850A /* BQBeaconCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BQBeaconCounter.m; sourceTree = "<group>"; };
-		79B60CFD18F692E70008BE61 /* CLBeacon+Equals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLBeacon+Equals.h"; sourceTree = "<group>"; };
-		79B60CFE18F692E70008BE61 /* CLBeacon+Equals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLBeacon+Equals.m"; sourceTree = "<group>"; };
 		79B60D0018F6A1B20008BE61 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		79B60D0318F6D8930008BE61 /* BeeQnCellBig.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BeeQnCellBig.xib; sourceTree = "<group>"; };
 		79B60D0518F6D9750008BE61 /* BeeQnCellBig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeQnCellBig.h; sourceTree = "<group>"; };
@@ -209,10 +209,8 @@
 				37C6594AF4B6E588FACBD38F /* BeeQnService.m */,
 				37C6507A324CA03E20AEA6F7 /* BeeQnLocationManager.h */,
 				37C659CC9541C05C52FE0CD7 /* BeeQnLocationManager.m */,
-				79B60CFD18F692E70008BE61 /* CLBeacon+Equals.h */,
-				79B60CFE18F692E70008BE61 /* CLBeacon+Equals.m */,
-				37C653EEA62FF97CF4330F77 /* BeeQnError.m */,
 				37C65303D4D0C2773362D0E3 /* BeeQnError.h */,
+				37C653EEA62FF97CF4330F77 /* BeeQnError.m */,
 				37C654586442A730CED7777D /* NSString+Base64.m */,
 				37C65AF28CE2AC0F37C9729B /* NSString+Base64.h */,
 				79B60D0518F6D9750008BE61 /* BeeQnCellBig.h */,
@@ -220,6 +218,8 @@
 				79B60D0318F6D8930008BE61 /* BeeQnCellBig.xib */,
 				79A6C64F18FD624300D2850A /* BQBeaconCounter.h */,
 				79A6C65018FD624300D2850A /* BQBeaconCounter.m */,
+				79257F6B18FD8FA0009B7CAC /* BQBeacon.h */,
+				79257F6C18FD8FA0009B7CAC /* BQBeacon.m */,
 			);
 			name = BeeQn;
 			sourceTree = "<group>";
@@ -326,7 +326,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				79092DF718F54B1D00EA63D5 /* AppDelegate.m in Sources */,
-				79B60CFF18F692E70008BE61 /* CLBeacon+Equals.m in Sources */,
 				79A6C65118FD624300D2850A /* BQBeaconCounter.m in Sources */,
 				79092E1818F54B9500EA63D5 /* MainViewController.m in Sources */,
 				79092DF318F54B1D00EA63D5 /* main.m in Sources */,
@@ -337,6 +336,7 @@
 				37C65B7E5B42B95B6C9936DC /* BeeQnLocationManager.m in Sources */,
 				37C6534B216D74F38FB9D2B2 /* BeeQnError.m in Sources */,
 				37C653D53478709650020289 /* NSString+Base64.m in Sources */,
+				79257F6D18FD8FA0009B7CAC /* BQBeacon.m in Sources */,
 				37C652B3D8DAD18CE66B693B /* BQAlert.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
