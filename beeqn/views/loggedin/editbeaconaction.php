@@ -148,7 +148,7 @@ function show_action_type($type)
 	?>
 <p>Action Type:</p>
 <select class="form-control" name="type">
-	<?php foreach(array("list","url","twitter","facebook","custom") as $key) {?>
+	<?php foreach(array("list", "alert", "url", "twitter", "facebook", "custom") as $key) {?>
 	<option<?php if($type === $key) echo " selected=\"true\""?>><?php echo $key?></option>
 	<?php }?>
 </select>

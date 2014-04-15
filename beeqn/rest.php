@@ -35,7 +35,7 @@ class Application {
 	{
 
 		$uuid = $this->mysqli->real_escape_string($arrayvalue[1]);
-
+		$uuid = strtoupper($uuid);
 		$query = "SELECT * FROM ibeacons, ibeacon_actions WHERE ibeacons.id = ibeacon_actions.id AND UUID = '$uuid'";
 
 

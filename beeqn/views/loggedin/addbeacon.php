@@ -52,7 +52,7 @@ class Addbeacons
 
 		$owner = $_SESSION["ownerid"];
 		
-		$uuid = $this->mysqli->real_escape_string($_POST["uuid"]);
+		$uuid = strtoupper($this->mysqli->real_escape_string($_POST["uuid"]));
 		$major = $this->mysqli->real_escape_string($_POST["major"]);
 		$minor = $this->mysqli->real_escape_string($_POST["minor"]);
 		$descr = $this->mysqli->real_escape_string($_POST["description"]);
