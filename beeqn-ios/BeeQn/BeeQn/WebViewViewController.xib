@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WebViewViewController">
+            <connections>
+                <outlet property="activityIndicator" destination="F0a-nG-ieP" id="LVI-9U-CVn"/>
+                <outlet property="forwardButton" destination="nEC-xf-cNL" id="Bqy-Lo-k81"/>
+                <outlet property="refreshButton" destination="htm-S7-IX7" id="zPm-9w-MCo"/>
+                <outlet property="rewindButton" destination="JW6-Ch-gTN" id="Vme-Rj-4tl"/>
+                <outlet property="stopButton" destination="Mmy-Jv-Ep1" id="Ykg-zt-ZFA"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="webview" destination="fd8-6O-vyJ" id="3rP-Fg-qhz"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <webView contentMode="scaleToFill" id="fd8-6O-vyJ">
+                    <rect key="frame" x="0.0" y="65" width="320" height="459"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="BOJ-Za-Urv"/>
+                    </connections>
+                </webView>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="QYr-lr-vkk">
+                    <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    <items>
+                        <barButtonItem systemItem="rewind" id="JW6-Ch-gTN">
+                            <connections>
+                                <action selector="goBack" destination="fd8-6O-vyJ" id="v7i-e3-CvD"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="sDu-vc-KzP"/>
+                        <barButtonItem systemItem="refresh" id="htm-S7-IX7">
+                            <connections>
+                                <action selector="reload" destination="fd8-6O-vyJ" id="HvD-8a-nzC"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="3MZ-dA-EVs"/>
+                        <barButtonItem systemItem="stop" id="Mmy-Jv-Ep1">
+                            <connections>
+                                <action selector="stopLoading" destination="fd8-6O-vyJ" id="WVe-g4-4h5"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Hrl-Dt-5Kk"/>
+                        <barButtonItem systemItem="fastForward" id="nEC-xf-cNL">
+                            <connections>
+                                <action selector="goForward" destination="fd8-6O-vyJ" id="YdV-Lh-QsU"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" id="F0a-nG-ieP">
+                    <rect key="frame" x="142" y="265" width="37" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+        </view>
+    </objects>
+</document>

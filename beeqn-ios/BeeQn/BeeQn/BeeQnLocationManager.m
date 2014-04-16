@@ -26,7 +26,8 @@
 @implementation BeeQnLocationManager
 
 
-static const int FACTOR_FOR_BEACON_FIND = 5;
+static const int MAXIMUM_BEACON_SEARCHES = 10;
+static const int FACTOR_FOR_BEACON_FIND_MAX = 4;
 
 - (id)init
 {
@@ -80,9 +81,9 @@ static const int FACTOR_FOR_BEACON_FIND = 5;
 
 - (void)stopFindingBeacons
 {
+    self.numDetections = 0;
     if (self.isBeaconFetchInProgress)
     {
-        self.numDetections = 0;
         self.isBeaconFetchInProgress = NO;
         for (NSString* uuid in self.uuidRegions)
         {
@@ -154,9 +155,9 @@ static const int FACTOR_FOR_BEACON_FIND = 5;
         [self.delegate manager:self hasFoundBeacons:newBQ];
     }
     
-    if(beacons && beacons.count > 0)
+    if(newBQ && newBQ.count > 0)
     {
-        [self checkIfNumberDetectionsNeedNotify:beacons];
+        [self checkIfNumberDetectionsNeedNotify:newBQ];
     }
 }
 
@@ -197,7 +198,17 @@ static const int FACTOR_FOR_BEACON_FIND = 5;
 {
     self.numDetections = self.numDetections + 1;
     
-    if (self.numDetections > beacons.count * FACTOR_FOR_BEACON_FIND && self.isBeaconFetchInProgress)
+    
+    int search = (int) beacons.count * FACTOR_FOR_BEACON_FIND_MAX;
+    search = search  > MAXIMUM_BEACON_SEARCHES ? MAXIMUM_BEACON_SEARCHES : search;
+    
+    if([self.delegate respondsToSelector:@selector(manager:hasFoundBeaconsTimes:fromMaximumSearch:)])
+    {
+        [self.delegate manager:self hasFoundBeaconsTimes:self.numDetections fromMaximumSearch:search ];
+    }
+    
+    
+    if (self.numDetections >= search && self.isBeaconFetchInProgress)
     {
         // notify delegate about beacon found
         BQBeacon* beacon =[self.beaconCounter closestBeacon];

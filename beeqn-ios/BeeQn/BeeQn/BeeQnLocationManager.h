@@ -75,6 +75,8 @@
  */
 - (void)manager:(BeeQnLocationManager*)manager hasFoundBeacons:(NSArray*)beacons;
 
+- (void)manager:(BeeQnLocationManager*)manager hasFoundBeaconsTimes:(int) times fromMaximumSearch:(int) maximum;
+
 /**
  *  the manager has received an error
  *

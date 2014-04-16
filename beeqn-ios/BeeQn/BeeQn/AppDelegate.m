@@ -17,9 +17,6 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
 
-    
-    NSLog(@"%ld", NSIntegerMin);
-
     UINavigationController* nav = [[UINavigationController alloc]
             initWithRootViewController:[[MainViewController alloc] initWithNibName:nil bundle:nil]];
 

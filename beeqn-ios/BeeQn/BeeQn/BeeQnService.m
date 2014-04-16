@@ -296,7 +296,6 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
         }
         else
         {
-            NSLog(@"%@", error);
             return nil;
         }
     }

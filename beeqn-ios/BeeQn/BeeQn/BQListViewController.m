@@ -10,6 +10,7 @@
 #import "BeeQnListItem.h"
 #import "BeeQnService.h"
 #import "BeeQnCellBig.h"
+#import "WebViewViewController.h"
 
 @interface BQListViewController ()
 
@@ -103,9 +104,8 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     NSURL* url = ((BeeQnListItem*) self.bqlistarray[indexPath.row]).destinationURL;
-
-    NSLog(@"%@", url);
-
+    WebViewViewController* web = [[WebViewViewController alloc] initWithURL:url];
+    [self.navigationController pushViewController:web animated:YES];
 }
 
 @end

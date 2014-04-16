@@ -31,10 +31,14 @@
 		79092E1F18F55B9600EA63D5 /* BQListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79092E1D18F55B9600EA63D5 /* BQListViewController.m */; };
 		79092E2018F55B9600EA63D5 /* BQListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79092E1E18F55B9600EA63D5 /* BQListViewController.xib */; };
 		79257F6D18FD8FA0009B7CAC /* BQBeacon.m in Sources */ = {isa = PBXBuildFile; fileRef = 79257F6C18FD8FA0009B7CAC /* BQBeacon.m */; };
+		794800AB18FE872B00A5C3F1 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794800AA18FE872B00A5C3F1 /* CoreText.framework */; };
 		79A6C65118FD624300D2850A /* BQBeaconCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A6C65018FD624300D2850A /* BQBeaconCounter.m */; };
 		79B60D0118F6A1B20008BE61 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79B60D0018F6A1B20008BE61 /* CoreBluetooth.framework */; };
 		79B60D0418F6D8930008BE61 /* BeeQnCellBig.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B60D0318F6D8930008BE61 /* BeeQnCellBig.xib */; };
 		79B60D0718F6D9750008BE61 /* BeeQnCellBig.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B60D0618F6D9750008BE61 /* BeeQnCellBig.m */; };
+		79FFE01B18FDD31D00D170D6 /* WebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FFE01918FDD31D00D170D6 /* WebViewViewController.m */; };
+		79FFE01C18FDD31D00D170D6 /* WebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79FFE01A18FDD31D00D170D6 /* WebViewViewController.xib */; };
+		79FFE02318FDDF7200D170D6 /* BQCircleProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 79FFE02218FDDF7200D170D6 /* BQCircleProgress.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,12 +89,18 @@
 		79092E1E18F55B9600EA63D5 /* BQListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BQListViewController.xib; sourceTree = "<group>"; };
 		79257F6B18FD8FA0009B7CAC /* BQBeacon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BQBeacon.h; sourceTree = "<group>"; };
 		79257F6C18FD8FA0009B7CAC /* BQBeacon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BQBeacon.m; sourceTree = "<group>"; };
+		794800AA18FE872B00A5C3F1 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		79A6C64F18FD624300D2850A /* BQBeaconCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BQBeaconCounter.h; sourceTree = "<group>"; };
 		79A6C65018FD624300D2850A /* BQBeaconCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BQBeaconCounter.m; sourceTree = "<group>"; };
 		79B60D0018F6A1B20008BE61 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		79B60D0318F6D8930008BE61 /* BeeQnCellBig.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BeeQnCellBig.xib; sourceTree = "<group>"; };
 		79B60D0518F6D9750008BE61 /* BeeQnCellBig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeeQnCellBig.h; sourceTree = "<group>"; };
 		79B60D0618F6D9750008BE61 /* BeeQnCellBig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeeQnCellBig.m; sourceTree = "<group>"; };
+		79FFE01818FDD31D00D170D6 /* WebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewViewController.h; sourceTree = "<group>"; };
+		79FFE01918FDD31D00D170D6 /* WebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewViewController.m; sourceTree = "<group>"; };
+		79FFE01A18FDD31D00D170D6 /* WebViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewViewController.xib; sourceTree = "<group>"; };
+		79FFE02118FDDF7200D170D6 /* BQCircleProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BQCircleProgress.h; sourceTree = "<group>"; };
+		79FFE02218FDDF7200D170D6 /* BQCircleProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BQCircleProgress.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +108,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794800AB18FE872B00A5C3F1 /* CoreText.framework in Frameworks */,
 				79B60D0118F6A1B20008BE61 /* CoreBluetooth.framework in Frameworks */,
 				79092E1B18F54BFA00EA63D5 /* CoreLocation.framework in Frameworks */,
 				79092DE918F54B1D00EA63D5 /* CoreGraphics.framework in Frameworks */,
@@ -141,6 +152,7 @@
 		79092DE518F54B1D00EA63D5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				794800AA18FE872B00A5C3F1 /* CoreText.framework */,
 				79B60D0018F6A1B20008BE61 /* CoreBluetooth.framework */,
 				79092E1A18F54BFA00EA63D5 /* CoreLocation.framework */,
 				79092DE618F54B1D00EA63D5 /* Foundation.framework */,
@@ -154,19 +166,23 @@
 		79092DEC18F54B1D00EA63D5 /* BeeQn */ = {
 			isa = PBXGroup;
 			children = (
+				79FFE01D18FDDEC400D170D6 /* Additional */,
 				79092DED18F54B1D00EA63D5 /* Supporting Files */,
 				79B60D0218F6C2530008BE61 /* BeeQn */,
 				79092DF818F54B1D00EA63D5 /* Images.xcassets */,
 				79092DF518F54B1D00EA63D5 /* AppDelegate.h */,
 				79092DF618F54B1D00EA63D5 /* AppDelegate.m */,
+				37C651730FF41B80A3D0B133 /* BQAlert.m */,
+				37C65CEF9DE8376F415B2D35 /* BQAlert.h */,
 				79092E1518F54B9500EA63D5 /* MainViewController.h */,
 				79092E1618F54B9500EA63D5 /* MainViewController.m */,
 				79092E1718F54B9500EA63D5 /* MainViewController.xib */,
 				79092E1C18F55B9600EA63D5 /* BQListViewController.h */,
 				79092E1D18F55B9600EA63D5 /* BQListViewController.m */,
 				79092E1E18F55B9600EA63D5 /* BQListViewController.xib */,
-				37C651730FF41B80A3D0B133 /* BQAlert.m */,
-				37C65CEF9DE8376F415B2D35 /* BQAlert.h */,
+				79FFE01818FDD31D00D170D6 /* WebViewViewController.h */,
+				79FFE01918FDD31D00D170D6 /* WebViewViewController.m */,
+				79FFE01A18FDD31D00D170D6 /* WebViewViewController.xib */,
 			);
 			path = BeeQn;
 			sourceTree = "<group>";
@@ -222,6 +238,15 @@
 				79257F6C18FD8FA0009B7CAC /* BQBeacon.m */,
 			);
 			name = BeeQn;
+			sourceTree = "<group>";
+		};
+		79FFE01D18FDDEC400D170D6 /* Additional */ = {
+			isa = PBXGroup;
+			children = (
+				79FFE02118FDDF7200D170D6 /* BQCircleProgress.h */,
+				79FFE02218FDDF7200D170D6 /* BQCircleProgress.m */,
+			);
+			name = Additional;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -302,6 +327,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79FFE01C18FDD31D00D170D6 /* WebViewViewController.xib in Resources */,
 				79B60D0418F6D8930008BE61 /* BeeQnCellBig.xib in Resources */,
 				79092DF118F54B1D00EA63D5 /* InfoPlist.strings in Resources */,
 				79092E1918F54B9500EA63D5 /* MainViewController.xib in Resources */,
@@ -332,7 +358,9 @@
 				79092E1F18F55B9600EA63D5 /* BQListViewController.m in Sources */,
 				37C6501BBC2F3EFDCEBE1F0D /* BeeQnListItem.m in Sources */,
 				37C653531A307044ADDA5041 /* BeeQnService.m in Sources */,
+				79FFE02318FDDF7200D170D6 /* BQCircleProgress.m in Sources */,
 				79B60D0718F6D9750008BE61 /* BeeQnCellBig.m in Sources */,
+				79FFE01B18FDD31D00D170D6 /* WebViewViewController.m in Sources */,
 				37C65B7E5B42B95B6C9936DC /* BeeQnLocationManager.m in Sources */,
 				37C6534B216D74F38FB9D2B2 /* BeeQnError.m in Sources */,
 				37C653D53478709650020289 /* NSString+Base64.m in Sources */,

@@ -12,6 +12,8 @@
 #import <CoreLocation/CoreLocation.h>
 #import "BeeQnLocationManager.h"
 #import "BQAlert.h"
+#import "WebViewViewController.h"
+#import "BQCircleProgress.h"
 
 @interface MainViewController () <BeeQnServiceProtocol, BeeQnLocationManagerProtocol>
 @property (weak, nonatomic) IBOutlet UILabel* textlabel;
@@ -23,6 +25,7 @@
 @property (retain, nonatomic) BeeQnLocationManager* beeqnLocation;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView* activityIndicator;
 
+@property (weak, nonatomic) IBOutlet BQCircleProgress *circleProgress;
 
 @property (nonatomic,retain) id bqAlert;
 
@@ -36,6 +39,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
+        self.title = @"BeeQn";
     }
     return self;
 }
@@ -57,30 +61,42 @@
     self.beeqnLocation.delegate = self;
 
 
-    UIBarButtonItem* scan = [[UIBarButtonItem alloc] initWithTitle:@"Scan" style:UIBarButtonItemStyleBordered target:self
+    UIBarButtonItem* scan = [[UIBarButtonItem alloc] initWithTitle:@"Stop Scan" style:UIBarButtonItemStyleBordered target:self
                                                             action:@selector(barButtonItemScan:)];
 
     self.navigationItem.leftBarButtonItem = scan;
+    
+    [self.circleProgress setCurrentValue:0];
+    [self.circleProgress setMaximumValue:5];
+    self.circleProgress.circleWidth = 16.0f;
+    [self.circleProgress update];
+    
+    
+    [self startBeaconFinding];
 }
 
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    NSLog(@"%@", @"View did Appear");
+    
+}
 
-
+-(void) startBeaconFinding
+{
     if (self.beeqnLocation.isBluetoothOn && self.beeqnLocation.isFindingBeaconsPossible
-            && self.beeqnLocation.isLocationServicesEnabled)
+        && self.beeqnLocation.isLocationServicesEnabled)
     {
-
+        
         self.activityIndicator.hidden = NO;
         [self.activityIndicator startAnimating];
         [self.beeqnLocation startFindingGPS];
         self.statusLabel.text = @"Finding GPS Location";
+        self.navigationItem.leftBarButtonItem.title = @"Stop Scan";
     }
     else
     {
+        self.navigationItem.leftBarButtonItem.title = @"Start Scan";
         if(!self.beeqnLocation.isBluetoothOn)
         {
             [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Please enable Bluetooth" delegate:self
@@ -97,31 +113,33 @@
                               cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
     }
+
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    NSLog(@"%@", @"view did disappear");
-
-    [self.beeqnLocation stopFindingBeacons];
     [super viewDidDisappear:animated];
+    [self.beeqnLocation stopFindingBeacons];
 }
 
 
 -(void) barButtonItemScan:(id) sender
 {
-
     if(self.beeqnLocation.isBeaconFetchInProgress)
     {
          self.statusLabel.text = @"Nothing in Progress";
         [self.beeqnLocation stopFindingBeacons];
         [self.activityIndicator stopAnimating];
+        self.activityIndicator.hidden = YES;
+        self.navigationItem.leftBarButtonItem.title = @"Start Scan";
     }
     else
     {
         [self.beeqnLocation startFindingGPS];
         self.statusLabel.text = @"Finding GPS Location";
         [self.activityIndicator startAnimating];
+        self.activityIndicator.hidden = NO;
+        self.navigationItem.leftBarButtonItem.title = @"Stop Scan";
     }
 }
 
@@ -129,10 +147,13 @@
 
 - (void)manager:(BeeQnLocationManager*)manager hasFoundBeacon:(BQBeacon*)beacon
 {
-    NSLog(@"FOUND BEACON: %@\n %f", beacon, beacon.accuracy);
+    self.navigationItem.leftBarButtonItem.title = @"Start Scan";
     [self.beeqnLocation stopFindingBeacons];
     [self.beeqnService fetchBeeQnInformation:beacon.UUID major:beacon.major minor:beacon.minor];
     [self.activityIndicator stopAnimating];
+    
+    
+    NSLog(@"%@", beacon);
 }
 
 - (void)manager:(BeeQnLocationManager*)manager hasFoundGPS:(CLLocation*)gpslocation
@@ -148,8 +169,6 @@
 
 - (void)manager:(BeeQnLocationManager*)manager hasFoundBeacons:(NSArray*)beacons
 {
-
-    NSLog(@"%@ %lu", @"has found beacons", (unsigned long) beacons.count);
     NSMutableString* mutable = [[NSMutableString alloc] initWithString:@""];
 
     for (BQBeacon* beacon in beacons)
@@ -161,19 +180,21 @@
     self.textlabel.text = [NSString stringWithFormat:@"Found :%lu beacons\n%@", (unsigned long) beacons.count, mutable];
 }
 
-- (void)manager:(BeeQnLocationManager*)manager didReceiveError:(NSError*)error
+-(void)manager:(BeeQnLocationManager *)manager hasFoundBeaconsTimes:(int)times fromMaximumSearch:(int)maximum
 {
-
+    [self.circleProgress setCurrentValue:times maximumValue:maximum update:YES];
 }
 
-
+- (void)manager:(BeeQnLocationManager*)manager didReceiveError:(NSError*)error
+{
+    NSLog(@"BeeQnLocationManagerError: %@", error);
+}
 
 
 #pragma mark - BeeQnService
 
 - (void)service:(id)beeqnservice didFailWithError:(NSError*)error
 {
-    
     [[[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     
     NSLog(@"%@", error);
@@ -214,13 +235,15 @@
 
 - (void)service:(id)beeqnservice foundURL:(NSURL*)url
 {
-    NSLog(@"URL: %@", url);
+    WebViewViewController* web = [[WebViewViewController alloc] initWithURL:url];
+    [self.navigationController pushViewController:web animated:YES];
 }
 
 - (void)service:(id)beeqnservice foundCustom:(NSString*)custom
 {
-    NSLog(@"CUSTOM: %@", custom);
-
+    self.bqAlert = [BQAlert showAlert:@"Found custom" message:@"SomeCustomstuff" action:^(NSInteger bt){self.bqAlert = nil;}
+                    cancelButtonTitle:@"ok" others: nil];
+    //NSLog(@"CUSTOM: %@", custom);
 }
 
 

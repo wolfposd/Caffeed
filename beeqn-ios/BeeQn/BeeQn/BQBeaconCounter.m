@@ -124,7 +124,7 @@
         Count* c = [self.beaconsCount objectForKey:ident];
         
         NSInteger mean = c.meanRSSI;
-        if(c && mean > distance && mean != 0)
+        if(c && mean > distance && mean != 0 && mean > -500)
         {
             closest = beacon;
             distance = mean;
@@ -145,7 +145,7 @@
         Count* c = [self.beaconsCount objectForKey:ident];
         
         NSInteger mean = c.meanRSSI;
-        if(c && mean > distance && mean != 0)
+        if(c && mean > distance && mean != 0 && mean > -500)
         {
             closest = beacon;
             distance = mean;
