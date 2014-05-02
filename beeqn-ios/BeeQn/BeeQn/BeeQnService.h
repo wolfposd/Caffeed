@@ -21,12 +21,18 @@ typedef enum
     kListSizeBig = 80
 } BeeQnListSize;
 
-
+/**
+ *  The Delegate Protocol
+ */
 @protocol BeeQnServiceProtocol
-
-
 @optional
 
+/**
+ *  The Service has experienced an Error
+ *
+ *  @param beeqnservice sender
+ *  @param error        experienced Error
+ */
 - (void)service:(id)beeqnservice didFailWithError:(NSError*)error;
 
 - (void)service:(id)beeqnservice foundCustom:(NSString*)custom;
@@ -35,8 +41,14 @@ typedef enum
 
 - (void)service:(id)beeqnservice foundURL:(NSURL*)url;
 
+- (void)service:(id)beeqnservice foundFloorData:(id) floorData;
+
+- (void)service:(id)beeqnservice insertedBeaconsWithResult:(NSArray*) result;
+
 /**
- *  Service has found a List of UUIDS
+ *  Service has found a List of UUIDS.
+ *
+ *  These can be used for scanning.
  *
  *  @param beeqnservice the service
  *  @param uuids        NSArray of NSString
@@ -47,7 +59,9 @@ typedef enum
 
 @end
 
-
+/**
+ *  The Beeqn service for contacting the BeeQn-Server
+ */
 @interface BeeQnService : NSObject
 
 
@@ -60,10 +74,39 @@ typedef enum
  *
  *  @param location the GPS-Location
  */
-- (void)fetchBeaconListForLocation:(CLLocation*)location;
+- (void)get_BeaconListForLocation:(CLLocation*)location;
 
+/**
+ *  Fetches the Information to be displayed by the App
+ *
+ *  This can be a number of things: List, Big-List, Alert, Website, Custom, etc...
+ *
+ *  @param UUID  UUID of Beacon
+ *  @param major major of Beacon
+ *  @param minor minor of Beacon
+ */
+- (void)get_BeeQnInformation:(NSString*)UUID major:(NSNumber*)major minor:(NSNumber*)minor;
 
-- (void)fetchBeeQnInformation:(NSString*)UUID major:(NSNumber*)major minor:(NSNumber*)minor;
+/**
+ *  Fetches the Floorplan for given Beacon
+ *
+ *  @param UUID  UUID of Beacon
+ *  @param major major of Beacon
+ *  @param minor minor of Beacon
+ */
+- (void)get_FloorPlanFor:(NSString*) UUID major:(NSNumber*)major minor:(NSNumber*)minor;
+
+/**
+ *  Inserts given array of Beacons into the Database
+ *
+ *  Callbacks will be made to: service:(id)beeqnservice insertedBeaconsWithResult:(NSArray*) result;
+ *
+ *  @param beacons  an array of BQBeacon
+ *  @param user     the User-Account from BeeQn-Service
+ *  @param key      the Application-Key from BeeQn-Service
+ *  @param location the GPS-Location of these Beacons
+ */
+- (void)put_BeaconsInDB:(NSArray*) beacons user:(NSString*) user key:(NSString*) key location:(CLLocationCoordinate2D) location;
 
 
 @end

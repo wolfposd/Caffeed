@@ -6,6 +6,10 @@
 #import "BeeQnLocationManager.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 
+
+#define kModeRangeAllBeacons 0
+#define kModeRangeSpecificBeacons 1
+
 @interface BeeQnLocationManager () <CLLocationManagerDelegate, CBCentralManagerDelegate>
 
 @property (nonatomic, retain) CLLocationManager* locationManager;
@@ -19,6 +23,13 @@
 
 @property (nonatomic) int numDetections;
 
+@property (nonatomic) int maximumNumberBeaconDetections;
+
+
+@property(nonatomic,retain) NSArray* specificUUIDRegions;
+
+
+@property (nonatomic) int currentModeOfOperation;
 
 @end
 
@@ -26,14 +37,16 @@
 @implementation BeeQnLocationManager
 
 
-static const int MAXIMUM_BEACON_SEARCHES = 10;
-static const int FACTOR_FOR_BEACON_FIND_MAX = 4;
+#define MAXIMUM_BEACON_SEARCHES_DEFAULT 10
+#define FACTOR_FOR_BEACON_FIND_MAX 4
 
 - (id)init
 {
     self = [super init];
     if (self)
     {
+        self.maximumNumberBeaconDetections = MAXIMUM_BEACON_SEARCHES_DEFAULT;
+        self.currentModeOfOperation = kModeRangeAllBeacons;
         self.numDetections = 0;
         self.beaconCounter = [BQBeaconCounter new];
         self.isBeaconFetchInProgress = NO;
@@ -69,6 +82,7 @@ static const int FACTOR_FOR_BEACON_FIND_MAX = 4;
 
 - (void)startFindingBeacons
 {
+    self.currentModeOfOperation = kModeRangeAllBeacons;
     self.numDetections = 0;
     self.isBeaconFetchInProgress = YES;
     for (NSString* uuid in self.uuidRegions)
@@ -117,12 +131,44 @@ static const int FACTOR_FOR_BEACON_FIND_MAX = 4;
     [self.uuidRegions removeAllObjects];
     [self.uuidRegions addObjectsFromArray:regions];
     
+    
+     self.maximumNumberBeaconDetections = MAXIMUM_BEACON_SEARCHES_DEFAULT * (int)regions.count;
     if (isInProgress)
     {
         [self startFindingBeacons];
     }
 }
 
+
+- (void)startFindingSpecificBeacons:(NSArray*) bqbeaconArray
+{
+    
+    self.currentModeOfOperation = kModeRangeSpecificBeacons;
+    self.isBeaconFetchInProgress = YES;
+    self.maximumNumberBeaconDetections = MAXIMUM_BEACON_SEARCHES_DEFAULT * (int)bqbeaconArray.count;
+    
+    self.specificUUIDRegions = bqbeaconArray;
+    
+    for(BQBeacon* beacon in self.specificUUIDRegions)
+    {
+        NSUUID* uuid = [[NSUUID alloc] initWithUUIDString:beacon.UUID];
+        NSString* identi = [NSString stringWithFormat:@"de.beeqn.%@%@%@",uuid,beacon.major,beacon.minor];
+        [self.locationManager startRangingBeaconsInRegion:
+         [[CLBeaconRegion alloc] initWithProximityUUID:uuid major:beacon.major.unsignedIntValue minor:beacon.minor.unsignedIntValue identifier:identi]];
+    }
+}
+
+
+- (void)stopFindingSpecificBeacons
+{
+    for(BQBeacon* beacon in self.specificUUIDRegions)
+    {
+        NSUUID* uuid = [[NSUUID alloc] initWithUUIDString:beacon.UUID];
+        NSString* identi = [NSString stringWithFormat:@"de.beeqn.%@%@%@",uuid,beacon.major,beacon.minor];
+        [self.locationManager startRangingBeaconsInRegion:
+         [[CLBeaconRegion alloc] initWithProximityUUID:uuid major:beacon.major.unsignedIntValue minor:beacon.minor.unsignedIntValue identifier:identi]];
+    }
+}
 
 
 
@@ -139,26 +185,34 @@ static const int FACTOR_FOR_BEACON_FIND_MAX = 4;
 
 - (void)locationManager:(CLLocationManager*)manager didRangeBeacons:(NSArray*)beacons inRegion:(CLBeaconRegion*)region
 {
-    
-    // Convert CLBeacon to BQBeacon because of equalsBullshit
-    NSMutableArray* newBQ = [NSMutableArray new];
-    for(CLBeacon* beacon in beacons)
+    if(beacons.count > 0)
     {
-        [newBQ addObject:[BQBeacon beacon:beacon]];
-    }
-    
-    [self.beaconCounter increaseCountFor:newBQ];
-    
-    if ([self.delegate respondsToSelector:@selector(manager:hasFoundBeacons:)] && beacons.count > 0)
-    {
-        // notify on beacons array found
-        [self.delegate manager:self hasFoundBeacons:newBQ];
-    }
-    
-    if(newBQ && newBQ.count > 0)
-    {
+        NSMutableArray* newBQ = [NSMutableArray new];
+        
+        // Convert CLBeacon to BQBeacon because of equalsBullshit
+        for(CLBeacon* beacon in beacons)
+        {
+            [newBQ addObject:[BQBeacon beacon:beacon]];
+        }
+        
+        [self insertBeaconsInCounter:newBQ];
+        
+        if(self.currentModeOfOperation == kModeRangeAllBeacons)
+        {
+            if ([self.delegate respondsToSelector:@selector(manager:hasFoundBeacons:)])
+            {
+                // notify on beacons array found
+                NSArray* sortedAllBeacons = [self.beaconCounter.allBeacons
+                                             sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"rssi" ascending:YES]]];
+                
+                [self.delegate manager:self hasFoundBeacons:sortedAllBeacons];
+            }
+        }
+        
         [self checkIfNumberDetectionsNeedNotify:newBQ];
+        
     }
+    
 }
 
 -(NSArray*) sortBeaconArray:(NSArray*) array
@@ -187,37 +241,75 @@ static const int FACTOR_FOR_BEACON_FIND_MAX = 4;
 {
     CLLocation* loc = [locations lastObject];
     
-    if (loc)
+    if (loc && [self.delegate respondsToSelector:@selector(manager:hasFoundGPS:)])
     {
         [self.delegate manager:self hasFoundGPS:loc];
     }
 }
 
 
+-(void) insertBeaconsInCounter:(NSArray*) beacons
+{
+    [self.beaconCounter increaseCountFor:beacons];
+    self.numDetections = self.numDetections + 1;
+}
+
+
 - (void)checkIfNumberDetectionsNeedNotify:(NSArray*) beacons
 {
-    self.numDetections = self.numDetections + 1;
-    
-    
-    int search = (int) beacons.count * FACTOR_FOR_BEACON_FIND_MAX;
-    search = search  > MAXIMUM_BEACON_SEARCHES ? MAXIMUM_BEACON_SEARCHES : search;
-    
-    if([self.delegate respondsToSelector:@selector(manager:hasFoundBeaconsTimes:fromMaximumSearch:)])
+    if(self.isBeaconFetchInProgress)
     {
-        [self.delegate manager:self hasFoundBeaconsTimes:self.numDetections fromMaximumSearch:search ];
-    }
-    
-    
-    if (self.numDetections >= search && self.isBeaconFetchInProgress)
-    {
-        // notify delegate about beacon found
-        BQBeacon* beacon =[self.beaconCounter closestBeacon];
-        if(beacon)
+       
+        int search = (int) self.beaconCounter.count * FACTOR_FOR_BEACON_FIND_MAX;
+        search = search  > self.maximumNumberBeaconDetections ? self.maximumNumberBeaconDetections : search;
+        
+        
+        // NOTIFY DELEGATE  5 / 10 detections
+        if([self.delegate respondsToSelector:@selector(manager:hasFoundBeaconsTimes:fromMaximumSearch:)])
         {
-            [self.delegate manager:self hasFoundBeacon:beacon];
+            [self.delegate manager:self hasFoundBeaconsTimes:self.numDetections fromMaximumSearch:search ];
+        }
+        
+        
+        if (self.numDetections >= search && self.isBeaconFetchInProgress)
+        {
+            // notify delegate about beacon found
+            if(self.currentModeOfOperation == kModeRangeAllBeacons && [self.delegate respondsToSelector:@selector(manager:hasFoundBeacon:)])
+            {
+                BQBeacon* beacon =[self.beaconCounter closestBeacon];
+                if(beacon)
+                {
+                    [self.delegate manager:self hasFoundBeacon:beacon];
+                }
+            }
+            else if (self.currentModeOfOperation == kModeRangeSpecificBeacons)
+            {
+                [self sendNotificationToDelegateSpecificBeaconsMaximumCountReached:self.beaconCounter.allBeacons];
+            }
         }
     }
     
+}
+
+-(void) sendNotificationToDelegateSpecificBeaconsMaximumCountReached:(NSSet*) oldBQBeacon
+{
+    if([self.delegate respondsToSelector:@selector(manager:hasFoundSpecificBeacons:)])
+    {
+        NSMutableArray* newArray = [NSMutableArray new];
+        
+        for(BQBeacon* beacon in oldBQBeacon)
+        {
+            NSInteger rssi = [self.beaconCounter meanRSSI:beacon];
+            double accu = [self.beaconCounter meanAccuracy:beacon];
+            
+            BQBeacon* newB = [BQBeacon beacon:beacon.UUID major:beacon.major minor:beacon.minor proximity:(CLProximity)beacon.proximity accuracy:accu rssi:rssi];
+            [newArray addObject:newB];
+        }
+        
+        [newArray sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"rssi" ascending:YES]]];
+        
+        [self.delegate manager:self hasFoundSpecificBeacons:newArray];
+    }
 }
 
 

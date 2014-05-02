@@ -30,6 +30,9 @@
  */
 @property (nonatomic) BOOL showProgressText;
 
+-(int) currentValue;
+-(int) maximumValue;
+
 -(void) setMaximumValue:(int) max;
 
 -(void) setCurrentValue:(int) current;

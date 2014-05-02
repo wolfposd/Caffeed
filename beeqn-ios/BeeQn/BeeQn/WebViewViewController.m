@@ -14,7 +14,6 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *stopButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *forwardButton;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (retain, nonatomic) NSURL* url;
 @end
 
@@ -43,8 +42,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidAppear:animated];self.activityIndicator.hidden = NO;
-    [self.activityIndicator startAnimating];
+    [super viewDidAppear:animated];
     [self loadRequestFromString:self.url];
 }
 
@@ -64,15 +62,11 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    self.activityIndicator.hidden = NO;
-    [self.activityIndicator startAnimating];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self updateButtons];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    self.activityIndicator.hidden = YES;
-    [self.activityIndicator stopAnimating];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [self updateButtons];
     self.title = [self.webview stringByEvaluatingJavaScriptFromString:@"document.title"];
@@ -80,8 +74,6 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-    self.activityIndicator.hidden = YES;
-    [self.activityIndicator stopAnimating];
     [self updateButtons];
 }
 

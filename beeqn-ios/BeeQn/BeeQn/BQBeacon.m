@@ -60,6 +60,11 @@
         default: return @"Unknown";
     }
 }
+-(void) updateMeanRSSI:(NSInteger) meanRSSI meanAccuracy:(double) meanAccuracy
+{
+    self.rssi = meanRSSI;
+    self.accuracy = meanAccuracy;
+}
 
 -(NSString *)description
 {

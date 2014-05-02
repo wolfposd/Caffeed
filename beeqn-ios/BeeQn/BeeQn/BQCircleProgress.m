@@ -63,6 +63,15 @@
     }
 }
 
+-(int) currentValue
+{
+    return self.current;
+}
+-(int) maximumValue
+{
+    return self.maximum;
+}
+
 -(void)setCurrentValue:(int) current
 {
     self.current = current;

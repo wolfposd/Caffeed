@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
+#import "DebugViewController.h"
+
 
 @implementation AppDelegate
 
@@ -18,7 +19,7 @@
     self.window.backgroundColor = [UIColor whiteColor];
 
     UINavigationController* nav = [[UINavigationController alloc]
-            initWithRootViewController:[[MainViewController alloc] initWithNibName:nil bundle:nil]];
+            initWithRootViewController:[[DebugViewController alloc] initWithNibName:nil bundle:nil]];
 
     self.window.rootViewController = nav;
 

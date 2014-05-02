@@ -8,6 +8,8 @@
 #import "BeeQnListItem.h"
 #import "BeeQnError.h"
 #import "NSString+Base64.h"
+#import "BQBeacon.h"
+#import "Crypto.h"
 
 
 @implementation BeeQnService
@@ -20,7 +22,7 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
 
 #pragma mark - Beacon information by uuid/major/minor
 
-- (void)fetchBeeQnInformation:(NSString*)UUID major:(NSNumber*)major minor:(NSNumber*)minor
+- (void)get_BeeQnInformation:(NSString*)UUID major:(NSNumber*)major minor:(NSNumber*)minor
 {
 
     NSString* path = [NSString stringWithFormat:@"%@beaconsinfo/%@/major/%@/minor/%@", baseURL, UUID, major, minor];
@@ -65,10 +67,10 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
 {
     if ([self.delegate respondsToSelector:@selector(service:didFailWithError:)])
     {
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-            [self.delegate service:self didFailWithError:error];
-        });
+        [self performOnMain:^()
+         {
+             [self.delegate service:self didFailWithError:error];
+         }];
     }
 }
 
@@ -107,24 +109,24 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
 
 - (void)handleAlert:(NSDictionary*)dictionary
 {
-    NSDictionary* alert = [self makeJSON:[dictionary objectForKey:ACTION_INFO]];
+    NSDictionary* alert = [self makeJSONDictionary:[dictionary objectForKey:ACTION_INFO]];
 
     NSString* title = [alert objectForKey:@"title"];
     NSString* message = [alert objectForKey:@"message"];
 
     if([self.delegate respondsToSelector:@selector(service:foundAlert:message:)])
     {
-        dispatch_async(dispatch_get_main_queue(), ^
-        {
-            [self.delegate service:self foundAlert:title message:message];
-        });
+        [self performOnMain:^()
+         {
+             [self.delegate service:self foundAlert:title message:message];
+         }];
     }
 
 }
 
 - (void)handleListItems:(NSDictionary*)dictionary
 {
-    NSDictionary* list = [self makeJSON:[dictionary objectForKey:ACTION_INFO]];
+    NSDictionary* list = [self makeJSONDictionary:[dictionary objectForKey:ACTION_INFO]];
     if (list)
     {
         NSString* listTitle = [list objectForKey:@"title"];
@@ -159,10 +161,10 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
 
         if ([self.delegate respondsToSelector:@selector(service:foundList:withTitle:andSize:)])
         {
-            dispatch_async(dispatch_get_main_queue(), ^
+            [self performOnMain:^
             {
                 [self.delegate service:self foundList:listitems withTitle:listTitle andSize:listSize];
-            });
+            }];
         }
 
     }
@@ -202,7 +204,7 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
 
 #pragma mark - UUID by GPS
 
-- (void)fetchBeaconListForLocation:(CLLocation*)location
+- (void)get_BeaconListForLocation:(CLLocation*)location
 {
     NSString* path = [NSString stringWithFormat:@"%@uuidbylocation/longitude/%f/latitude/%f", baseURL, location.coordinate.longitude, location.coordinate.latitude];
 
@@ -238,6 +240,128 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
     }
 }
 
+- (void)get_FloorPlanFor:(NSString*) UUID major:(NSNumber*)major minor:(NSNumber*)minor
+{
+    //://beeqn.informatik.uni-hamburg.de/rest.php/floorinformation/uuid/B9407F30-F5F8-466E-AFF9-25556B57FE6D/major/48604/minor/372
+    
+    NSString* path = [NSString stringWithFormat:@"%@floorinformation/uuid/%@/major/%@/minor/%@",baseURL,UUID,major,minor];
+    NSURLRequest* request = [NSURLRequest requestWithURL:[[NSURL alloc] initWithString:path] cachePolicy:
+                             NSURLRequestReloadIgnoringCacheData timeoutInterval:20];
+    NSOperationQueue* queue = [[NSOperationQueue alloc] init];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:
+     ^(NSURLResponse* response, NSData* data, NSError* connectionError)
+     {
+         if (!connectionError && data)
+         {
+             [self handleFloorData:data];
+         }
+         else
+         {
+             [self sendError:connectionError];
+         }
+     }];
+    
+}
+
+-(void) handleFloorData:(NSData*) data
+{
+    NSDictionary* dict = [self makeJSONDictionary:data];
+    
+    // try replacing image with UIImage
+    
+    
+    
+    // data:image/png;base64,
+    
+    NSString* imagedata = [dict objectForKey:@"imagedata"];
+    NSString* imagetype = [dict objectForKey:@"imagetype"];
+    if(imagetype && imagedata)
+    {
+        NSURL* url = [[NSURL alloc] initWithString:[NSString stringWithFormat:@"data:%@;base64,%@",imagetype, imagedata]];
+        
+        NSData* imageData = [NSData dataWithContentsOfURL:url];
+        UIImage* image = [UIImage imageWithData:imageData];
+        
+        NSMutableDictionary* newDict = [NSMutableDictionary dictionaryWithDictionary:dict];
+        
+        [newDict setValue:image forKey:@"imagedata"];
+        dict = newDict;
+    }
+   
+    
+    
+    if([self.delegate respondsToSelector:@selector(service:foundFloorData:)])
+    {
+        [self performOnMain:^()
+        {
+            [self.delegate service:self foundFloorData:dict];
+        }];
+    }
+    
+}
+
+- (void)put_BeaconsInDB:(NSArray*) beacons user:(NSString*) user key:(NSString*) key location:(CLLocationCoordinate2D) location
+{
+    NSMutableArray* beaconsJson = [NSMutableArray new];
+    
+    for(BQBeacon* beacon in beacons)
+    {
+        NSMutableDictionary* dict = [NSMutableDictionary new];
+        
+        [dict setObject:beacon.UUID forKey:@"UUID"];
+        [dict setObject:beacon.major forKey:@"major"];
+        [dict setObject:beacon.minor forKey:@"minor"];
+        [beaconsJson addObject:dict];
+    }
+    
+    NSMutableDictionary* jsonDict = [NSMutableDictionary new];
+    
+    [jsonDict setObject:beaconsJson forKey:@"beacons"];
+    [jsonDict setObject:[NSNumber numberWithDouble:location.latitude] forKey:@"latitude"];
+    [jsonDict setObject:[NSNumber numberWithDouble:location.longitude] forKey:@"longitude"];
+    [jsonDict setObject:user forKey:@"user.account"];
+    
+    NSError* error;
+    NSData* jsonObjectData = [NSJSONSerialization dataWithJSONObject:jsonDict options:kNilOptions error:&error];
+
+    NSString* jsonContentBase64 = [NSString base64StringFromData:jsonObjectData];
+    
+    NSString* hash= [Crypto hmac256:jsonContentBase64 withKey:key];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@beacons/%@/verify/%@",baseURL,jsonContentBase64,hash]];
+    
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:20];
+    [request setHTTPMethod:@"PUT"];
+    
+    NSOperationQueue* queue = [[NSOperationQueue alloc] init];
+    
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:
+     ^(NSURLResponse* response, NSData* data, NSError* connectionError)
+     {
+         if(!connectionError)
+         {
+             // NOTIFY DELEGATE
+             if([self.delegate respondsToSelector:@selector(service:insertedBeaconsWithResult:)])
+             {
+                 [self performOnMain:^()
+                  {
+                      [self.delegate service:self insertedBeaconsWithResult:[self makeJSONArray:data]];
+                  }];
+             }
+         }
+         else
+         {
+             if(connectionError)
+             {
+                 [self sendError:connectionError];
+             }
+             else
+             {
+                 [self sendError:[BeeQnError errorWith:404 message:@"Some error with put_beacons"]];
+             }
+         }
+     }];
+}
 
 
 
@@ -284,15 +408,27 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
 
 }
 
-- (NSDictionary*)makeJSON:(id)possibleDictionary
+- (NSDictionary*)makeJSONDictionary:(id)possibleDictionary
 {
+    NSError* error;
     if ([[possibleDictionary class] isSubclassOfClass:[NSString class]])
     {
-        NSError* error;
         NSDictionary* result = [NSJSONSerialization JSONObjectWithData:[possibleDictionary dataUsingEncoding:NSUTF8StringEncoding] options:kNilOptions error:&error];
         if (!error)
         {
             return result;
+        }
+        else
+        {
+            return nil;
+        }
+    }
+    else if ([[possibleDictionary class] isSubclassOfClass:[NSData class]])
+    {
+        NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:possibleDictionary options:kNilOptions error:&error];
+        if (!error)
+        {
+            return dict;
         }
         else
         {
@@ -309,6 +445,12 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
     }
 }
 
+
+
+-(void) performOnMain:( void ( ^ )( void ) )block
+{
+    dispatch_async(dispatch_get_main_queue(), ^{ block(); });
+}
 
 @end
 

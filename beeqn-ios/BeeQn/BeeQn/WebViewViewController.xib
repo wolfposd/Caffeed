@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="5056" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WebViewViewController">
             <connections>
-                <outlet property="activityIndicator" destination="F0a-nG-ieP" id="LVI-9U-CVn"/>
                 <outlet property="forwardButton" destination="nEC-xf-cNL" id="Bqy-Lo-k81"/>
                 <outlet property="refreshButton" destination="htm-S7-IX7" id="zPm-9w-MCo"/>
                 <outlet property="rewindButton" destination="JW6-Ch-gTN" id="Vme-Rj-4tl"/>
@@ -20,7 +19,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <webView contentMode="scaleToFill" id="fd8-6O-vyJ">
+                <webView contentMode="scaleToFill" verticalCompressionResistancePriority="1" translatesAutoresizingMaskIntoConstraints="NO" id="fd8-6O-vyJ">
                     <rect key="frame" x="0.0" y="65" width="320" height="459"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -28,7 +27,7 @@
                         <outlet property="delegate" destination="-1" id="BOJ-Za-Urv"/>
                     </connections>
                 </webView>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="QYr-lr-vkk">
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QYr-lr-vkk">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
@@ -57,13 +56,17 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" id="F0a-nG-ieP">
-                    <rect key="frame" x="142" y="265" width="37" height="37"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="QYr-lr-vkk" secondAttribute="bottom" id="4ez-Op-wQu"/>
+                <constraint firstItem="fd8-6O-vyJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="5Vq-vx-Ngc"/>
+                <constraint firstItem="QYr-lr-vkk" firstAttribute="leading" secondItem="fd8-6O-vyJ" secondAttribute="leading" id="8qU-J8-TtZ"/>
+                <constraint firstItem="QYr-lr-vkk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="J23-jH-Hao"/>
+                <constraint firstItem="QYr-lr-vkk" firstAttribute="top" secondItem="fd8-6O-vyJ" secondAttribute="bottom" id="TEd-cd-5LU"/>
+                <constraint firstItem="fd8-6O-vyJ" firstAttribute="trailing" secondItem="QYr-lr-vkk" secondAttribute="trailing" id="fzC-T8-MQb"/>
+                <constraint firstAttribute="trailing" secondItem="fd8-6O-vyJ" secondAttribute="trailing" id="jQm-CU-EEH"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
