@@ -8,13 +8,20 @@
 #import "BQBeaconCounter.h"
 #import "BQBeacon.h"
 
+
+#define kModeRangeAllBeacons 0
+#define kModeRangeSpecificBeacons 1
+#define kModeRangeAllBeaconsForInfinity 2
+
 @protocol BeeQnLocationManagerProtocol;
 
 @interface BeeQnLocationManager : NSObject
 
 @property (nonatomic, weak) NSObject <BeeQnLocationManagerProtocol>* delegate;
 
-@property(nonatomic, readonly) BOOL isBeaconFetchInProgress;
+@property (nonatomic, readonly) BOOL isBeaconFetchInProgress;
+
+@property (nonatomic, readonly) int currentModeOfOperation;
 
 @property (nonatomic, retain) BQBeaconCounter* beaconCounter;
 
@@ -42,7 +49,14 @@
  *
  *  Callbacks will be made to a variety of methods: manager:hasFoundBeacon: , manager:hasFoundBeacons: , manager:hasFoundBeaconsTimes:fromMaximumSearch:
  */
-- (void)startFindingBeacons;
+- (void) startFindingBeacons;
+
+/**
+ *  Starts finding Beacons for an inifinte amount of time
+ *
+ * Callbacks will be made to a variety of methods: manager:hasFoundBeacons: , manager:hasFoundBeaconsTimes:fromMaximumSearch:
+ */
+- (void) startFindingBeaconsInfiniteTime;
 
 /**
  *  Stops finding Beacons

@@ -18,6 +18,19 @@ Coordinate CoordinateMake(double x , double y, double distance)
     return c;
 }
 
+Rectangle RectangleMake(double x1, double y1, double x2, double y2)
+{
+    Rectangle r;
+    r.x1 = x1;
+    r.x2 = x2;
+    r.y1 = y1;
+    r.y2 = y2;
+    return r;
+}
+NSString* RectangleToString(Rectangle r)
+{
+    return [NSString stringWithFormat:@"<%d %d>;<%d %d>", (int)r.x1, (int)r.y1 , (int)r.x2, (int)r.y2 ];
+}
 
 
 NSString* StringFromCoordinate(Coordinate c)
@@ -39,8 +52,12 @@ Coordinate CoordinateFromString(NSString* st)
     }
 }
 
-@implementation Trilateration
+BOOL CoordinateIsInRect(Coordinate coord, Rectangle rect)
+{
+    return rect.x1 <= coord.x &&  coord.x <= rect.x2 && rect.y1 <= coord.y && coord.y <= rect.y2;
+}
 
+@implementation Trilateration
 
 
 +(Coordinate) point:(Coordinate) p1 and:(Coordinate) p2 and:(Coordinate) p3

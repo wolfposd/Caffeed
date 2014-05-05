@@ -86,7 +86,13 @@
 
 -(BQBeacon*) findBeaconWithInfo:(BQBeacon*) beacon;
 
-
+/**
+ *  Returns all Accuracy Values for a specified beacon
+ *
+ *  @param beacon the beacon to search for
+ *
+ *  @return NSArray of NSNumber double values or <nil>
+ */
 -(NSArray*) findBeaconsAccuracyValues:(BQBeacon*) beacon;
 
 -(NSArray*) findBeaconsRSSIValues:(BQBeacon*) beacon;

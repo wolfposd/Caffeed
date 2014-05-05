@@ -9,6 +9,13 @@
 #import <Foundation/Foundation.h>
 
 
+typedef struct {
+    double x1;
+    double y1;
+    double x2;
+    double y2;
+} Rectangle;
+
 
 typedef struct {
     double x;
@@ -30,6 +37,12 @@ Coordinate CoordinateMake(double x , double y, double distance);
 NSString* StringFromCoordinate(Coordinate c);
 
 Coordinate CoordinateFromString(NSString* st);
+
+Rectangle RectangleMake(double x1, double y1, double x2, double y2);
+NSString* RectangleToString(Rectangle r);
+
+BOOL CoordinateIsInRect(Coordinate coord, Rectangle rect);
+
 
 @interface Trilateration : NSObject
 

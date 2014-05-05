@@ -11,6 +11,7 @@
 #import "MainViewController.h"
 #import "IndoorTrackingViewController.h"
 #import "SubmitBeaconViewController.h"
+#import "SingleBeaconTrackingViewController.h"
 
 @interface DebugViewController ()
 
@@ -41,6 +42,10 @@
 - (IBAction)submitiBeaconAction:(id)sender
 {
     [self.navigationController pushViewController:[[SubmitBeaconViewController alloc] initWithNibName:nil bundle:nil] animated:YES];
+}
+- (IBAction)singleBeaconTrackingAction:(id)sender
+{
+     [self.navigationController pushViewController:[[SingleBeaconTrackingViewController alloc] initWithNibName:nil bundle:nil] animated:YES];
 }
 
 @end

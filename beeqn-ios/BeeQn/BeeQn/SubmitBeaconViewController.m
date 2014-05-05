@@ -115,7 +115,7 @@
     {
         [self.circleProgress setCurrentValue:maximum maximumValue:maximum update:YES];
         [self.beeqn.locatioManager stopFindingBeacons];
-        self.statusLabel.text = @"Done Finding";
+        self.statusLabel.text = [self.statusLabel.text stringByAppendingString:@"\nDone Finding"];
     }
 }
 
@@ -129,7 +129,19 @@
 
 -(void)service:(id)beeqnservice insertedBeaconsWithResult:(NSArray *)result
 {
-    NSLog(@"%@", result);
+    int count = (int)result.count;
+    int successes = 0;
+    for(NSDictionary* dict in result)
+    {
+        NSNumber* success = [dict objectForKey:@"successfullinsert"];
+        
+        if(success.intValue != 0)
+        {
+            successes++;
+        }
+    }
+    
+    self.statusLabel.text =  [NSString stringWithFormat:@"Inserted %d/%d",successes,count];
 }
 
 

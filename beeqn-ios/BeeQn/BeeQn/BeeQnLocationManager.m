@@ -6,10 +6,6 @@
 #import "BeeQnLocationManager.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 
-
-#define kModeRangeAllBeacons 0
-#define kModeRangeSpecificBeacons 1
-
 @interface BeeQnLocationManager () <CLLocationManagerDelegate, CBCentralManagerDelegate>
 
 @property (nonatomic, retain) CLLocationManager* locationManager;
@@ -29,7 +25,7 @@
 @property(nonatomic,retain) NSArray* specificUUIDRegions;
 
 
-@property (nonatomic) int currentModeOfOperation;
+@property (nonatomic,readwrite) int currentModeOfOperation;
 
 @end
 
@@ -91,6 +87,12 @@
         NSString* identi = [NSString stringWithFormat:@"de.beeqn.%@",uuid];
         [self.locationManager startRangingBeaconsInRegion:[[CLBeaconRegion alloc] initWithProximityUUID:nsuuid identifier:identi]];
     }
+}
+
+-(void) startFindingBeaconsInfiniteTime
+{
+    [self startFindingBeacons];
+    self.currentModeOfOperation = kModeRangeAllBeaconsForInfinity;
 }
 
 - (void)stopFindingBeacons
@@ -208,6 +210,18 @@
                 [self.delegate manager:self hasFoundBeacons:sortedAllBeacons];
             }
         }
+        else if(self.currentModeOfOperation == kModeRangeAllBeaconsForInfinity)
+        {
+            if ([self.delegate respondsToSelector:@selector(manager:hasFoundBeacons:)])
+            {
+                // notify on beacons array found
+                NSArray* sortedAllBeacons = [newBQ sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"rssi" ascending:YES]]];
+                
+                [self.delegate manager:self hasFoundBeacons:sortedAllBeacons];
+            }
+
+        }
+        
         
         [self checkIfNumberDetectionsNeedNotify:newBQ];
         
@@ -269,7 +283,6 @@
         {
             [self.delegate manager:self hasFoundBeaconsTimes:self.numDetections fromMaximumSearch:search ];
         }
-        
         
         if (self.numDetections >= search && self.isBeaconFetchInProgress)
         {

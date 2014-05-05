@@ -363,6 +363,37 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
      }];
 }
 
+-(void) put_TestingData:(NSString*)data user:(NSString*) user key:(NSString*) key
+{
+    
+    NSMutableDictionary* dict = [NSMutableDictionary new];
+    [dict setObject:user forKey:@"user.account"];
+    [dict setObject:data forKey:@"data"];
+    
+    NSError* error;
+    NSData* jsonObjectData = [NSJSONSerialization dataWithJSONObject:dict options:kNilOptions error:&error];
+
+    NSString* jsonContentBase64 = [NSString base64StringFromData:jsonObjectData];
+    
+    NSString* hash= [Crypto hmac256:jsonContentBase64 withKey:key];
+    NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"%@testData/verify/%@",baseURL,hash]];
+    
+    NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:20];
+    [request setHTTPMethod:@"PUT"];
+    
+    [request setHTTPBody:[[NSString stringWithFormat:@"%@", jsonContentBase64] dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSOperationQueue* queue = [[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:
+     ^(NSURLResponse* response, NSData* data, NSError* connectionError)
+     {
+         if(!error)
+         {
+             NSLog(@"BeeQNService:TestingData:Response %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+         }
+     }];
+}
+
 
 
 #pragma mark - Additional

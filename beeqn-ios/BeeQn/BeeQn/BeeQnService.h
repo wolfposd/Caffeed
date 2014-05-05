@@ -108,5 +108,14 @@ typedef enum
  */
 - (void)put_BeaconsInDB:(NSArray*) beacons user:(NSString*) user key:(NSString*) key location:(CLLocationCoordinate2D) location;
 
+/**
+ *  Inserts the given data-string into the Database
+ *
+ *  @param data some string
+ *  @param user the User-Account
+ *  @param key  the Application-Key
+ */
+-(void) put_TestingData:(NSString*)data user:(NSString*) user key:(NSString*) key;
+
 
 @end
