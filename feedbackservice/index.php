@@ -79,6 +79,7 @@ new NavigationBarTop($content->getNavigationBarTopContent());
 </div>
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-additions.js"></script>
 <script src="js/custom.js"></script>
 <?php $js = $content->additionalJavascript(); if($js !== false) echo "<script type=\"text/javascript\">".$js."</script>"?>
 </body>
