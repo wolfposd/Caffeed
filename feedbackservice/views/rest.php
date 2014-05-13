@@ -6,6 +6,9 @@
 class Rest
 {
 	private $mysqli;
+	
+	
+	private $modules = array();
 
 	function __construct(&$mysqli)
 	{
@@ -17,19 +20,32 @@ class Rest
 
 	function display()
 	{
-		echo show();
+	    include_once 'views/modules/slider.module.php';
+	    include_once 'views/modules/star.module.php';
+	    
+	    $this->modules["slider"] = new slider(array("text"=>"How much do you like flowers?", "min"=>0, "max"=>2, "step"=>0.25), "slider5");
+	    $this->modules["star"] = new star(array("text"=>"How much do you like flowers?"), "star4");
+	    
+		echo $this->show();
 	}
 	
 	function additionalJavascript()
 	{
-	    return '$("#t1").keypress(function(){if(this.value.length>160){return false}$("#remainingcharacterstextarea").html("Remaining characters : "+(160-this.value.length))});
-	            $("#t0").keypress(function(){if(this.value.length>160){return false}$("#remainingcharacterstextfield").html("Remaining characters : "+(160-this.value.length))});  
+	    
+	    $result = "";
+	    foreach($this->modules as $module)
+	    {
+	        $result.=$module->javascript();
+	    }
+	    
+	    return $result.'$("#t1").keyup(function(){if(this.value.length>160){return false}$("#remainingcharacterstextarea").html("Remaining characters : "+(160-this.value.length))});
+	            $("#t0").keyup(function(){if(this.value.length>160){return false}$("#remainingcharacterstextfield").html("Remaining characters : "+(160-this.value.length))});  
 	            $(function(){window.prettyPrint&&prettyPrint();$("#dp1").datepicker({format:"dd.mm.yyyy"})});
 	            $(function(){window.prettyPrint&&prettyPrint();$("#sl1").slider({formater:function(e){return"Current value: "+e}})});';
 	}
 
 
-}
+
 
 
 function show()
@@ -136,7 +152,7 @@ function show()
     			    <p>It could look like this:</p>
     			    <div style="border: 2px solid #000;" class="text-center">
     			        <p class="text-center">Pick one of the following</p>
-    			        <div style="overflow: scroll; height: 120px;">
+    			        <div style="overflow: scroll; height: 140px;">
     			            <p><button type="button" class="btn-primary btn-sm" style="width:100px;">best</button></p>
     			            <p><button type="button" class="btn-primary btn-sm" style="width:100px;">better</button></p>
     			            <p><button type="button" class="btn-primary btn-sm" style="width:100px;">good</button></p>
@@ -171,7 +187,7 @@ function show()
     			    <div style="border: 2px solid #000;" class="text-center">
     			        <p class="text-center">Add any additonal comments</p>
     			        <input type="text" size="45" maxlength="160" id="t0">
-    			        </p><span id='remainingcharacterstextfield'>Remaining characters: 160</span></p>
+    			        <p><span id='remainingcharacterstextfield'>Remaining characters: 160</span></p>
     			        <p/>
     			    </div>
     			</td>
@@ -245,10 +261,28 @@ function show()
     			    </ol>
     			    <p>It could look like this:</p>
     			    <div style="border: 2px solid #000;" class="text-center">
-    			        <p/>
-        			    <p>How much do you like flowers? 
-        			    <input type="text" class="span2" value="1" id="sl1" data-slider-min="0" data-slider-max="2" data-slider-step="0.25" data-slider-value="1" >
-        			    <p>
+    			        <?php $this->modules["slider"]->html(); ?>
+    			    </div>
+    			</td>
+			</tr>
+		</table>
+		
+		<h4>Star Rating Module</h4>
+		<p>The star rating module enables the user to select a preference based on a value from 1 to 5 stars.</p>
+		<table class="table">
+			<tr>
+				<th class="text-center">JSON-Response</th>
+				<th class="text-center">Meaning</th>
+			</tr>
+    		<tr>
+    			<td><pre><?php basicStarRatingJsonCodeSnippet();?></pre></td>
+    			<td>
+    			    <ol>
+    			        <li><b>text</b> contains the text, which should be displayed alongside the star-rating</li>
+    			    </ol>
+    			    <p>It could look like this:</p>
+    			    <div style="border: 2px solid #000;" class="text-center">
+    			        <?php $this->modules["star"]->html();?>
     			    </div>
     			</td>
 			</tr>
@@ -265,7 +299,7 @@ function show()
     			<td><pre><?php basicPhotoJsonCodeSnippet();?></pre></td>
     			<td>
     			    <ol>
-    			        <li><b>text</b> contains the text, which should be displayed to indicate additional tasks for the photo</li>
+    			        <li><b>text</b> contains the text, which should be displayed to indicate additional tasks for the date picking process</li>
     			    </ol>
     			    <p>It could look like this:</p>
     			    <div style="border: 2px solid #000;" class="text-center">
@@ -349,7 +383,7 @@ function show()
 </div>
 <?php
 }
-
+}
 
 
 
@@ -450,6 +484,17 @@ function basicDateJsonCodeSnippet()
   "text": "Please select your birthday"
 }';
 }
+
+function basicStarRatingJsonCodeSnippet()
+{
+    echo '{
+  "type": "star",
+  "id": "star1",
+  "text": "Please select your birthday"
+}';
+}
+
+
 
 function basicPhotoJsonCodeSnippet()
 {
