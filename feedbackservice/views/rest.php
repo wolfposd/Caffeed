@@ -335,6 +335,7 @@ function show()
 		
 		<h4>Terms of Service-Module</h4>
 		<p>The ToS Module will display your terms of service along with an accept or decline button.</p>
+		<p>If you choose to display the ToS-Module it needs to be located on the first page without any additional modules, because a progressing in the question-sheet will only be possible by pressing "Accept"</p>
 		<table class="table">
 			<tr>
 				<th class="text-center">JSON-Response</th>
@@ -351,6 +352,7 @@ function show()
     			    <div style="border: 2px solid #000;" class="text-center">
                         <p class="text-center"><b>CAF-FOPAS ToS</b></p>
     			        <textarea rows="5" cols="60" id="tos1">By reading this you agree to the terms of service</textarea>
+    			        <span><button class="btn btn-success">Accept</button> <button class="btn btn-danger">Decline</button></span>
     			    </div>
     			</td>
 			</tr>
