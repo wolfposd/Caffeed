@@ -5,14 +5,14 @@
  */
 class Rest
 {
-	private $mysqli;
+	private $database;
 	
 	
 	private $modules = array();
 
-	function __construct(&$mysqli)
+	function __construct(database &$database)
 	{
-		$this->mysqli = $mysqli;
+		$this->database = $database;
 	}
 	function __destruct()
 	{
@@ -22,9 +22,19 @@ class Rest
 	{
 	    include_once 'views/modules/slider.module.php';
 	    include_once 'views/modules/star.module.php';
+	    include_once 'views/modules/list.module.php';
+	    include_once 'views/modules/long_list.module.php';
+	    include_once 'views/modules/textfield.module.php';
+	    include_once 'views/modules/textarea.module.php';
+	    include_once 'views/modules/date.module.php';
 	    
+	    $this->modules["list"] = new listmodule(array("text"=>"Pick one of the following", "elements"=>array("good","medium","bad")), "list1");
+	    $this->modules["long_list"] = new long_list(array("text"=>"Pick one of the following", "elements"=>array("best", "better", "good", "medium", "bad", "worse","worst")), "long_list1");
 	    $this->modules["slider"] = new slider(array("text"=>"How much do you like flowers?", "min"=>0, "max"=>2, "step"=>0.25), "slider5");
 	    $this->modules["star"] = new star(array("text"=>"How much do you like flowers?"), "star4");
+	    $this->modules["textfield"] = new textfield(array("text"=>"Add any additonal comments","length"=>160), "textfield1");
+	    $this->modules["textarea"] = new textarea(array("text"=>"Add any additonal comments","length"=>160), "textarea1");
+	    $this->modules["date"] = new date(array("text"=>"Please select your birthday"), "date1");
 	    
 		echo $this->show();
 	}
@@ -35,13 +45,10 @@ class Rest
 	    $result = "";
 	    foreach($this->modules as $module)
 	    {
-	        $result.=$module->javascript();
+	        $result.=$module->javascript()."\n";
 	    }
 	    
-	    return $result.'$("#t1").keyup(function(){if(this.value.length>160){return false}$("#remainingcharacterstextarea").html("Remaining characters : "+(160-this.value.length))});
-	            $("#t0").keyup(function(){if(this.value.length>160){return false}$("#remainingcharacterstextfield").html("Remaining characters : "+(160-this.value.length))});  
-	            $(function(){window.prettyPrint&&prettyPrint();$("#dp1").datepicker({format:"dd.mm.yyyy"})});
-	            $(function(){window.prettyPrint&&prettyPrint();$("#sl1").slider({formater:function(e){return"Current value: "+e}})});';
+	    return $result.'$(function(){window.prettyPrint&&prettyPrint();$("#dp1").datepicker({format:"dd.mm.yyyy"})});';
 	}
 
 
@@ -51,19 +58,38 @@ class Rest
 function show()
 {
 ?>
+<div id="page">
 <div class="row">
 	<div class="col-md-3">
 		<img src="img/rest-area.png" width="256" height="256">
 	</div>
 	<div class="col-md-6">
 		<h1 class="page-header">Guide to using the REST-API</h1>
-		<p>In the future you will be able to find information here about accessing the provided functions of this service via a REST-API.</p>
+		<p>Here you can find all necessary information for accessing the provided functions of this service via a REST-API.</p>
 		<p>The base URL for every REST-Request is "<b>http://beeqn.informatik.uni-hamburg.de/feedback/rest.php/</b>" .</p>
+	</div>
+	<div class="col-md-2 well">
+	    <div class="bs-docs-sidebar hidden-print" >
+            <ul class="nav bs-docs-sidenav">
+		        <li class="active"><a href="#1">1. Getting a question-sheet</a>
+		            <ul class="nav bs-docs-sidenav">
+    		        <li class="active"><a href="#1.1">1.1 Response content</a></li>
+    		        <li class="active"><a href="#1.2">1.2 Sheet-Modules</a></li>
+    		        <li>
+    		            <ul class="nav bs-docs-sidenav">
+        		            <li class="active"><a href="#1.2.1">1.2.1 Visible Modules</a></li>
+        		            <li class="active"><a href="#1.2.2">1.2.2 Invisible Modules</a></li>
+    		            </ul>
+		            </li>
+		            </ul>
+		        </li>
+	        </ul>
+        </div>
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-offset-3 col-md-6">
-		<h2>1. Getting a question-sheet</h2>
+	<div class="col-md-offset-3 col-md-6"> <!-- begin rest info -->
+		<h2 id="1">1. Getting a question-sheet</h2>
 		<p>To get the necessary data for displaying a question-sheet you will need to issue a <b>GET</b>-Request with the following parameters:</p>
 		<ol>
 		<li>sheet</li>
@@ -97,12 +123,12 @@ function show()
 			</tr>
 		</table>
 		
-		<h3>1.2 Sheet-Modules</h3>
+		<h3 id="1.2">1.2 Sheet-Modules</h3>
 		<p>Every question-sheet is made up of different modules. Depending on the type of module different keys and values will be set in the servers response.</p>
 		<p>The modules are all similarly structured. They each begin with <b>type</b> and <b>id</b>. The <b>type</b> tells you what kind of module is supposed to be displayed and the <b>id</b> tells you the id to use when submitting the filled out sheet.</p>
 		<p>The modules can be divided into two categories: <b>visible</b> and <b>invisible</b> modules. Visible modules will need to be operated by the user, whereas invisible modules will collect additional meta-data.</p>
 		
-		<h3>1.2.1 Visible Modules</h3>
+		<h3 id="1.2.1">1.2.1 Visible Modules</h3>
 		<h4>List-Module</h4>
 		<p>The List-Module is used to display a list of items, where a single element is supposed to be selected by the user.</p>
 		
@@ -121,12 +147,7 @@ function show()
     			    </ol>
     			    <p>It could look like this:</p>
     			    <div style="border: 2px solid #000;" class="text-center">
-    			        <p class="text-center">Pick one of the following</p>
-    			        <p>
-        			        <button type="button" class="btn-primary btn-sm">good</button>
-        			        <button type="button" class="btn-primary btn-sm">medium</button>
-        			        <button type="button" class="btn-primary btn-sm">bad</button>
-        			    </p>
+    			        <?php $this->modules["list"]->html();?>
     			    </div>
     			</td>
 			</tr>
@@ -150,17 +171,8 @@ function show()
     			        <li><b>elements</b> is an array of items, which should be displayed in the list for selection.</li>
     			    </ol>
     			    <p>It could look like this:</p>
-    			    <div style="border: 2px solid #000;" class="text-center">
-    			        <p class="text-center">Pick one of the following</p>
-    			        <div style="overflow: scroll; height: 140px;">
-    			            <p><button type="button" class="btn-primary btn-sm" style="width:100px;">best</button></p>
-    			            <p><button type="button" class="btn-primary btn-sm" style="width:100px;">better</button></p>
-    			            <p><button type="button" class="btn-primary btn-sm" style="width:100px;">good</button></p>
-    			            <p><button type="button" class="btn-primary btn-sm" style="width:100px;">medium</button></p>
-    			            <p><button type="button" class="btn-primary btn-sm" style="width:100px;">bad</button></p>
-    			            <p><button type="button" class="btn-primary btn-sm" style="width:100px;">worse</button></p>
-    			            <p><button type="button" class="btn-primary btn-sm" style="width:100px;">worst</button></p>
-    			        </div>
+    			    <div style="border: 2px solid #000;" class="text-center"><!-- show long list -->
+    			    <?php $this->modules["long_list"]->html();?>
     			    </div>
     			</td>
 			</tr>
@@ -185,10 +197,7 @@ function show()
     			    </ol>
     			    <p>It could look like this:</p>
     			    <div style="border: 2px solid #000;" class="text-center">
-    			        <p class="text-center">Add any additonal comments</p>
-    			        <input type="text" size="45" maxlength="160" id="t0">
-    			        <p><span id='remainingcharacterstextfield'>Remaining characters: 160</span></p>
-    			        <p/>
+    			        <?php $this->modules["textfield"]->html();?>
     			    </div>
     			</td>
 			</tr>
@@ -213,9 +222,7 @@ function show()
     			    </ol>
     			    <p>It could look like this:</p>
     			    <div style="border: 2px solid #000;" class="text-center">
-    			        <p class="text-center">Add any additonal comments</p>
-    			        <textarea rows="5" cols="60" maxlength="160" id="t1"></textarea>
-    			        <span id='remainingcharacterstextarea'>Remaining characters: 160</span>
+    			        <?php $this->modules["textarea"]->html();?>
     			    </div>
     			</td>
 			</tr>
@@ -296,16 +303,14 @@ function show()
 				<th class="text-center">Meaning</th>
 			</tr>
     		<tr>
-    			<td><pre><?php basicPhotoJsonCodeSnippet();?></pre></td>
+    			<td><pre><?php basicDateJsonCodeSnippet();?></pre></td>
     			<td>
     			    <ol>
     			        <li><b>text</b> contains the text, which should be displayed to indicate additional tasks for the date picking process</li>
     			    </ol>
     			    <p>It could look like this:</p>
     			    <div style="border: 2px solid #000;" class="text-center">
-    			        <p/>
-        			    <p>Please select your birthday<p>
-        			    <input type="text" class="span2 text-center" value="09.05.2014" id="dp1" >
+    			        <?php $this->modules["date"]->html();?>
     			    </div>
     			</td>
 			</tr>
@@ -319,7 +324,7 @@ function show()
 				<th class="text-center">Meaning</th>
 			</tr>
     		<tr>
-    			<td><pre><?php basicDateJsonCodeSnippet();?></pre></td>
+    			<td><pre><?php basicPhotoJsonCodeSnippet();?></pre></td>
     			<td>
     			    <ol>
     			        <li><b>text</b> contains the text, which should be displayed to indicate additional tasks for the photo</li>
@@ -351,14 +356,14 @@ function show()
     			    <p>It could look like this:</p>
     			    <div style="border: 2px solid #000;" class="text-center">
                         <p class="text-center"><b>CAF-FOPAS ToS</b></p>
-    			        <textarea rows="5" cols="60" id="tos1">By reading this you agree to the terms of service</textarea>
+    			        <textarea rows="5" cols="60" id="tos1" readonly="readonly">By reading this you agree to the terms of service</textarea>
     			        <span><button class="btn btn-success">Accept</button> <button class="btn btn-danger">Decline</button></span>
     			    </div>
     			</td>
 			</tr>
 		</table>
 		
-		<h3>1.2.1 Invisible Modules</h3>
+		<h3 id="1.2.2">1.2.2 Invisible Modules</h3>
 		<h4>GPS-Module</h4>
 		<p>The GPS module will take the users current longitude and latitude.</p>
 		<table class="table">
@@ -404,7 +409,8 @@ function show()
 		</table>
 		
 		
-	</div>
+	</div>  <!-- end rest info -->
+</div>
 </div>
 <?php
 }

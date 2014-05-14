@@ -5,14 +5,29 @@
  */
 class Home
 {
-	private $mysqli;
+	private $database;
 
-	function __construct(&$mysqli)
+	function __construct(database &$database)
 	{
-		$this->mysqli = $mysqli;
+		$this->database = $database;
 	}
 	function __destruct()
 	{
+	}
+	/**
+	 * Remove function if not necessary
+	 */
+	function handleCookies()
+	{
+	    
+	}
+	
+	/**
+	 * Remove function if not necessary
+	 */
+	function setup()
+	{
+	    
 	}
 
 	function display()

@@ -3,13 +3,13 @@
 
 class Content
 {
-	private $mysqli;
+	private $database;
 	private $subcontent = false;
 
 	function __construct()
 	{
 		include_once 'config.php';
-		$this->mysqli = getConnection();
+		$this->database = getConnection();
 
 
 		global $_SESSION;
@@ -18,24 +18,22 @@ class Content
 		if($loggedin === true)
 		{
 			include_once 'views/LoggedIn.php';
-			$this->subcontent = new LoggedInContent($this->mysqli);
+			$this->subcontent = new LoggedInContent($this->database);
 		}
-		else if(isset($_GET["d"]))
+		else if(isset($_GET["view"]))
 		{
-			$destination = $_GET["d"];
+			$destination = $_GET["view"];
 
-			
 			if(!@include_once "views/".$destination.".php")
 			{
 				$this->fallBackSubcontent();
 				return;
 			}
-				
 			
 			$classname = explode("/", $destination);
 			$classname = $classname[count($classname)-1];
 
-			$subcontent = call_user_func_array(array(new ReflectionClass($classname), 'newInstance'), array(&$this->mysqli));
+			$subcontent = call_user_func_array(array(new ReflectionClass($classname), 'newInstance'), array(&$this->database));
 
 			if($subcontent !== false)
 			{
@@ -53,19 +51,33 @@ class Content
 	}
 	function __destruct()
 	{
-		$this->mysqli->close();
+		$this->database->close();
 	}
 
 
 	function fallBackSubcontent()
 	{
 		include_once 'views/home.php';
-		$this->subcontent = new Home($this->mysqli);
+		$this->subcontent = new Home($this->database);
+	}
+	
+	function handleCookies()
+	{
+	    if(method_exists($this->subcontent, "handleCookies"))
+	    {
+	        return $this->subcontent->handleCookies();
+	    }
+	}
+	function setup()
+	{
+	    if(method_exists($this->subcontent, "setup"))
+	    {
+	        return $this->subcontent->setup();
+	    }
 	}
 
 	function display()
 	{
-
 		if($this->subcontent !== false)
 		{
 			$this->subcontent->display();
@@ -73,9 +85,9 @@ class Content
 		else
 		{
 			?>
-<h1 class="page-header">Hier Default Template</h1>
-Hier kann auch Text stehen
-<?php
+            <h1 class="page-header">Hier Default Template</h1>
+            Hier kann auch Text stehen
+            <?php
 		}
 	}
 
@@ -105,7 +117,7 @@ Hier kann auch Text stehen
 	{
 		global $_SESSION;
 
-		$leftarr = array("Home"=>"?d=home");
+		$leftarr = array("Home"=>"?view=home");
 		if(method_exists($this->subcontent, "getNavigationBarTopContent"))
 		{
 			foreach($this->subcontent->getNavigationBarTopContent() as $key => $value)
@@ -114,7 +126,7 @@ Hier kann auch Text stehen
 			}
 		}
 		
-		$leftarr["REST-API"] ="?d=rest";
+		$leftarr["REST-API"] ="?view=rest";
 
 		if(isset($_SESSION["login"]) && $_SESSION["login"])
 		{
@@ -122,7 +134,7 @@ Hier kann auch Text stehen
 		}
 		else
 		{
-			return array($leftarr,array("Login"=>"?login"));
+			return array($leftarr,array("Login"=>"?view=login"));
 		}
 
 	}

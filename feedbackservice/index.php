@@ -39,15 +39,13 @@ else
 	session_start();
 
 
-$isCookiesSet = false;
-if($isCookiesSet !== false)
-{
-	// setCookies
-}
-
 include_once 'Content.php';
 include_once 'navbar.php';
 $content = new Content();
+
+$content->handleCookies();
+
+$content->setup();
 
 
 
@@ -70,9 +68,8 @@ new NavigationBarTop($content->getNavigationBarTopContent());
 		{
 			new NavigationBarLeft($leftNavBarContent);
 		}
-
 		?>
-		<div class="<?php echo $maindiv?>">
+		<div class="<?php echo $maindiv?>" id="maindiv">
 			<?php $content->display();?>
 		</div>
 	</div>

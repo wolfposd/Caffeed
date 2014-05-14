@@ -3,11 +3,11 @@
 
 class Home
 {
-	private $mysqli;
+	private $database;
 
-	function __construct(&$mysqli)
+	function __construct(&$database)
 	{
-		$this->mysqli = $mysqli;
+		$this->database = $database;
 	}
 	function __destruct()
 	{

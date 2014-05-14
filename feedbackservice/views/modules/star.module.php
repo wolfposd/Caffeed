@@ -28,17 +28,17 @@ class star implements IModule
     {
         ?>
         <div class="text-center">
-    			        <p/>
-        			    <p><?php echo $this->values["text"]?></p>
-        			    <div class="rating">
-                            <input type="radio" name="<?php echo $this->id?>" value="1" checked="checked"/><span></span>
-                            <input type="radio" name="<?php echo $this->id?>" value="2" /><span></span>
-                            <input type="radio" name="<?php echo $this->id?>" value="3" /><span></span>
-                            <input type="radio" name="<?php echo $this->id?>" value="4" /><span></span>
-                            <input type="radio" name="<?php echo $this->id?>" value="5" /><span></span>
-                        </div>
-        			    <p>
-    			    </div>
+	        <p/>
+		    <p><?php echo $this->values["text"]?></p>
+		    <div class="rating">
+                <input type="radio" name="<?php echo $this->id?>" value="1" checked="checked"/><span></span>
+                <input type="radio" name="<?php echo $this->id?>" value="2" /><span></span>
+                <input type="radio" name="<?php echo $this->id?>" value="3" /><span></span>
+                <input type="radio" name="<?php echo $this->id?>" value="4" /><span></span>
+                <input type="radio" name="<?php echo $this->id?>" value="5" /><span></span>
+            </div>
+		    <p>
+	    </div>
         <?php 
     }
 }
