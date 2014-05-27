@@ -5,7 +5,7 @@ class Home
 {
 	private $database;
 
-	function __construct(&$database)
+	function __construct($database)
 	{
 		$this->database = $database;
 	}
@@ -15,7 +15,7 @@ class Home
 
 	function display()
 	{
-		echo "Hello";
+		echo "Hello, this is the start screen";
 	}
 
 }

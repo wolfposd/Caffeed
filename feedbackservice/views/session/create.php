@@ -3,7 +3,7 @@
 /**
  * This is the basic Template for controller-classes
  */
-class Home
+class Create
 {
 	private $database;
 
@@ -14,6 +14,7 @@ class Home
 	function __destruct()
 	{
 	}
+	
 	/**
 	 * Remove function if not necessary
 	 */
@@ -32,7 +33,7 @@ class Home
 
 	function display()
 	{
-		echo "Hello";
+		echo "This is the Create page";
 	}
 
 	/**
@@ -42,26 +43,6 @@ class Home
 	function modifiedBodyValues()
 	{
 		return ""; // <body> tag not modified
-	}
-
-	/**
-	 * Remove function if not necessary
-	 * @return multitype:multitype:string
-	 */
-	function getNavigationBarLeftContent()
-	{
-		return array(
-				array("MenuTitle"=>"?key","MenuTitle"=>"?key"), // separation
-				array("MenuTitle"=>"?key","MenuTitle"=>"?key")
-		);
-	}
-	/**
-	 * Remove function if not necessary
-	 * @return multitype:string
-	 */
-	function getNavigationBarTopContent()
-	{
-		return array("MenuTitle"=>"?key", "MenuTitle"=>"?key");
 	}
 
 

@@ -6,6 +6,8 @@ class Content
 	private $database;
 	private $subcontent = false;
 
+	private $loggedin = false;
+	
 	function __construct()
 	{
 		include_once 'config.php';
@@ -13,14 +15,10 @@ class Content
 
 
 		global $_SESSION;
-		$loggedin = isset($_SESSION["login"]) ? $_SESSION["login"] : false;
+		$this->loggedin = isset($_SESSION["login"]) ? $_SESSION["login"] : false;
 
-		if($loggedin === true)
-		{
-			include_once 'views/LoggedIn.php';
-			$this->subcontent = new LoggedInContent($this->database);
-		}
-		else if(isset($_GET["view"]))
+		
+		if(isset($_GET["view"]))
 		{
 			$destination = $_GET["view"];
 
@@ -30,18 +28,26 @@ class Content
 				return;
 			}
 			
-			$classname = explode("/", $destination);
-			$classname = $classname[count($classname)-1];
-
-			$subcontent = call_user_func_array(array(new ReflectionClass($classname), 'newInstance'), array(&$this->database));
-
-			if($subcontent !== false)
+			if($this->loggedin === false && strpos($destination, "session/") !== false)
 			{
-				$this->subcontent = $subcontent;
+                // TRYING TO ACCESS LOGIN AREA WITHOUT LOGIN	
+                $this->fallBackSubcontent(); 		    
 			}
 			else
 			{
-				$this->fallBackSubcontent();
+			    $classname = explode("/", $destination);
+			    $classname = $classname[count($classname)-1];
+
+			    $subcontent = call_user_func_array(array(new ReflectionClass($classname), 'newInstance'), array(&$this->database));
+
+			    if($subcontent !== false)
+			    {
+			        $this->subcontent = $subcontent;
+			    }
+			    else
+			    {
+			        $this->fallBackSubcontent();
+			    }
 			}
 		}
 		else
@@ -118,25 +124,35 @@ class Content
 		global $_SESSION;
 
 		$leftarr = array("Home"=>"?view=home");
+		$rightarra = array();
+
+		$leftarr["REST-API"] ="?view=rest";
+		
 		if(method_exists($this->subcontent, "getNavigationBarTopContent"))
 		{
 			foreach($this->subcontent->getNavigationBarTopContent() as $key => $value)
 			{
-				$leftarr[$key] = $value;
+			    $leftarr[$key] = $value;
 			}
 		}
-		
-		$leftarr["REST-API"] ="?view=rest";
+
+
+		if($this->loggedin === true)
+		{
+		    $rightarra["Login-Area"] = "?view=session/overview";
+		}
+
 
 		if(isset($_SESSION["login"]) && $_SESSION["login"])
 		{
-			return array($leftarr, array("Logout"=>"?logout"));
+		    $rightarra["Logout"]="?view=logout";
 		}
 		else
 		{
-			return array($leftarr,array("Login"=>"?view=login"));
+		    $rightarra["Login"]="?view=login";
 		}
 
+		return array($leftarr, $rightarra);
 	}
 
 

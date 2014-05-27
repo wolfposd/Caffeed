@@ -7,15 +7,15 @@ $application->handle();
 
 class Application {
 
-	private $mysqli;
+    private $database;
 
 	function __construct()
 	{
-		$this->mysqli = getConnection();
+		$this->database = getConnection();
 	}
 	function __destruct()
 	{
-		$this->mysqli->close();
+		$this->database->close();
 	}
 
 	function handle()
@@ -43,8 +43,7 @@ class Application {
 			$index = array_search($key, $requestArr);
 			if($index + 1 < count($requestArr))
 			{
-				$possible = $this->mysqli->real_escape_string($requestArr[$index+1]);
-				return $possible;
+				return $requestArr[$index+1];
 			}
 		}
 		return false;
@@ -58,7 +57,7 @@ class Application {
 		{
 			if($id == 3)
 			{	//TESTING DATA
-				echo '{"title":"iPhone 5s Feedback","id":3,"submitbuttononpage":1,"pages":[{"title":"Page 1","elements":[{"type":"list","id":"list1","text":"Pick one of the following","elements":["good","medium","bad"]},{"type":"photo","id":"photo1","text":"Please take a picture of your face"},{"type":"textfield","id":"textfield1","text":"Add any additonal comments"}]}]}';
+				echo '{"title":"Some Feedback for Company X","id":3,"pages":[{"title":"Page 1","elements":[{"type":"tos","id":"tos1","title":"Company X ToS","text":"By reading this you agree to the terms of service"}]},{"title":"Page 2","elements":[{"type":"list","id":"list1","text":"Pick one of the following","elements":["good","medium","bad"]},{"type":"photo","id":"photo1","text":"Please take a picture of your face"},{"type":"textfield","id":"textfield1","text":"Add any additonal comments"}]},{"title":"Page 3","elements":[{"type":"checkbox","id":"checkbox1","text":"Do you like flowers?"},{"type":"textarea","id":"textarea1","length":"160","text":"Add any additonal comments"},{"type":"slider","id":"slider1","text":"How much do you like flowers?","min":"0.0","max":"2.0","step":"0.25"}]},{"title":"Page 4","elements":[{"type":"star","id":"star1","text":"Please select your birthday"},{"type":"date","id":"date1","text":"Please select your birthday"},{"type":"auto-date","id":"auto-date1"},{"type":"accelerometer","id":"accelerometer1"},{"type":"gps","id":"gps1"}]}]}';
 			}
 		}
 	}
@@ -85,6 +84,21 @@ class Application {
 				}
 			}
 		}
+	}
+	
+	
+	function rest_get_internal_emailfree(array $array)
+	{
+	    if(count($array) === 2)
+	    {
+	        $email = $array[1];
+	        $free = $this->database->isUserNameFree($email);
+	        echo $free === true ? "true" : "false";
+	    }
+	    else
+	    {
+	        echo "false";
+	    }
 	}
 
 

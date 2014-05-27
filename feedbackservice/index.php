@@ -1,42 +1,6 @@
 <?php
 
-
-if(isset($_GET["id"]))
-{
-	$id = $_GET["id"];
-	
-	if($id == 3)
-	{
-		echo '{"title":"iPhone 5s Feedback","id":3,"submitbuttononpage":1,"pages":[{"title":"Page 1","elements":[{"type":"list","id":"list1","text":"Pick one of the following","elements":["good","medium","bad"]},{"type":"photo","id":"photo1","text":"Please take a picture of your face"},{"type":"textfield","id":"textfield1","text":"Add any additonal comments"}]}]}';
-	}
-}
-else if(isset($_POST["id"]))
-{
-	
-	$id = $_POST["id"];
-	
-	if($id == 3 && isset($_POST["json"]))
-	{
-		$json = json_decode($_POST["json"], true);
-		
-		if(isset($json["list1"]) && isset($json["photo1"]) && isset($json["textfield1"]))
-		{
-			echo "success";
-		}
-		else
-		{
-			echo "unsuccessfull";
-		}
-	}
-	else
-	{
-		echo "unsuccessfull";
-	}
-}
-
-else
-{
-	session_start();
+session_start();
 
 
 include_once 'Content.php';
@@ -46,7 +10,6 @@ $content = new Content();
 $content->handleCookies();
 
 $content->setup();
-
 
 
 include_once 'header.html';
@@ -82,7 +45,5 @@ new NavigationBarTop($content->getNavigationBarTopContent());
 </body>
 </html>
 <?php 
-}
-
 
 ?>

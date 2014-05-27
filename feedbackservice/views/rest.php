@@ -10,7 +10,7 @@ class Rest
 	
 	private $modules = array();
 
-	function __construct(database &$database)
+	function __construct(database $database)
 	{
 		$this->database = $database;
 	}

@@ -39,6 +39,23 @@ function hash_SHA265($message, $customkey = false)
 	return hash_hmac('SHA256', $message, $customkey);
 }
 
+/**
+ * create an HMAC form message (optional a special key)
+ * @param string $message the message to verify
+ * @param string $customkey (optional) use a custom key
+ * @return string Hex-Form string of SHA265 message
+ */
+function hash_SHA512($message, $customkey = false)
+{
+    if($customkey === false)
+    {
+        global $encryptionKey;
+        $customkey = $encryptionKey;
+    }
+
+    return hash_hmac('SHA512', $message, $customkey);
+}
+
 function show_succes_or_error($success, $successTitle, $successMessage, $errorTitle,$errorMessage)
 {
 	if($success)
@@ -53,7 +70,7 @@ function show_succes_or_error($success, $successTitle, $successMessage, $errorTi
 
 function show_message_dialog_with_text($message, $text="", $successOrError = true)
 {
-	$type = $successOrError === true  ? "success" : "error";
+	$type = $successOrError === true  ? "success" : "danger";
 
 	echo "<div class='container alert alert-$type center span4' align='center'><h4>$message</h4><p>$text</p></div>";
 }
@@ -68,7 +85,7 @@ function reloadPageJavascriptTextForBody($reloadtime = 3000)
 	return "onLoad=\"JavaScript:reloadPage($reloadtime);\"";
 }
 
-function redirectPageJavaScriptTextForBody($reloadtime, $destination = "")
+function redirectPageJavaScriptTextForBody($reloadtime=1500, $destination = "")
 {
 	return "onLoad=\"JavaScript:changeURL($reloadtime, '$destination');\"";
 }
