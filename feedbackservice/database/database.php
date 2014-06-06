@@ -11,6 +11,7 @@ class database
         $mysql = new mysqli($db_host, $db_username, $db_password, $db_database);
         $this->mysqli = $mysql;
     }
+    
     function __destruct()
     {
     }

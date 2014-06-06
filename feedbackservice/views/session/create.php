@@ -1,5 +1,7 @@
 <?php
 
+include_once 'views/session/create_view.php';
+
 /**
  * This is the basic Template for controller-classes
  */
@@ -7,6 +9,8 @@ class Create
 {
 	private $database;
 
+	private $mode;
+	
 	function __construct(database $database)
 	{
 		$this->database = $database;
@@ -28,12 +32,50 @@ class Create
 	 */
 	function setup()
 	{
-	    
+	    $this->mode = isset($_GET["create"]) ? "create": "show";
 	}
 
 	function display()
 	{
-		echo "This is the Create page";
+	    switch ($this->mode)
+	    {
+	        case "create":
+	            $this->handleCreation();
+	            break;
+	        default:
+	            $this->handleSheetConstruction();
+	    }
+	}
+	
+	function handleCreation()
+	{
+	    
+	}
+	
+	function handleSheetConstruction()
+	{
+	    showCreateSheet();
+	    
+	    $this->showCreateButton();
+	}
+	
+	
+	function showCreateButton()
+	{
+	    $var ="";
+	    foreach ($_GET as $get => $getval)
+	    {
+	        $var .= "<input type='hidden' name='$get' value='$getval'>";
+	    }
+	    echo "<div class='row'></div>
+	            <p></p>
+	          <div>
+    	            <form method='get'>
+    	            <input type='hidden' name='create'>".$var."
+    	            <button class='btn btn-success btn-block'>Create this sheet</button>
+    	            </form>
+	          </div>
+	         ";
 	}
 
 	/**
@@ -52,9 +94,17 @@ class Create
 	 */
 	function additionalJavascript()
 	{
-		return ""; // additional javascript
+	    if($this->mode === "show")
+	    {
+	        return addingJavaScript();
+	    }
+	    else
+	    { 
+	        return "";
+	    }
 	}
-
+	
+	
 }
 
 

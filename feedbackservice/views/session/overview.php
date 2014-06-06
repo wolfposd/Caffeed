@@ -80,6 +80,11 @@ class Overview
                 )
         );
     }
+    
+    function additionalJavascript()
+    {
+       return $this->content->additionalJavascript();
+    }
 
 
     function makeLink($dest)
