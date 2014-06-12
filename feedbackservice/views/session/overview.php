@@ -6,9 +6,7 @@
 class Overview
 {
     private $database;
-
     private $content = false;
-
     function __construct($database)
     {
         $this->database = $database;
@@ -16,83 +14,89 @@ class Overview
     function __destruct()
     {
     }
-
-
     function setup()
     {
-        if(isset($_GET["sub"]))
+        if (isset ( $_GET ["sub"] ))
         {
             include_once 'profile.php';
             include_once 'create.php';
             include_once 'analyze.php';
-            switch($_GET["sub"])
+            switch ($_GET ["sub"])
             {
-                case "profile":
+                case "profile" :
                     {
-                        $this->content = new Profile($this->database);
+                        $this->content = new Profile ( $this->database );
                         break;
                     }
-                case "create":
+                case "create" :
                     {
-                        $this->content = new Create($this->database);
+                        $this->content = new Create ( $this->database );
                         break;
                     }
-                case "analyze":
+                case "analyze" :
                     {
-                        $this->content = new Analyze($this->database);
+                        $this->content = new Analyze ( $this->database );
                         break;
                     }
             }
-            if($this->content)
+            if ($this->content)
             {
-                $this->content->setup();
+                $this->content->setup ();
             }
         }
     }
-
-
     function display()
     {
-        if($this->content)
+        if ($this->content)
         {
-            $this->content->display();
-        }
-        else
+            $this->content->display ();
+        } else
         {
-            echo "<p>Welcome back, ".$_SESSION["user"]."!</p>";
+            echo "<p>Welcome back, " . $_SESSION ["user"] . "!</p>";
             echo "<p>You have 10 sheets</p>";
             echo "<p>You have 500 new results</p>";
             echo "<p>...</p>";
         }
     }
-
-
     function getNavigationBarLeftContent()
     {
-        return array(
-                array
-                (
-                        array("name"=>"Overview", "link"=>$this->makeLink("overview")), array("name"=>"Profile", "link"=>$this->makeLink("profile"))
+        return array (
+                array (
+                        array (
+                                "name" => "Overview",
+                                "link" => $this->makeLink ( "overview" ) 
+                        ),
+                        array (
+                                "name" => "Profile",
+                                "link" => $this->makeLink ( "profile" ) 
+                        ) 
                 ), // separation
-                array
-                (
-                        array("name"=>"Create Sheet", "link"=>$this->makeLink("create")), array("name"=>"Analyze Sheet", "link"=>$this->makeLink("analyze"))
-                )
+                array (
+                        array (
+                                "name" => "Create Sheet",
+                                "link" => $this->makeLink ( "create" ) 
+                        ),
+                        array (
+                                "name" => "Analyze Sheet",
+                                "link" => $this->makeLink ( "analyze" ) 
+                        ) 
+                ) 
         );
     }
-    
     function additionalJavascript()
     {
-       return $this->content->additionalJavascript();
+        if (method_exists ( $this->content, "additionalJavascript" ))
+        {
+            return $this->content->additionalJavascript ();
+        } else
+        {
+            return false;
+        }
     }
-
-
     function makeLink($dest)
     {
-        return "?view=session/overview&sub=".$dest;
+        return "?view=session/overview&sub=" . $dest;
     }
-
 }
-
 
 ?>

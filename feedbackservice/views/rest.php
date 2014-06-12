@@ -27,6 +27,7 @@ class Rest
 	    include_once 'views/modules/textfield.module.php';
 	    include_once 'views/modules/textarea.module.php';
 	    include_once 'views/modules/date.module.php';
+	    include_once 'views/modules/checkbox.module.php';
 	    
 	    $this->modules["list"] = new listmodule(array("text"=>"Pick one of the following", "elements"=>array("good","medium","bad")), "list1");
 	    $this->modules["long_list"] = new long_list(array("text"=>"Pick one of the following", "elements"=>array("best", "better", "good", "medium", "bad", "worse","worst")), "long_list1");
@@ -35,6 +36,7 @@ class Rest
 	    $this->modules["textfield"] = new textfield(array("text"=>"Add any additonal comments","length"=>160), "textfield1");
 	    $this->modules["textarea"] = new textarea(array("text"=>"Add any additonal comments","length"=>160), "textarea1");
 	    $this->modules["date"] = new date(array("text"=>"Please select your birthday"), "date1");
+	    $this->modules["checkbox"] = new checkbox(array("text"=>"Do you like flowers"), "checkbox1");
 	    
 		echo $this->show();
 	}
@@ -243,8 +245,7 @@ function show()
     			    </ol>
     			    <p>It could look like this:</p>
     			    <div style="border: 2px solid #000;" class="text-center">
-    			        <p/>
-        			    <p>Do you like flowers? <input type="checkbox"><p>
+    			       <?php $this->modules["checkbox"]->html(); ?>
     			    </div>
     			</td>
 			</tr>
@@ -563,7 +564,7 @@ function basicTOSJsonCodeSnippet()
   "type": "tos",
   "id": "tos1",
   "title":"CAF-FOPAS ToS",
-  "text": "By reading this you agree to the terms of service",
+  "text": "By reading this you agree<br>&#09;to the terms of service",
 }';
 }
 

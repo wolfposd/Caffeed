@@ -49,6 +49,12 @@ class textarea implements IModule
 	    </div>
         <?php 
     }
+    function editorhtml()
+    {
+        include_once 'views/modules/basiceditor.php';
+        $text = '<p>Length: <input type="text" name="module_XXXX_length" value="160">  (empty = infinite)<p>';
+        echo basiceditor("Textarea Module","textareamodule",$text);
+    }
 }
 
 

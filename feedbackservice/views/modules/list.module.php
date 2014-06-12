@@ -39,6 +39,16 @@ class listmodule implements IModule
     </div>
 <?php 
     }
+    
+    /**
+     * Echos the HTML code needed for creation of a sheet
+     */
+    public function editorhtml()
+    {
+        include_once 'views/modules/basiceditor.php';
+        
+        echo basiceditor("List Module","listmodule", '<p>Elements: (seperated by &lt;newline&gt;)</p><textarea rows="5" cols="40" name="module_XXXX_elements"></textarea>');
+    }
 
 }
 

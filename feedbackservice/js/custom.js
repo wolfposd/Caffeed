@@ -29,3 +29,22 @@ function setNameIntoField(name, field)
 {
 	$('#'+field).val(name);
 }
+
+
+
+function addItemToBody(moduleitem)
+{
+	$.get("rest.php/internal_module/" + moduleitem, function (data) 
+	{
+		var number = 0;
+		var elements = $("#sheetmain > div");
+		if(elements.length > 0)
+		{
+			var lastelement = elements[elements.length-1];
+			var id = lastelement.id;
+			id = id.substr(id.lastIndexOf("_")+1, id.length-1);
+			//alert(number);
+		}
+		$("#sheetmain").append(data.replace(/XXXX/g,number));
+	});
+}

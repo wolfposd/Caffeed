@@ -41,6 +41,12 @@ class star implements IModule
 	    </div>
         <?php 
     }
+    function editorhtml()
+    {
+        include_once 'views/modules/basiceditor.php';
+        
+        echo basiceditor("Star Module","starmodule");
+    }
 }
 
 

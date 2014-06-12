@@ -49,11 +49,16 @@ class Create
 	
 	function handleCreation()
 	{
-	    
+	    foreach ($_GET as $key => $value)
+	    {
+	        echo "$key and $value <br>";
+	    }
 	}
 	
 	function handleSheetConstruction()
 	{
+	    echo "<form method='get'>";
+	    
 	    showCreateSheet();
 	    
 	    $this->showCreateButton();
@@ -69,8 +74,8 @@ class Create
 	    }
 	    echo "<div class='row'></div>
 	            <p></p>
-	          <div>
-    	            <form method='get'>
+	          <div class='col-md-10' style='padding-bottom:20px;'>
+    	            
     	            <input type='hidden' name='create'>".$var."
     	            <button class='btn btn-success btn-block'>Create this sheet</button>
     	            </form>
