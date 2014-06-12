@@ -43,7 +43,7 @@ function addItemToBody(moduleitem)
 			var lastelement = elements[elements.length-1];
 			var id = lastelement.id;
 			id = id.substr(id.lastIndexOf("_")+1, id.length-1);
-			//alert(number);
+			number = parseInt(id)+1;
 		}
 		$("#sheetmain").append(data.replace(/XXXX/g,number));
 	});
