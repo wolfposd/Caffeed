@@ -19,7 +19,7 @@ function basiceditor($title, $type, $others = "")
             </div>
         </div>
     <?php 
-       return ob_get_clean();
+    return ob_get_clean();
 }
 
 ?>

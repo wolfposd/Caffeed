@@ -37,18 +37,10 @@ class date implements IModule
     
     function editorhtml()
     {
-        ?>
-        <div class="row" id="div_module_XXXX">
-        <h4>Date Module</h4>
-            <div class="col-md-5 divbordersheeteditor">
-            <input type="hidden" name="module_XXXX_type" value="longlistmodule">
-            <p>Text: <input class="form-control" type="text" name="module_XXXX_text" placeholder="Display Text"></p>
-            </div>
-            <div class="col-md-1">
-                <button type="button" class="btn btn-danger" onclick="$('#div_module_XXXX').remove(); return false;">X</button>
-            </div>
-        </div>
-            <?php
+        
+        include_once 'views/modules/basiceditor.php';
+        
+        echo basiceditor("Date Module","datemodule");
         }
 }
 

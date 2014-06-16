@@ -28,7 +28,7 @@ function decrypt($value)
  * @param string $customkey (optional) use a custom key
  * @return string Hex-Form string of SHA265 message
  */
-function hash_SHA265($message, $customkey = false)
+function hash_SHA265($message, $customkey = false, $rawdata = false)
 {
 	if($customkey === false)
 	{
@@ -36,7 +36,7 @@ function hash_SHA265($message, $customkey = false)
 		$customkey = $encryptionKey;
 	}
 	
-	return hash_hmac('SHA256', $message, $customkey);
+	return hash_hmac('SHA256', $message, $customkey, $rawdata);
 }
 
 /**

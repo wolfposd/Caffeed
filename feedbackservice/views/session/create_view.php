@@ -61,4 +61,29 @@ $(function() {$('#floatdiv').addFloating({targetTop: 80, snap: true });});
 }
 
 
+function reloadToSuccessPage($sheetid = "")
+{
+    //view=session/overview&sub=create
+    $GET = "?view=".$_GET["view"]."&sub=".$_GET["sub"]."&create=success".$sheetid;
+    ob_start();
+    ?>
+$(function()
+{
+	var url = window.location.href;
+
+	if (url.indexOf("?")>-1)
+	{
+		url = url.substr(0,url.indexOf("?"));
+	}	
+	url += "<?php echo  $GET?>";
+
+	setTimeout(function() {
+		location.replace(url);
+	}, 3000);
+});
+    <?php 
+   return str_replace("\n","", ob_get_clean());
+}
+
+
 ?>
