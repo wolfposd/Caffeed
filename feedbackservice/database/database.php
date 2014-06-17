@@ -195,10 +195,10 @@ class database
             
             $page1 = new ArrayObject();
             
-            $page1["title"] = "Page 1";
-            $page1["elements"] = array();
+            $currentpage = 1;
             
-            $pagearray[] = $page1;
+            $page1["title"] = "Page $currentpage";
+            $page1["elements"] = array();
             
             while ( $row = $result->fetch_row() )
             {
@@ -206,8 +206,23 @@ class database
                 $jsonarray = json_decode($row[1]);
                 $jsonarray->id = $row[2];
                 
-                $page1["elements"][] = $jsonarray;
+                if($jsonarray->type =="pagebreak")
+                {
+                    $pagearray[] = $page1;
+                    $currentpage++;
+                    $page1 = new ArrayObject();
+                    $page1["title"] = "Page $currentpage";
+                    $page1["elements"] = array();
+                }
+                else
+                {
+                    $page1["elements"][] = $jsonarray;
+                }
+                
             }
+            
+            $pagearray[] = $page1;
+            
             $returnval["pages"] = $pagearray;
             
             $result->free();

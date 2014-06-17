@@ -20,14 +20,12 @@ class Rest
 
 	function display()
 	{
-	    include_once 'views/modules/slider.module.php';
-	    include_once 'views/modules/star.module.php';
-	    include_once 'views/modules/list.module.php';
-	    include_once 'views/modules/long_list.module.php';
-	    include_once 'views/modules/textfield.module.php';
-	    include_once 'views/modules/textarea.module.php';
-	    include_once 'views/modules/date.module.php';
-	    include_once 'views/modules/checkbox.module.php';
+        include_once 'views/modules/interface.module.php';
+        foreach (glob("views/modules/*.php") as $filename)
+        {
+            include_once $filename;
+        }
+	    
 	    
 	    $this->modules["list"] = new listmodule(array("text"=>"Pick one of the following", "elements"=>array("good","medium","bad")), "list1");
 	    $this->modules["long_list"] = new long_list(array("text"=>"Pick one of the following", "elements"=>array("best", "better", "good", "medium", "bad", "worse","worst")), "long_list1");
@@ -37,6 +35,7 @@ class Rest
 	    $this->modules["textarea"] = new textarea(array("text"=>"Add any additonal comments","length"=>160), "textarea1");
 	    $this->modules["date"] = new date(array("text"=>"Please select your birthday"), "date1");
 	    $this->modules["checkbox"] = new checkbox(array("text"=>"Do you like flowers"), "checkbox1");
+	    $this->modules["photo"] = new photo(array("text"=>"Please select a photo"), "photo1");
 	    
 		echo $this->show();
 	}
@@ -332,8 +331,7 @@ function show()
     			    </ol>
     			    <p>It could look like this:</p>
     			    <div style="border: 2px solid #000;" class="text-center">
-    			        <p/>
-        			    <p>Take a photo of your smile!<p><button class="btn-info btn-lg">Open Camera</button>
+    			    <?php $this->modules["photo"]->html();?>
     			    </div>
     			</td>
 			</tr>

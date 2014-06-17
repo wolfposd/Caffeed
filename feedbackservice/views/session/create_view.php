@@ -26,6 +26,8 @@ function showCreateSheet(){
 
    <p><button class="btn btn-block btn-primary" id="starmodule" onclick="return false;">Add Star-Rating</button></p>
    <p><button class="btn btn-block btn-primary" id="datemodule" onclick="return false;">Add Date-Selection</button></p>
+   <hr>
+   <p><button class="btn btn-block btn-warning" id="pagebreak" onclick="return false;">Add Pagebreak</button></p>
 
    <hr>
    <p><button class="btn btn-block btn-danger" id="clearbutton" onclick="return false;">Clear</button></p>
@@ -50,6 +52,7 @@ $("#checkboxmodule").click(function(){addItemToBody("checkboxmodule")});
 $("#slidermodule").click(function(){addItemToBody("slidermodule")});
 $("#starmodule").click(function(){addItemToBody("starmodule")});
 $("#datemodule").click(function(){addItemToBody("datemodule")});
+$("#pagebreak").click(function(){addItemToBody("pagebreak")});
 $("#clearbutton").click(function(){$("#sheetmain").empty();});
 });
 </script>

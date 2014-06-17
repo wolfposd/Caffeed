@@ -105,14 +105,13 @@ class Application
 
     function rest_get_internal_module(array $array)
     {
-        include_once 'views/modules/slider.module.php';
-        include_once 'views/modules/star.module.php';
-        include_once 'views/modules/list.module.php';
-        include_once 'views/modules/long_list.module.php';
-        include_once 'views/modules/textfield.module.php';
-        include_once 'views/modules/textarea.module.php';
-        include_once 'views/modules/date.module.php';
-        include_once 'views/modules/checkbox.module.php';
+        include_once 'views/modules/interface.module.php';
+        foreach (glob("views/modules/*.php") as $filename)
+        {
+            include_once $filename;
+        }
+        
+        
         if(count($array) >= 2)
         {
             $element;
@@ -121,27 +120,12 @@ class Application
                 case "listmodule" :
                     $element = new listmodule(array(), null);
                     break;
-                case "slidermodule" :
-                    $element = new slider(array(), null);
-                    break;
                 case "longlistmodule" :
                     $element = new long_list(array(), null);
                     break;
-                case "datemodule" :
-                    $element = new date(array(), null);
-                    break;
-                case "starmodule" :
-                    $element = new star(array(), null);
-                    break;
-                case "textfieldmodule" :
-                    $element = new textfield(array(), null);
-                    break;
-                case "textareamodule" :
-                    $element = new textarea(array(), null);
-                    break;
-                case "checkboxmodule" :
-                    $element = new checkbox(array(), null);
-                    break;
+                default:
+                    $classname = str_replace("module", "", $array[1]);
+                    $element = call_user_func_array(array(new ReflectionClass($classname), 'newInstance'), array(array(),null));
             }
             $element->editorhtml();
         }
