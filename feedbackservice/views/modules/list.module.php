@@ -20,7 +20,10 @@ class listmodule implements IModule
      */
     public function javascript()
     {
-        return "";
+        return "</script>
+                <script src=\"js/bootstrap-select.min.js\"></script>
+                <script type=\"text/javascript\">$('.selectpicker').selectpicker();</script>
+                <script type=\"text/javascript\">";
     }
 
     /**
@@ -32,9 +35,13 @@ class listmodule implements IModule
     <div class="text-center">
         <p>Pick one of the following</p>
         <p>
-        <?php foreach($this->values["elements"] as $value){?>
-	        <button type="button" class="btn-primary btn-sm" name="<?php echo $this->id?>" id="<?php echo $this->id?>"><?php echo $value?></button>
-        <?php }?>
+        <select class="selectpicker" data-style="btn-primary"> 
+            <?php
+            $i = 0;
+             foreach($this->values["elements"] as $value){?>
+            <option value="<?php echo $i?>"><?php echo $value;?></option>
+            <?php $i++;}?>
+        </select> 
 	    </p>
     </div>
 <?php 

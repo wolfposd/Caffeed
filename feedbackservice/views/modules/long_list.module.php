@@ -31,17 +31,13 @@ class long_list implements IModule
 ?>
     <div class="text-center">
         <p class="text-center">Pick one of the following</p>
-        <div style="overflow: scroll; height: 140px;">
-        <?php $i = 0; 
-            foreach($this->values["elements"] as $value) 
-            {
-            ?>
-            <p><button type="button" class="btn-primary btn-sm" style="width:100px;" name="<?php echo $this->id.",".$i;?>" id="<?php echo $this->id.",".$i;?>"><?php echo $value?></button></p>
-        <?php 
-                $i++;
-            }
-        ?>
-        </div>
+       <select class="selectpicker" data-style="btn-primary" data-live-search="true"> 
+            <?php
+            $i = 0;
+             foreach($this->values["elements"] as $value){?>
+            <option value="<?php echo $i?>"><?php echo $value;?></option>
+            <?php $i++;}?>
+        </select> 
     </div>
 <?php 
     }
