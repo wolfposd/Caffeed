@@ -30,7 +30,7 @@ class long_list implements IModule
     {
 ?>
     <div class="text-center">
-        <p class="text-center">Pick one of the following</p>
+        <p><?php echo $this->values["text"]?></p>
        <select class="selectpicker" data-style="btn-primary" data-live-search="true"> 
             <?php
             $i = 0;

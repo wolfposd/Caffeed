@@ -90,4 +90,28 @@ function redirectPageJavaScriptTextForBody($reloadtime=1500, $destination = "")
 	return "onLoad=\"JavaScript:changeURL($reloadtime, '$destination');\"";
 }
 
+function getModuleForType($type, $values = array(), $moduleid = null)
+{
+    include_once 'views/modules/interface.module.php';
+    foreach(glob("views/modules/*.php") as $filename)
+    {
+        include_once $filename;
+    }
+
+    $element;
+    switch ($type)
+    {
+        case "listmodule" :
+            $element = new listmodule($values, $moduleid);
+            break;
+        case "longlistmodule" :
+            $element = new long_list($values, $moduleid);
+            break;
+        default :
+            $classname = str_replace("module", "", $type);
+            $element = call_user_func_array(array(new ReflectionClass($classname), 'newInstance'), array($values, $moduleid));
+    }
+    return $element;
+}
+
 ?>

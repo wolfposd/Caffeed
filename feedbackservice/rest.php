@@ -1,5 +1,6 @@
 <?php
 include_once 'config.php';
+include_once 'functions.php';
 $application = new Application();
 $application->handle();
 class Application
@@ -105,29 +106,9 @@ class Application
 
     function rest_get_internal_module(array $array)
     {
-        include_once 'views/modules/interface.module.php';
-        foreach (glob("views/modules/*.php") as $filename)
-        {
-            include_once $filename;
-        }
-        
-        
         if(count($array) >= 2)
         {
-            $element;
-            switch ($array[1])
-            {
-                case "listmodule" :
-                    $element = new listmodule(array(), null);
-                    break;
-                case "longlistmodule" :
-                    $element = new long_list(array(), null);
-                    break;
-                default:
-                    $classname = str_replace("module", "", $array[1]);
-                    $element = call_user_func_array(array(new ReflectionClass($classname), 'newInstance'), array(array(),null));
-            }
-            $element->editorhtml();
+            getModuleForType($array[1])->editorhtml();
         }
     }
 }

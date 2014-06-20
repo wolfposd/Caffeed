@@ -206,10 +206,10 @@ class database
                 $jsonarray = json_decode($row[1]);
                 $jsonarray->id = $row[2];
                 
-                if($jsonarray->type =="pagebreak")
+                if($jsonarray->type == "pagebreak")
                 {
                     $pagearray[] = $page1;
-                    $currentpage++;
+                    $currentpage ++;
                     $page1 = new ArrayObject();
                     $page1["title"] = "Page $currentpage";
                     $page1["elements"] = array();
@@ -218,7 +218,6 @@ class database
                 {
                     $page1["elements"][] = $jsonarray;
                 }
-                
             }
             
             $pagearray[] = $page1;
@@ -248,6 +247,29 @@ class database
             $num = $num[0];
             $result->free();
             return $num;
+        }
+    }
+
+    function getSheetIdsForUser($useremail)
+    {
+        $useremail = $this->mysqli->real_escape_string($useremail);
+        $query = "SELECT rest_id FROM fb_question_sheet, fb_feedback_user
+        WHERE fb_feedback_user.user_id = fb_question_sheet.user_id AND fb_feedback_user.user_email = '$useremail'";
+        
+        $result = $this->mysqli->query($query);
+        if($result === false)
+        {
+            return array();
+        }
+        else
+        {
+            $arr = array();
+            while($row = $result->fetch_row())
+            {
+                $arr[] = $row[0];
+            }
+            $result->free();
+            return $arr;
         }
     }
 

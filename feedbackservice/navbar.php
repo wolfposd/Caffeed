@@ -21,7 +21,6 @@ class NavigationBarTop
 				<li><a href="<?php echo $value?>"><?php echo $key?> </a></li>
 				<?php }?>
 			</ul>
-
 			<ul class="nav navbar-nav navbar-right">
 				<?php  foreach ($elements[1] as $key => $value) {?>
 				<li><a href="<?php echo $value?>"><?php echo $key?> </a></li>
@@ -53,6 +52,7 @@ class NavigationBarLeft
 		}
 		?>
 	</ul>
+	<hr style="color:#A0A0A0; background-color:#A0A0A0;height: 1px;">
 	<?php 
 	}
 	?>

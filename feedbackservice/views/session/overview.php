@@ -68,6 +68,18 @@ class Overview
             
             echo "<p>Welcome back, " . $_SESSION["user"] . "!</p>";
             echo "<p>You have $count sheets</p>";
+            
+            if($count > 0)
+            {
+                echo "<p>Your sheet-ids:</p>";
+                echo "<ul>";
+                foreach($this->database->getSheetIdsForUser($_SESSION["user"]) as $sheetid)
+                {
+                    echo "<li><a href='?view=sheet&sheet=$sheetid'>$sheetid</a></li>";
+                }
+                echo "</ul>";
+            }
+            
             echo "<p>You have $sheetResults new results</p>";
             echo "<p>...</p>";
         }

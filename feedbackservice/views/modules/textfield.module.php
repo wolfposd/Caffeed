@@ -43,7 +43,7 @@ class textfield implements IModule
         ?>
 	    <div class="text-center">
 	        <p><?php echo $this->values["text"]?></p>
-	        <input type="text" size="45" <?php echo $maxlength?> id="<?php echo $this->id?>">
+	        <input type="text" style="width: 75%;" <?php echo $maxlength?> id="<?php echo $this->id?>">
 	        <p><span id='<?php echo "addon-".$this->id;?>'><?php echo $length !== false ? "Remaining characters: ".$length : "";?></span></p>
 	        <p/>
 	    </div>

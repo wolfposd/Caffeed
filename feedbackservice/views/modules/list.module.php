@@ -33,7 +33,7 @@ class listmodule implements IModule
     {
 ?>
     <div class="text-center">
-        <p>Pick one of the following</p>
+        <p><?php echo $this->values["text"]?></p>
         <p>
         <select class="selectpicker" data-style="btn-primary"> 
             <?php
