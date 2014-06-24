@@ -1,25 +1,8 @@
 <?php
 
 
-
-class star implements IModule
+class star extends AbstractModule
 {
-    private $values;
-    private $id;
-    
-    function __construct(array $values, $id)
-    {    
-        $this->values = $values;
-        $this->id = $id;
-    }
-
-    /**
-     * Returns Javascript code
-    */
-    public function javascript()
-    {
-        return "";
-    }
 
     /**
      * Echos the HTML code
@@ -31,9 +14,9 @@ class star implements IModule
 	        <p/>
 		    <p><?php echo $this->values["text"]?></p>
 		    <div class="rating">
-                <input type="radio" name="<?php echo $this->id?>" value="1" checked="checked"/><span></span>
+                <input type="radio" name="<?php echo $this->id?>" value="1" /><span></span>
                 <input type="radio" name="<?php echo $this->id?>" value="2" /><span></span>
-                <input type="radio" name="<?php echo $this->id?>" value="3" /><span></span>
+                <input type="radio" name="<?php echo $this->id?>" value="3" checked="checked"/><span></span>
                 <input type="radio" name="<?php echo $this->id?>" value="4" /><span></span>
                 <input type="radio" name="<?php echo $this->id?>" value="5" /><span></span>
             </div>
@@ -41,13 +24,12 @@ class star implements IModule
 	    </div>
         <?php 
     }
+    
     function editorhtml()
     {
         include_once 'views/modules/basiceditor.php';
-        
         echo basiceditor("Star Module","starmodule");
     }
+    
 }
-
-
 ?>

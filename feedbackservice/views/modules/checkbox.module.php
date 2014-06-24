@@ -2,29 +2,9 @@
 
 
 
-class checkbox implements IModule
+class checkbox extends AbstractModule
 {
-    private $values;
-    private $id;
     
-    function __construct(array $values, $id)
-    {    
-        $this->values = $values;
-        $this->id = $id;
-    }
-
-    /**
-     * Returns Javascript code
-    */
-    public function javascript()
-    {
-        return false;
-       // return '$("#'.$this->id.'").datepicker({format:"dd.mm.yyyy"});';
-    }
-
-    /**
-     * Echos the HTML code
-    */
     public function html()
     {
         ?>
@@ -35,7 +15,7 @@ class checkbox implements IModule
         <?php 
     }
     
-    function editorhtml()
+    public function editorhtml()
     {
         include_once 'views/modules/basiceditor.php';
         

@@ -1,20 +1,8 @@
 <?php
 
 
-class textarea implements IModule
+class textarea extends AbstractModule
 {
-    private $values;
-    private $id;
-    
-    function __construct(array $values, $id)
-    {    
-        $this->values = $values;
-        $this->id = $id;
-    }
-
-    /**
-     * Returns Javascript code
-    */
     public function javascript()
     {
         $length = isset($this->values["length"]) ? $this->values["length"] : false;
@@ -31,9 +19,6 @@ class textarea implements IModule
         }
     }
 
-    /**
-     * Echos the HTML code
-    */
     public function html()
     {
         $length = isset($this->values["length"]) ? $this->values["length"] : false;
@@ -43,18 +28,20 @@ class textarea implements IModule
         ?>
 	    <div class="text-center">
 	        <p><?php echo $this->values["text"]?></p>
-	        <textarea rows="5" style="width: 75%;" <?php echo $maxlength?> id="<?php echo $this->id?>"></textarea>
+	        <textarea rows="5" style="width: 75%;margin-bottom:5px;" <?php echo $maxlength?> name="<?php echo $this->id?>" id="<?php echo $this->id?>"></textarea>
 	        <p><span id='<?php echo "addon-".$this->id;?>'><?php echo $length !== false ? "Remaining characters: ".$length : "";?></span></p>
 	        <p></p>
 	    </div>
         <?php 
     }
+    
     function editorhtml()
     {
         include_once 'views/modules/basiceditor.php';
         $text = '<p>Length: <input type="text" name="module_XXXX_length" value="160">  (empty = infinite)<p>';
         echo basiceditor("Textarea Module","textareamodule",$text);
     }
+    
 }
 
 

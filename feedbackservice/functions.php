@@ -114,4 +114,38 @@ function getModuleForType($type, $values = array(), $moduleid = null)
     return $element;
 }
 
+/**
+ * Returns javascript to reload to a page with specified get-params
+ * @param array $paramArray
+ * @param int $timeout timeout in milliseconds
+ * @return javascript code
+ */
+function reloadToPageJavascriptWithParams(array $paramArray, $timeout = 3000)
+{
+    $params ="?";
+    foreach($paramArray as $key => $value)
+    {
+        $params .="$key=$value&";
+    }
+    
+    ob_start();
+    ?>
+$(function()
+{
+	var url = window.location.href;
+
+	if (url.indexOf("?")>-1)
+	{
+		url = url.substr(0,url.indexOf("?"));
+	}	
+	url += "<?php echo  $params?>";
+
+	setTimeout(function() {
+		location.replace(url);
+	}, <?php echo  $timeout?>);
+});
+    <?php 
+   return str_replace("\n","", ob_get_clean());
+}
+
 ?>

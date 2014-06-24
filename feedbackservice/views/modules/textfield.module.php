@@ -1,20 +1,8 @@
 <?php
 
 
-class textfield implements IModule
+class textfield extends AbstractModule
 {
-    private $values;
-    private $id;
-    
-    function __construct(array $values, $id)
-    {    
-        $this->values = $values;
-        $this->id = $id;
-    }
-
-    /**
-     * Returns Javascript code
-    */
     public function javascript()
     {
         $length = isset($this->values["length"]) ? $this->values["length"] : false;
@@ -31,9 +19,6 @@ class textfield implements IModule
         }
     }
 
-    /**
-     * Echos the HTML code
-    */
     public function html()
     {
         $length = isset($this->values["length"]) ? $this->values["length"] : false;
@@ -43,7 +28,7 @@ class textfield implements IModule
         ?>
 	    <div class="text-center">
 	        <p><?php echo $this->values["text"]?></p>
-	        <input type="text" style="width: 75%;" <?php echo $maxlength?> id="<?php echo $this->id?>">
+	        <input type="text" style="width: 75%;" <?php echo $maxlength?> id="<?php echo $this->id?>" name="<?php echo $this->id?>">
 	        <p><span id='<?php echo "addon-".$this->id;?>'><?php echo $length !== false ? "Remaining characters: ".$length : "";?></span></p>
 	        <p/>
 	    </div>
@@ -56,6 +41,7 @@ class textfield implements IModule
         $text = '<p>Length: <input type="text" name="module_XXXX_length" value="160">  (empty = infinite)<p>';
         echo basiceditor("Textfield Module","textfieldmodule",$text);
     }
+    
 }
 
 

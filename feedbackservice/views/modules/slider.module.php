@@ -1,19 +1,8 @@
 <?php
 
 
-include_once 'views/modules/interface.module.php';
-class slider implements IModule
+class slider extends AbstractModule
 {
-    private $values;
-    private $id;
-    
-    function __construct(array $values, $id)
-    {    
-        $this->values = $values;
-        $this->id = $id;
-        
-    }
-    
     function javascript()
     {
         return '$("#'.$this->id.'").slider({formater:function(e){return"Current value: "+e}});';

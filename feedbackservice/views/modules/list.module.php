@@ -4,17 +4,9 @@
 /**
  * Interface for modules
  */
-class listmodule implements IModule
+class listmodule extends AbstractModule
 {
-    private $values;
-    private $id;
-
-    function __construct(array $values, $id)
-    {
-        $this->values = $values;
-        $this->id = $id;
-    }
-
+    
     /**
      * Returns Javascript code
      */
@@ -35,7 +27,7 @@ class listmodule implements IModule
     <div class="text-center">
         <p><?php echo $this->values["text"]?></p>
         <p>
-        <select class="selectpicker" data-style="btn-primary"> 
+        <select class="selectpicker" data-style="btn-primary" name="<?php echo $this->id;?>"> 
             <?php
             $i = 0;
              foreach($this->values["elements"] as $value){?>
@@ -56,7 +48,7 @@ class listmodule implements IModule
         
         echo basiceditor("List Module","listmodule", '<p>Elements: (seperated by &lt;newline&gt;)</p><textarea rows="5" cols="40" name="module_XXXX_elements"></textarea>');
     }
-
+    
 }
 
 ?>

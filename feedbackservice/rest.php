@@ -106,7 +106,8 @@ class Application
 
     function rest_get_internal_module(array $array)
     {
-        if(count($array) >= 2)
+        session_start();
+        if(count($array) >= 2 && isset($_SESSION) && isset($_SESSION["login"]) && $_SESSION["login"] === true)
         {
             getModuleForType($array[1])->editorhtml();
         }

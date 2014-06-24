@@ -4,24 +4,8 @@
 /**
  * Interface for modules
  */
-class long_list implements IModule
+class long_list extends AbstractModule
 {
-    private $values;
-    private $id;
-
-    function __construct(array $values, $id)
-    {
-        $this->values = $values;
-        $this->id = $id;
-    }
-
-    /**
-     * Returns Javascript code
-     */
-    public function javascript()
-    {
-        return "";
-    }
 
     /**
      * Echos the HTML code
@@ -31,7 +15,7 @@ class long_list implements IModule
 ?>
     <div class="text-center">
         <p><?php echo $this->values["text"]?></p>
-       <select class="selectpicker" data-style="btn-primary" data-live-search="true"> 
+       <select class="selectpicker" data-style="btn-primary" data-live-search="true" name="<?php $this->id?>"> 
             <?php
             $i = 0;
              foreach($this->values["elements"] as $value){?>
@@ -48,8 +32,8 @@ class long_list implements IModule
         
         echo basiceditor("Long List Module","longlistmodule", 
     '<p>Elements: (seperated by &lt;newline&gt;)</p><textarea rows="5" cols="40" name="module_XXXX_elements"></textarea>');
-     }
-
+    }
+     
 }
 
 ?>

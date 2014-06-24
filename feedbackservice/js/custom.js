@@ -24,14 +24,6 @@ function reloadPage(timeoutPeriod){
 	setTimeout(function() { window.location.href = window.location.href;}, timeoutPeriod);
 }
 
-
-function setNameIntoField(name, field)
-{
-	$('#'+field).val(name);
-}
-
-
-
 function addItemToBody(moduleitem)
 {
 	$.get("rest.php/internal_module/" + moduleitem, function (data) 

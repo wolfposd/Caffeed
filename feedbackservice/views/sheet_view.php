@@ -17,8 +17,10 @@ function showPages($sheettitle , $pagearray)
         <li><a href="<?php echo "#".$pageid;?>" data-toggle="tab"><?php echo $pagetitle;?></a></li>
     <?php }?>
     </ul>
+    
+    <form method="POST">
     <div id="pageTabsContent" class="tab-content">
-    <?php foreach($pagearray as $page) { 
+    <?php foreach($pagearray as $index => $page) { 
         $pagetitle = $page["title"];
         $pageid = str_replace(" ", "", $pagetitle);
         ?>
@@ -31,18 +33,18 @@ function showPages($sheettitle , $pagearray)
                 </div>
                 <?php 
             }
+            if($index == count($pagearray)-1)
+            {
+                ?><button class="btn btn-primary" type="submit" id="sheetsubmitbutton">Submit</button><?php 
+            }
         ?>
-        
         </div>
     <?php } ?>
     </div>
+    </form>
 </div>
 <?php
 }
-
-
-
-
 
 
 ?>

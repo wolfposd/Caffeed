@@ -264,7 +264,7 @@ class database
         else
         {
             $arr = array();
-            while($row = $result->fetch_row())
+            while ( $row = $result->fetch_row() )
             {
                 $arr[] = $row[0];
             }
@@ -287,6 +287,37 @@ class database
             
             $result->free();
             return $row[0];
+        }
+        
+        return false;
+    }
+
+    function insertResultsForSheet($sheetid, array $sheetresults)
+    {
+        $sheetid = $this->mysqli->real_escape_string($sheetid);
+        $sheetidquery = "SELECT sheet_id from fb_question_sheet WHERE rest_id = '$sheetid' LIMIT 1";
+        $result = $this->mysqli->query($sheetidquery);
+        if($result !== false)
+        {
+            $sid = $result->fetch_row();
+            $sid = $sid[0];
+            $result->free();
+            
+            $query = "INSERT INTO fb_question_sheet_results (sheet_id, module_id, result) VALUES ";
+            
+            $queryinserts = array();
+            
+            foreach($sheetresults as $moduleid => $result)
+            {
+                $moduleid = $this->mysqli->real_escape_string($moduleid);
+                $result = $this->mysqli->real_escape_string($result);
+                
+                $queryinserts[] = "($sid, $moduleid, '$result')";
+            }
+            
+            $result = $this->mysqli->query($query . implode(",", $queryinserts));
+            
+            return $result;
         }
         
         return false;

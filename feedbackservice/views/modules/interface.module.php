@@ -5,7 +5,6 @@
  */
 interface IModule
 {
-
     /**
      * Create the module
      * 
@@ -17,7 +16,7 @@ interface IModule
     public function __construct(array $values, $id);
 
     /**
-     * Returns Javascript code
+     * Returns Javascript code or <b>empty-string</b>
      */
     public function javascript();
 
@@ -30,6 +29,11 @@ interface IModule
      * Echos the HTML code needed for creation of this module
      */
     public function editorhtml();
+    
+    /**
+     * Returns this modules id;
+     */
+    public function getID();
 }
 
 ?>

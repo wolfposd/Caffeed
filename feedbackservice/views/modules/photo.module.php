@@ -2,28 +2,9 @@
 
 
 
-class photo implements IModule
+class photo extends AbstractModule
 {
-    private $values;
-    private $id;
-    
-    function __construct(array $values, $id)
-    {    
-        $this->values = $values;
-        $this->id = $id;
-    }
 
-    /**
-     * Returns Javascript code
-    */
-    public function javascript()
-    {
-        return "";
-    }
-
-    /**
-     * Echos the HTML code
-    */
     public function html()
     {
         ?>

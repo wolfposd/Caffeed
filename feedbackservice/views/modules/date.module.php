@@ -2,28 +2,14 @@
 
 
 
-class date implements IModule
+class date extends AbstractModule
 {
-    private $values;
-    private $id;
     
-    function __construct(array $values, $id)
-    {    
-        $this->values = $values;
-        $this->id = $id;
-    }
-
-    /**
-     * Returns Javascript code
-    */
     public function javascript()
     {
         return '$("#'.$this->id.'").datepicker({format:"dd.mm.yyyy"});';
     }
 
-    /**
-     * Echos the HTML code
-    */
     public function html()
     {
         ?>
@@ -35,13 +21,11 @@ class date implements IModule
         <?php 
     }
     
-    function editorhtml()
+    public function editorhtml()
     {
-        
         include_once 'views/modules/basiceditor.php';
-        
         echo basiceditor("Date Module","datemodule");
-        }
+    }
 }
 
 
