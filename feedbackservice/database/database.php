@@ -303,7 +303,13 @@ class database
             $sid = $sid[0];
             $result->free();
             
-            $query = "INSERT INTO fb_question_sheet_results (sheet_id, module_id, result) VALUES ";
+            $queryParticipant = "INSERT INTO fb_question_sheet_participation (sheet_id) VALUES ($sid)";
+            
+            $this->mysqli->query($queryParticipant);
+            
+            $participantid = $this->mysqli->insert_id;
+            
+            $query = "INSERT INTO fb_question_sheet_results (sheet_id, module_id, participant_id, result) VALUES ";
             
             $queryinserts = array();
             
@@ -312,7 +318,7 @@ class database
                 $moduleid = $this->mysqli->real_escape_string($moduleid);
                 $result = $this->mysqli->real_escape_string($result);
                 
-                $queryinserts[] = "($sid, $moduleid, '$result')";
+                $queryinserts[] = "($sid, $moduleid, $participantid, '$result')";
             }
             
             $result = $this->mysqli->query($query . implode(",", $queryinserts));
