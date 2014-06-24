@@ -7,7 +7,7 @@ class date extends AbstractModule
     
     public function javascript()
     {
-        return '$("#'.$this->id.'").datepicker({format:"dd.mm.yyyy"});';
+        return 'var dp'.$this->id.'= $("#'.$this->id.'").datepicker({format:"dd.mm.yyyy"}).on("changeDate", function(ev) { dp'.$this->id.'.hide(); }).data("datepicker");';
     }
 
     public function html()
