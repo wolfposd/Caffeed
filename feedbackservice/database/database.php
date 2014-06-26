@@ -176,18 +176,23 @@ class database
         }
     }
 
-    function getSheetJSON($sheetid)
+    /**
+     * Returns the sheet
+     * @param string $rest_id the rest_id
+     * @return multitype:string multitype:multitype: Ambigous <multitype:, mixed>  unknown |multitype:string
+     */
+    function getSheetJSON($rest_id)
     {
-        $sheetid = $this->mysqli->real_escape_string($sheetid);
+        $rest_id = $this->mysqli->real_escape_string($rest_id);
         
         $query = "SELECT sheet_title, json_values, B.id FROM fb_question_sheet as A, fb_question_sheet_module as B 
-                WHERE A.sheet_id = B.sheet_id and A.rest_id = '$sheetid'";
+                WHERE A.sheet_id = B.sheet_id and A.rest_id = '$rest_id'";
         
         $result = $this->mysqli->query($query);
         
         if($result !== false && $result->num_rows > 0)
         {
-            $returnval = array("title" => "notitle", "id" => $sheetid);
+            $returnval = array("title" => "notitle", "id" => $rest_id);
             
             // TODO react to multiple pages
             

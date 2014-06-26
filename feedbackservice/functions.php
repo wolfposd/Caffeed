@@ -148,4 +148,32 @@ $(function()
    return str_replace("\n","", ob_get_clean());
 }
 
+
+function convertDatabaseSheetToModules($databasesheetarray)
+{
+    $sheetsheet = $databasesheetarray;
+    
+    $pages = array();
+    
+    foreach($sheetsheet["pages"] as $page)
+    {
+        $pagearray = array();
+        $pagearray["title"] = $page["title"];
+        $pagearray["id"] = str_replace(" ", "", $page["title"]);
+    
+        $elements = array();
+    
+        foreach($page["elements"] as $mod)
+        {
+            $module = getModuleForType($mod->type, (array) $mod, $mod->id);
+            $elements[] = $module;
+        }
+        $pagearray["elements"] = $elements;
+    
+        $pages[] = $pagearray;
+    }
+    
+    return $pages;
+}
+
 ?>

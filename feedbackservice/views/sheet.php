@@ -30,7 +30,7 @@ class Sheet
         
         if(isset($_GET["sheet"]))
         {
-            $this->getSheetData();
+           $this->getSheetData();
         }
         
         if(isset($_POST) && count($_POST) > 0 && ! $this->isErrorFromDB())
@@ -44,8 +44,6 @@ class Sheet
     {
         $resultsVerified = array();
         
-        $modules = 0;
-        
         foreach($this->sheet as $page)
         {
             foreach($page["elements"] as $module)
@@ -54,7 +52,6 @@ class Sheet
                 {
                     $resultsVerified[$module->getID()] = $_POST[$module->getID()];
                 }
-                $modules ++;
             }
         }
         
@@ -74,34 +71,11 @@ class Sheet
         {
             return;
         }
-        else
-        {
-            $this->shouldShowSheet = true;
-        }
         
+        $this->shouldShowSheet = true;
         $this->sheettitle = $this->sheet["title"];
+        $this->sheet = convertDatabaseSheetToModules($this->sheet);
         
-        $pages = array();
-        
-        foreach($this->sheet["pages"] as $page)
-        {
-            $pagearray = array();
-            $pagearray["title"] = $page["title"];
-            $pagearray["id"] = str_replace(" ", "", $page["title"]);
-            
-            $elements = array();
-            
-            foreach($page["elements"] as $mod)
-            {
-                $module = getModuleForType($mod->type, (array) $mod, $mod->id);
-                $elements[] = $module;
-            }
-            $pagearray["elements"] = $elements;
-            
-            $pages[] = $pagearray;
-        }
-        
-        $this->sheet = $pages;
     }
 
     function display()

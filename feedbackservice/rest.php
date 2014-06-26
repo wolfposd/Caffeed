@@ -80,11 +80,44 @@ class Application
             { // TESTING DATA
                 if(isset($json["list1"]) && isset($json["photo1"]) && isset($json["textfield1"]))
                 {
-                    echo "success";
+                    $this->displaySuccess();
                 }
                 else
                 {
-                    echo "unsuccessfull";
+                    $this->displayUnsuccessful();
+                }
+            }
+            else
+            {
+                $sheet = $this->database->getSheetJSON($id);
+                if(isset($this->sheet["error"]))
+                {
+                    // echo error;
+                }
+                else
+                {
+                    $sheet = convertDatabaseSheetToModules($sheet);
+                    $resultsVerified = array();
+                    foreach($sheet as $page)
+                    {
+                        foreach($page["elements"] as $module)
+                        {
+                            if(isset($json[$module->getID()]))
+                            {
+                                $resultsVerified[$module->getID()] = $json[$module->getID()];
+                            }
+                        }
+                    }
+                    $result = $this->database->insertResultsForSheet($id, $resultsVerified);
+                    
+                    if($result)
+                    {
+                        $this->displaySuccess();
+                    }
+                    else
+                    {
+                        $this->displayUnsuccessful();
+                    }
                 }
             }
         }
@@ -111,5 +144,15 @@ class Application
         {
             getModuleForType($array[1])->editorhtml();
         }
+    }
+
+    function displaySuccess()
+    {
+        echo "success";
+    }
+
+    function displayUnsuccessful()
+    {
+        echo "unsuccessful";
     }
 }
