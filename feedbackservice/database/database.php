@@ -178,8 +178,10 @@ class database
 
     /**
      * Returns the sheet
-     * @param string $rest_id the rest_id
-     * @return multitype:string multitype:multitype: Ambigous <multitype:, mixed>  unknown |multitype:string
+     *
+     * @param string $rest_id
+     *            the rest_id
+     * @return multitype:string multitype:multitype: Ambigous <multitype:, mixed> unknown |multitype:string
      */
     function getSheetJSON($rest_id)
     {
@@ -332,5 +334,55 @@ class database
         }
         
         return false;
+    }
+
+    function getNumberOfResults($user)
+    {
+        $user = $this->mysqli->real_escape_string($user);
+        $query = "SELECT COUNT(aa.sheet_id) 
+            FROM fb_question_sheet_participation AS aa, fb_question_sheet AS bb, fb_feedback_user AS cc
+            WHERE cc.user_email = '$user' AND aa.sheet_id = bb.sheet_id AND bb.user_id = cc.user_id";
+        
+        $result = $this->mysqli->query($query);
+        
+        if($result !== false)
+        {
+            $row = $result->fetch_row();
+            $row = $row[0];
+            
+            $result->free();
+            return $row;
+        }
+        
+        return 0;
+    }
+
+    function getResultsForSheet($restid)
+    {
+        $restid = $this->espace($restid);
+        
+        $query = "SELECT CC.module_id, CC.result FROM  fb_question_sheet_results AS CC, fb_question_sheet AS AA
+                WHERE AA.rest_id = '$restid' AND CC.sheet_id = AA.sheet_id";
+        
+        $queryresult = $this->mysqli->query($query);
+        if($queryresult !== false)
+        {
+            $resultarr = array();
+            
+            while ( $row = $queryresult->fetch_row() )
+            {
+                $resultarr[$row[0]][] = $row[1];
+            }
+            
+            $queryresult->free();
+            return $resultarr;
+        }
+        
+        return false;
+    }
+
+    function espace($string)
+    {
+        return $this->mysqli->real_escape_string($string);
     }
 }

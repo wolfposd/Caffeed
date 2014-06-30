@@ -34,6 +34,17 @@ interface IModule
      * Returns this modules id;
      */
     public function getID();
+    
+    /**
+     * Returns the text of this module
+     */
+    public function getText();
+    
+    /**
+     * Returns the Elements if this Module has any, or false
+     * This is used for result-to-text mapping-reasons during analysis
+     */
+    public function getElements();
 }
 
 ?>

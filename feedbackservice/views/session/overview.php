@@ -64,7 +64,7 @@ class Overview
         else
         {
             $count = $this->database->getSheetCountForUser($_SESSION["user"]);
-            $sheetResults = 0;
+            $sheetResults = $this->database->getNumberOfResults($_SESSION["user"]);
             
             echo "<p>Welcome back, " . $_SESSION["user"] . "!</p>";
             echo "<p>You have $count sheets</p>";
@@ -80,7 +80,7 @@ class Overview
                 echo "</ul>";
             }
             
-            echo "<p>You have $sheetResults new results</p>";
+            echo "<p>You have currently $sheetResults results for inspection</p>";
             echo "<p>...</p>";
         }
     }

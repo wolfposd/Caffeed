@@ -104,7 +104,7 @@ class Sheet
 
         if($this->postParamsSet)
         {
-            $string.=reloadToPageJavascriptWithParams(array("view"=>$_GET["view"], "success"=>""),3000);
+            $string.=reloadToPageJavascriptWithParams(array("view"=>$_GET["view"], "success"=>"success"),3000);
         }
         else if($this->shouldShowSheet)
         {

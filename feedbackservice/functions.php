@@ -148,7 +148,11 @@ $(function()
    return str_replace("\n","", ob_get_clean());
 }
 
-
+/**
+ * Pages[ title, pageid, elements[module,module,..]]
+ * @param unknown $databasesheetarray
+ * @return multitype:multitype:mixed unknown multitype:mixed
+ */
 function convertDatabaseSheetToModules($databasesheetarray)
 {
     $sheetsheet = $databasesheetarray;
