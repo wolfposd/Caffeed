@@ -1,5 +1,22 @@
 <?php
 
+
+
+function showOverview($sheet)
+{
+    ?>
+    Please select a sheet for inspection:<p></p>
+    <ul>
+    <?php foreach($sheet as $sheetinfo) { ?>
+        <li>
+            <p><a href="?view=session/overview&sub=analyze&sheet=<?php echo $sheetinfo[0];?>"><?php echo $sheetinfo[0];?></a><br>
+            Title: <b><?php echo $sheetinfo[1];?></b> <br>Date: <?php echo $sheetinfo[2];?></p>
+        </li>
+    <?php }?>
+    </ul>
+    <?php 
+}
+
 function presentResults($headings, $results, $textmappings)
 {
     
