@@ -196,8 +196,6 @@ class database
         {
             $returnval = array("title" => "notitle", "id" => $rest_id);
             
-            // TODO react to multiple pages
-            
             $pagearray = array();
             
             $page1 = new ArrayObject();
@@ -356,10 +354,34 @@ class database
         
         return 0;
     }
+    
+    function getSheetInforsForUser($username)
+    {
+        
+        $username = $this->escape($username);
+        
+        $query = "SELECT sheet.rest_id, sheet.sheet_title, sheet.creation_date FROM fb_question_sheet as sheet, fb_feedback_user as user
+        WHERE sheet.user_id = user.user_id AND user.user_email = '$username'";
+        
+        $result = $this->mysqli->query($query);
+        
+        if($result !== false)
+        {
+            $resularr = array();
+            while($row = $result->fetch_row())
+            {
+                $resularr[] = $row;
+            }
+            
+            return $resularr;
+        }
+
+        return false;
+    }
 
     function getResultsForSheet($restid)
     {
-        $restid = $this->espace($restid);
+        $restid = $this->escape($restid);
         
         $query = "SELECT CC.module_id, CC.result FROM  fb_question_sheet_results AS CC, fb_question_sheet AS AA
                 WHERE AA.rest_id = '$restid' AND CC.sheet_id = AA.sheet_id";
@@ -381,7 +403,7 @@ class database
         return false;
     }
 
-    function espace($string)
+    function escape($string)
     {
         return $this->mysqli->real_escape_string($string);
     }

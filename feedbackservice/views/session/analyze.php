@@ -24,11 +24,12 @@ class Analyze
     {
         if(! isset($_GET["sheet"]))
         {
-            echo "Please select a sheet for inspection:";
+            echo "Please select a sheet for inspection:<p></p>";
             echo "<ul>";
-            foreach($this->database->getSheetIdsForUser($_SESSION["user"]) as $sheetid)
+            foreach($this->database->getSheetInforsForUser($_SESSION["user"]) as $sheetinfo)
             {
-                echo "<li><a href='?view=session/overview&sub=analyze&sheet=$sheetid'>$sheetid</a></li>";
+                echo "<li><p><a href='?view=session/overview&sub=analyze&sheet=$sheetinfo[0]'>$sheetinfo[0]</a><br>
+                Title: <b>$sheetinfo[1]</b> <br>Date: $sheetinfo[2]</p></li>";
             }
             echo "</ul>";
         }
@@ -89,6 +90,10 @@ class Analyze
                         }
                         
                     }
+                }
+                else 
+                {
+                    $values[$id] = array();    
                 }
             }
         }
