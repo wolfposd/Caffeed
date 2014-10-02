@@ -41,7 +41,7 @@ interface IModule
     public function getText();
     
     /**
-     * Returns the Elements if this Module has any, or false
+     * Returns the Elements if this Module has any, or false<br>
      * This is used for result-to-text mapping-reasons during analysis
      */
     public function getElements();

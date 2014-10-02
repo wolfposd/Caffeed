@@ -1,7 +1,8 @@
 <?php
 
+include_once 'textfield.module.php';
 
-class textarea extends AbstractModule
+class textarea extends textfield
 {
     public function javascript()
     {

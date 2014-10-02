@@ -42,6 +42,21 @@ class textfield extends AbstractModule
         echo basiceditor("Textfield Module","textfieldmodule",$text);
     }
     
+    
+    function analyzehtml($results, $mappings =array())
+    {
+        $values = $this->countSameElements($results);
+        ob_start();
+        ?>
+        <ul>
+        <?php foreach ($values as $value => $valuecount) { ?>
+            <li><?php echo $value; ?> <span class="badge"><?php echo $valuecount?></span></li>
+        <?php } ?>
+        </ul>
+        <?php 
+        return ob_get_clean();
+    }
+    
 }
 
 

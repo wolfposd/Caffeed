@@ -22,6 +22,11 @@ abstract class AbstractModule implements IModule
     public function editorhtml()
     {
     }
+    
+    public function analyzehtml($results, $mappings = array())
+    {
+        return false;
+    }
 
     public function getID()
     {
@@ -41,5 +46,20 @@ abstract class AbstractModule implements IModule
     public function getElements()
     {
         return false;
+    }
+    
+    
+    protected function countSameElements($results)
+    {
+        $values = array();
+        foreach($results as $result)
+        {
+            if(!isset($values[$result]))
+            {
+                $values[$result] = 0;
+            }
+            $values[$result]++;
+        }
+        return $values;
     }
 }

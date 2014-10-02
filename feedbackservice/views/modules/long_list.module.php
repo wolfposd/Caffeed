@@ -1,10 +1,10 @@
 <?php
 
-
+include_once 'list.module.php';
 /**
  * Interface for modules
  */
-class long_list extends AbstractModule
+class long_list extends listmodule
 {
 
     /**

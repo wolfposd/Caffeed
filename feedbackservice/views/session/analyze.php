@@ -56,42 +56,57 @@ class Analyze
     {
         $sheet = $_GET["sheet"];
         $results = $this->database->getResultsForSheet($sheet);
-        $modules = convertDatabaseSheetToModules($this->database->getSheetJSON($sheet));
-        
+        $sheetpages = convertDatabaseSheetToModules($this->database->getSheetJSON($sheet));
+
         $headings = array();
         $values = array();
         $mappings = array();
-        
-        foreach($modules as $page)
+        $analyzes = array();
+
+        foreach($sheetpages as $page)
         {
             foreach($page["elements"] as $module)
             {
                 $id = $module->getID();
                 $headings[$id] = array("text" => $module->getText(), "id" => $id, "class" => get_class($module));
-                
+
                 if(isset($results[$id]))
                 {
                     if($elements = $module->getElements())
                     {
                         $mappings[$id] = $elements;
                     }
+
                     foreach($results[$id] as $val)
                     {
                         if($val !== "")
                         {
                             $values[$id][] = $val;
                         }
-                        
+                    }
+                    
+                    $resultscount = count($values[$id]);
+                    
+                    $hasAnalyze = $module->analyzehtml($values[$id],$module->getElements() ? $mappings[$id]:array());
+                    if($hasAnalyze !== false)
+                    {
+                        $analyzes[$id] = array($resultscount ,$hasAnalyze);
+                    }
+                    else
+                    {
+                        $analyzes[$id] = array($resultscount,"TEST");
                     }
                 }
-                else 
+                else
                 {
-                    $values[$id] = array();    
+                    $values[$id] = array();
+                    $analyzes[$id] =  array(0,"");
                 }
+
             }
         }
-        
-        presentResults($headings, $values, $mappings);
+
+        presentResults($headings, $analyzes);
     }
 }
 

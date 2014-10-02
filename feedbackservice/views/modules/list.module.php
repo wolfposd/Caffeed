@@ -54,6 +54,35 @@ class listmodule extends AbstractModule
         return $this->values["elements"];
     }
     
+    
+    public function analyzehtml($results, $mappings = array())
+    {
+        $values = $this->countSameElements($results);
+        $count = array();
+
+        foreach ($mappings as $index => $map)
+        {
+            if(isset($values[$index]))
+            {
+                $count[$index] = $values[$index];
+            }
+            else
+            {
+                $count[$index] = 0;
+            }
+        }
+        
+        ob_start();
+        ?>
+        <ul>
+        <?php foreach ($count as $index => $value) { ?>
+            <li><?php echo $mappings[$index];?> <span class="badge"><?php echo $value?></span></li>
+        <?php } ?>
+        </ul>
+        <?php 
+        return ob_get_clean();
+    }
+    
 }
 
 ?>

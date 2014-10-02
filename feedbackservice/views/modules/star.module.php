@@ -31,5 +31,30 @@ class star extends AbstractModule
         echo basiceditor("Star Module","starmodule");
     }
     
+    function analyzehtml($results, $mappings = array())
+    {
+        $values = $this->countSameElements($results);
+
+        for($i = 1; $i <= 5; $i++)
+        {
+            if(!isset($values[$i]))
+            {
+                $values[$i] = 0;
+            }
+        }
+        ksort($values);
+        
+        $average = 0;
+        $countresults = count($results);
+        
+        foreach($values as $index => $val)
+        {
+            $average += ($val*$index);
+        }
+        
+        $average = round($average/$countresults, 1);
+        
+        return "Avarage is: " .  $average;
+    }
 }
 ?>

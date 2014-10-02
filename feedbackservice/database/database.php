@@ -29,7 +29,7 @@ class database
         $useremail = $this->mysqli->real_escape_string($useremail);
         $password = $this->mysqli->real_escape_string($password);
         
-        $password = hash_SHA265($password);
+        $password = hash_SHA256($password);
         
         $query = "SELECT * FROM fb_feedback_user WHERE user_email = '$useremail' AND user_pwd_hashed = '$password'";
         
@@ -52,7 +52,7 @@ class database
         $firstname = $this->mysqli->real_escape_string($firstname);
         $lastname = $this->mysqli->real_escape_string($lastname);
         
-        $userpwd = hash_SHA265($userpwd);
+        $userpwd = hash_SHA256($userpwd);
         
         $query = "INSERT INTO fb_feedback_user (user_email, user_pwd_hashed, user_first_name, user_last_name, registration_pending) 
                                                 VALUES ('$useremail', '$userpwd', '$firstname', '$lastname', 1)";
@@ -119,7 +119,7 @@ class database
     function isLoginCorrect($user, $pwd)
     {
         $user = $this->mysqli->real_escape_string($user);
-        $pwd = hash_SHA265($pwd);
+        $pwd = hash_SHA256($pwd);
         
         $query = "SELECT user_email FROM fb_feedback_user WHERE user_email = '$user' AND user_pwd_hashed = '$pwd'";
         
@@ -153,7 +153,7 @@ class database
             while ( $result === false )
             {
                 $key = "" . ($time - rand(1, 500));
-                $restid = base64_encode(hash_SHA265($sheet_id, $key, true));
+                $restid = base64_encode(hash_SHA256($sheet_id, $key, true));
                 $restid = str_replace(array("+", "/", "="), "", $restid);
                 
                 $queryRestId = "UPDATE fb_question_sheet SET rest_id = '$restid' WHERE sheet_id = '$sheet_id'";
