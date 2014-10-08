@@ -71,6 +71,8 @@ class Create
     function handleCreation()
     {
         $title = $_GET["title"];
+        $fullsheet = $_GET["isfullsheet"];
+        $fullsheet = $fullsheet == "on" ? "1" : "0";
         
         $modules = array();
         
@@ -111,7 +113,7 @@ class Create
         {
             $modules[] = $curvals;
         }
-        $result = $this->database->addNewSheet($title, $_SESSION["user"], $modules);
+        $result = $this->database->addNewSheet($title, $_SESSION["user"], $modules, $fullsheet);
         
         echo "Creation was " . ($result ? "successfull" : "unsuccessfull") . "<br>RELOADING";
         

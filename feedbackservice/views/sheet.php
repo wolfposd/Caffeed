@@ -110,6 +110,16 @@ class Sheet
         {
             $string = "$('#pageTabs a:first').tab('show');";
             
+            ob_start();
+            ?>
+            $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+              $('a[data-toggle="tab"].active').toggleClass("active");
+              $(e.target).toggleClass("active");
+            })
+            <?php 
+            
+            $string .= ob_get_clean();
+            
             foreach($this->sheet as $page)
             {
                 foreach($page["elements"] as $module)

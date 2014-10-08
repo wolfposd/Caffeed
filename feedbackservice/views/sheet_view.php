@@ -10,11 +10,11 @@ function showPages($sheettitle , $pagearray)
 <div class="row text-center">
 <h1><?php echo $sheettitle;?></h1>
     <ul class="pager" id="pageTabs">
-    <?php foreach($pagearray as $page) {
+    <?php foreach($pagearray as $index => $page) {
         $pagetitle = $page["title"];
         $pageid = $page["id"];
         ?>
-        <li><a href="<?php echo "#".$pageid;?>" data-toggle="tab"><?php echo $pagetitle;?></a></li>
+        <li><a href="<?php echo "#".$pageid;?>" data-toggle="tab" class="<?php if($index == 0) echo "active";?>"><?php echo $pagetitle;?></a></li>
     <?php }?>
     </ul>
     

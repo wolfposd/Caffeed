@@ -24,7 +24,7 @@ class Analyze
     {
         if(! isset($_GET["sheet"]))
         {
-            showOverview($this->database->getSheetInforsForUser($_SESSION["user"]));
+            showOverview($this->database->getSheetInfosForUser($_SESSION["user"]));
         }
         else
         {

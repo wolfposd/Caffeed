@@ -33,6 +33,37 @@ class checkbox extends AbstractModule
         
         return array("on" => $on, "1" => $on, "off" => $off, "0" => $off);
     }
+    
+    public function analyzehtml($results, $mappings = array())
+    {
+        $values = $this->countSameElements($results);
+        $realVals = array(0,0);
+        $count = 0;
+        foreach ($values as $key => $value)
+        {
+            if($key === "on" || $key === "1")
+            {
+                $realVals[1] += $value;
+            }
+            else
+            {
+                $realVals[0] += $value;
+            }
+            $count += $value;
+        }
+        
+        
+        $pNo = round($realVals[0] * 100 / $count,1);
+        $pYes = round($realVals[1] * 100 / $count,1);
+        
+        
+        ob_start();
+        ?>
+        <p><label>YES: <?php echo $realVals[1]?> in P: <?php echo $pYes?>%</label></p>
+        <p><label>NO: <?php echo $realVals[0]?> in P: <?php echo $pNo?>%</label></p>
+        <?php 
+        return ob_get_clean();
+    }
 }
 
 

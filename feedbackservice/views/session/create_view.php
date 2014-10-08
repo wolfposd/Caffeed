@@ -10,6 +10,11 @@ function showCreateSheet(){
                 <font size="5">Title:</font> <input class="form-control" type="text" name="title" placeholder="Sheet title">   
            </div>
        </div>
+       <div class="row panel-body">
+           Is this a complete feedbacksheet?
+           <input type="hidden" value="0" name="isfullsheet">
+           <input type="checkbox" name="isfullsheet" checked="checked"><span></span>
+       </div>
        <hr>
        <div class="row" id="sheetmain"></div>
    </div>

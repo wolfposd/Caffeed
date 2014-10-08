@@ -21,30 +21,36 @@ class Overview
     {
         if(isset($_GET["sub"]))
         {
-            include_once 'profile.php';
-            include_once 'create.php';
-            include_once 'analyze.php';
-            include_once 'preview.php';
             switch ($_GET["sub"])
             {
                 case "profile" :
                     {
+                        include_once 'profile.php';
                         $this->content = new Profile($this->database);
                         break;
                     }
                 case "create" :
                     {
+                        include_once 'create.php';
                         $this->content = new Create($this->database);
                         break;
                     }
                 case "analyze" :
                     {
+                        include_once 'analyze.php';
                         $this->content = new Analyze($this->database);
                         break;
                     }
                 case "preview" :
                     {
+                        include_once 'preview.php';
                         $this->content = new Preview($this->database);
+                        break;
+                    }
+                case "trigger" :
+                    {
+                        include_once 'trigger.php';
+                        $this->content = new Trigger($this->database);
                         break;
                     }
             }
@@ -71,11 +77,13 @@ class Overview
             
             if($count > 0)
             {
-                echo "<p>Your sheet-ids:</p>";
+                echo "<p>Your Sheets:</p>";
                 echo "<ul>";
-                foreach($this->database->getSheetIdsForUser($_SESSION["user"]) as $sheetid)
+                foreach($this->database->getSheetInfosForUser($_SESSION["user"]) as $sheetid)
                 {
-                    echo "<li><a href='?view=sheet&sheet=$sheetid'>$sheetid</a></li>";
+                    echo "<li>
+                    <a href='?view=sheet&sheet=$sheetid[0]'><label>$sheetid[1]</label>  $sheetid[0]</a>
+                    </li>";
                 }
                 echo "</ul>";
             }
@@ -87,9 +95,20 @@ class Overview
 
     function getNavigationBarLeftContent()
     {
-        return array(array($this->makeSideEntry("Overview", "overview"), $this->makeSideEntry("Profile", "profile")), 
-                array($this->makeSideEntry("Create Sheet", "create"), $this->makeSideEntry("Analyze Sheet", "analyze"), 
-                        $this->makeSideEntry("Preview Sheet", "preview")));
+        return array(
+                array(
+                        $this->makeSideEntry("Overview", "overview"),
+                        $this->makeSideEntry("Profile", "profile")
+                ),
+                array(
+                        $this->makeSideEntry("Create Sheet", "create"),
+                        $this->makeSideEntry("Analyze Sheet", "analyze"),
+                        $this->makeSideEntry("Preview Sheet", "preview")
+                ),
+                array(
+                        $this->makeSideEntry("Create Contextgroup", "trigger")
+                        )
+        );
     }
 
     function additionalJavascript()

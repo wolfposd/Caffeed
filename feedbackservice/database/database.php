@@ -134,14 +134,15 @@ class database
         return false;
     }
 
-    function addNewSheet($title, $username, $sheetmodulearray)
+    function addNewSheet($title, $username, $sheetmodulearray, $isfullsheet)
     {
         $title = $this->mysqli->real_escape_string($title);
         $username = $this->mysqli->real_escape_string($username);
+        $isfullsheet = $this->mysqli->real_escape_string($isfullsheet);
         
         $subquery = "(SELECT user_id FROM fb_feedback_user WHERE user_email = '$username')";
         
-        $querySheet = "INSERT INTO fb_question_sheet (user_id, rest_id, sheet_title) VALUES ($subquery, 'empty', '$title')";
+        $querySheet = "INSERT INTO fb_question_sheet (user_id, rest_id, sheet_title, isfullsheet) VALUES ($subquery, 'empty', '$title', '$isfullsheet')";
         
         $result = $this->mysqli->query($querySheet);
         
@@ -259,7 +260,7 @@ class database
     {
         $useremail = $this->mysqli->real_escape_string($useremail);
         $query = "SELECT rest_id FROM fb_question_sheet, fb_feedback_user
-        WHERE fb_feedback_user.user_id = fb_question_sheet.user_id AND fb_feedback_user.user_email = '$useremail'";
+        WHERE fb_feedback_user.user_id = fb_question_sheet.user_id AND fb_feedback_user.user_email = '$useremail' AND isfullsheet = 1";
         
         $result = $this->mysqli->query($query);
         if($result === false)
@@ -355,13 +356,13 @@ class database
         return 0;
     }
     
-    function getSheetInforsForUser($username)
+    function getSheetInfosForUser($username)
     {
         
         $username = $this->escape($username);
         
         $query = "SELECT sheet.rest_id, sheet.sheet_title, sheet.creation_date FROM fb_question_sheet as sheet, fb_feedback_user as user
-        WHERE sheet.user_id = user.user_id AND user.user_email = '$username'";
+        WHERE sheet.user_id = user.user_id AND user.user_email = '$username' AND isfullsheet = 1";
         
         $result = $this->mysqli->query($query);
         
