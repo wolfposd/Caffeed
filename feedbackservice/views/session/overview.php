@@ -107,7 +107,7 @@ class Overview
                 ),
                 array(
                         $this->makeSideEntry("Create Contextgroup", "trigger")
-                        )
+                )
         );
     }
 

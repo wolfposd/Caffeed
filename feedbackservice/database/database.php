@@ -379,6 +379,34 @@ class database
 
         return false;
     }
+    
+    
+    function getDynamicSheetsForUser($username)
+    {
+        
+        $username = $this->escape($username);
+        
+        $query = "SELECT sheet.rest_id, sheet.sheet_title, sheet.creation_date FROM fb_question_sheet as sheet, fb_feedback_user as user
+        WHERE sheet.user_id = user.user_id AND user.user_email = '$username' AND isfullsheet = 0";
+        
+        $result = $this->mysqli->query($query);
+        
+        if($result !== false)
+        {
+            $resularr = array();
+            while($row = $result->fetch_row())
+            {
+                $resularr[] = $row;
+            }
+        
+            $result->free();
+            return $resularr;
+        }
+        
+        return false;
+        
+        
+    }
 
     function getResultsForSheet($restid)
     {
@@ -408,4 +436,81 @@ class database
     {
         return $this->mysqli->real_escape_string($string);
     }
+    
+    
+    function getGroupIdForBeacons($beaconuuid)
+    {
+        $query = "SELECT g.id FROM fb_beacon as b, fb_trigger_group as g WHERE b.id = g.beaconid AND b.uuid = ? LIMIT 1";
+        
+        $stmt = $this->mysqli->prepare($query);
+        
+        $stmt->bind_param("s", $beaconuuid);
+        
+        $ok = $stmt->execute();
+        
+        $result = -1;
+        
+        if($ok)
+        {
+            $stmt->bind_result($groupid);
+            while ($stmt->fetch())
+            {
+                $result = $groupid;
+                break;
+            }
+            $stmt->close();
+        }
+        
+        return $result;
+    }
+    
+    function getTriggersForGroupId($groupid)
+    {
+        $query = "SELECT type, extra from fb_trigger WHERE groupid = ?";
+        $stmt = $this->mysqli->prepare($query);
+        
+        $stmt->bind_param("s", $groupid);
+        
+        $ok = $stmt->execute();
+        $result = array();
+
+        if($ok)
+        {
+            $stmt->bind_result($type, $extra);
+            while ($stmt->fetch())
+            {
+                $extra = json_decode($extra,true);
+                $result[] = array("type" => $type,"extra" => $extra);
+            }
+            $stmt->close();
+        }
+        
+        return $result;
+    }
+    
+    function getBeaconForBeaconId($beaconid)
+    {
+        require_once 'views/items/beacon.php';
+        
+        $query = "SELECT * FROM fb_beacon where id = ? LIMIT 1";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $beaconid);
+        
+        $ok = $stmt->execute();
+        $result = false;
+        
+        if($ok)
+        {
+            $stmt->bind_result($id, $uuid, $major, $minor);
+            while ($stmt->fetch())
+            {
+                $result = new Beacon($uuid, $major, $minor);
+                break;
+            }
+            $stmt->close();
+        }
+        
+        return $result;
+    }
+    
 }

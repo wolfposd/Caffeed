@@ -13,8 +13,9 @@ class slider extends AbstractModule
         $this->values["middle"] = ($this->values["max"]-$this->values["min"])/2;
     ?>
     <div class="text-center">
-        <p>
-	    <p><?php echo $this->values["text"]?> <input type="text" class="span2" value="1" name="<?php echo $this->id?>" id="<?php echo $this->id?>" data-slider-min="<?php echo $this->values["min"]?>" data-slider-max="<?php echo $this->values["max"]?>" data-slider-step="<?php echo $this->values["step"]?>" data-slider-value="<?php echo $this->values["middle"]?>" ></p>
+        <p></p>
+	    <p><?php echo $this->values["text"]?></p>
+	    <input type="text" value="1" name="<?php echo $this->id?>" id="<?php echo $this->id?>" data-slider-min="<?php echo $this->values["min"]?>" data-slider-max="<?php echo $this->values["max"]?>" data-slider-step="<?php echo $this->values["step"]?>" data-slider-value="<?php echo $this->values["middle"]?>">
     </div>
     <?php 
     }

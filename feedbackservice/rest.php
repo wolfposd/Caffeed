@@ -21,7 +21,7 @@ class Application
     {
         $request = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
         $rest = 'rest_' . strtolower($_SERVER['REQUEST_METHOD']) . "_" . $request[0];
-        
+
         if(method_exists($this, $rest))
         {
             call_user_func(array($this, $rest), $request);
@@ -73,9 +73,9 @@ class Application
         if($id !== false)
         {
             $input = file_get_contents('php://input', 'r');
-            
+
             $json = json_decode($input, true);
-            
+
             if($id == 3)
             { // TESTING DATA
                 if(isset($json["list1"]) && isset($json["photo1"]) && isset($json["textfield1"]))
@@ -109,7 +109,7 @@ class Application
                         }
                     }
                     $result = $this->database->insertResultsForSheet($id, $resultsVerified);
-                    
+
                     if($result)
                     {
                         $this->displaySuccess();
@@ -155,4 +155,41 @@ class Application
     {
         echo "unsuccessful";
     }
+
+    function rest_get_sheetforcontext(array $array)
+    {
+        $contextInformation = json_decode(base64_decode($array[1]) ,true);
+        $beacons = $contextInformation["beacons"];
+        $uuid = $beacons[0]["uuid"];
+
+        $triggerGroupId  = $this->database->getGroupIdForBeacons($uuid);
+
+        $triggers  = $this->database->getTriggersForGroupId($triggerGroupId);
+        
+        
+        $sheetIds = array();
+        
+        include_once 'views/triggers/BeaconTrigger.php';
+        foreach ($triggers as $trigger)
+        {
+            if(isset($trigger["extra"]["beacon"]))
+            {
+                $beacon = $this->database->getBeaconForBeaconId($trigger["extra"]["beacon"]);
+                $trigger["extra"]["beacon"] = $beacon;
+            }
+            $bt = new BeaconTrigger($trigger["extra"]);
+            
+            $bt->putContextInformation($contextInformation);
+            
+            $sheetid = $bt->getSheetId();
+            if($sheetid !== false)
+            {
+                $sheetIds[] = $sheetid;
+            }
+        }
+        
+        
+        echo json_encode($sheetIds);
+    }
+
 }
