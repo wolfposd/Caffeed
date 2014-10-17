@@ -180,4 +180,30 @@ function convertDatabaseSheetToModules($databasesheetarray)
     return $pages;
 }
 
+function stripSheetsFromDescriptiveElementsForContext($fullsheetarray)
+{
+    $resultArray = array("title"=> "",
+                        "pages" => array(array("title"=>"Page 1", "elements" => array()))
+                    );
+
+    if(count($fullsheetarray) > 0)
+    {
+        $resultArray["title"] = $fullsheetarray[0]["title"];
+
+        foreach ($fullsheetarray as $sheet)
+        {
+            foreach($sheet["pages"] as $page)
+            {
+                foreach ($page["elements"] as $module)
+                {
+                    $resultArray["pages"][0]["elements"][] = $module;
+                }
+            }
+        }
+    }
+
+    return $resultArray;
+}
+
+
 ?>

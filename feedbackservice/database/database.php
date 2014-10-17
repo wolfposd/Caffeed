@@ -176,6 +176,32 @@ class database
             return false;
         }
     }
+    
+    
+    function getSheetJSONbyID($sheet_id)
+    {
+        $query = "SELECT rest_id FROM fb_question_sheet WHERE sheet_id = ? LIMIT 1";
+
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s",$sheet_id);
+        
+        $ok = $stmt->execute();
+        $result = false;
+        if($ok)
+        {
+            $stmt->bind_result($restid);    
+            while ($stmt->fetch())
+            {
+                $result = $restid;
+                break;
+            }
+            $stmt->close();
+            
+            $result = $this->getSheetJSON($result);
+        }
+        
+        return $result;
+    }
 
     /**
      * Returns the sheet
@@ -466,7 +492,7 @@ class database
     
     function getTriggersForGroupId($groupid)
     {
-        $query = "SELECT type, extra from fb_trigger WHERE groupid = ?";
+        $query = "SELECT type, extra from fb_trigger WHERE groupid = ? ORDER BY priority DESC";
         $stmt = $this->mysqli->prepare($query);
         
         $stmt->bind_param("s", $groupid);

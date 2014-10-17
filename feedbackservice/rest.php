@@ -184,10 +184,11 @@ class Application
             $sheetid = $bt->getSheetId();
             if($sheetid !== false)
             {
-                $sheetIds[] = $sheetid;
+                $sheetIds[] = $this->database->getSheetJSONbyID($sheetid);
             }
         }
         
+        $sheetIds = stripSheetsFromDescriptiveElementsForContext($sheetIds);
         
         echo json_encode($sheetIds);
     }
