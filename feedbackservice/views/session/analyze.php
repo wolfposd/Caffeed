@@ -22,16 +22,21 @@ class Analyze
 
     function display()
     {
-        if(! isset($_GET["sheet"]))
-        {
-            showOverview($this->database->getSheetInfosForUser($_SESSION["user"]));
-        }
-        else
+        if(isset($_GET["sheet"]))
         {
             $this->handleDisplaySheetResults();
         }
+        else if(isset($_GET["ct"]))
+        {
+            $this->handleDisplayDynamicResults();
+        }
+        else
+        {
+            showOverview($this->database->getSheetInfosForUser($_SESSION["user"]),
+                         $this->database->getContextTriggerGroups($_SESSION["user"]));
+        }
     }
-
+    
     /**
      * Remove function if not necessary
      *
@@ -51,32 +56,32 @@ class Analyze
     {
         return ""; // additional javascript
     }
-
-    function handleDisplaySheetResults()
+    
+    
+    function getSheetResultsAndAnalyzeForSheet($sheet)
     {
-        $sheet = $_GET["sheet"];
         $results = $this->database->getResultsForSheet($sheet);
         $sheetpages = convertDatabaseSheetToModules($this->database->getSheetJSON($sheet));
-
+        
         $headings = array();
         $values = array();
         $mappings = array();
         $analyzes = array();
-
+        
         foreach($sheetpages as $page)
         {
             foreach($page["elements"] as $module)
             {
                 $id = $module->getID();
                 $headings[$id] = array("text" => $module->getText(), "id" => $id, "class" => get_class($module));
-
+        
                 if(isset($results[$id]))
                 {
                     if($elements = $module->getElements())
                     {
                         $mappings[$id] = $elements;
                     }
-
+        
                     foreach($results[$id] as $val)
                     {
                         if($val !== "")
@@ -84,9 +89,9 @@ class Analyze
                             $values[$id][] = $val;
                         }
                     }
-                    
+        
                     $resultscount = count($values[$id]);
-                    
+        
                     $hasAnalyze = $module->analyzehtml($values[$id],$module->getElements() ? $mappings[$id]:array());
                     if($hasAnalyze !== false)
                     {
@@ -102,11 +107,59 @@ class Analyze
                     $values[$id] = array();
                     $analyzes[$id] =  array(0,"");
                 }
-
+        
             }
         }
+        
+        return array($headings, $analyzes);
+    }
 
-        presentResults($headings, $analyzes);
+    function handleDisplaySheetResults()
+    {
+        $sheet = $_GET["sheet"];
+       
+        $HeadingsAndResults = $this->getSheetResultsAndAnalyzeForSheet($sheet);
+
+        presentResults($HeadingsAndResults[0], $HeadingsAndResults[1]);
+    }
+    
+    
+    function getSheetIdsForTriggerGroup($triggerGroup)
+    {
+        $sheetids = array();
+        $triggerextras = $this->database->getContextTriggerExtraForGroupID($triggerGroup);
+
+        foreach ($triggerextras as $triggerextra)
+        {
+            $sheetids[] = $this->database->getRestIDforSheetID($triggerextra["sheetid"]);
+        }
+        
+        return $sheetids;
+    }
+    
+    function handleDisplayDynamicResults()
+    {
+        $sheetRestIds = $this->getSheetIdsForTriggerGroup($_GET["ct"]);
+        $name = $this->database->getContextTriggerNameForID($_GET["ct"]);
+        echo "<h2>Dynamic results for".$name."</h2>";
+             
+        $alreadyHandles = array();
+        
+        foreach($sheetRestIds as $sheet)
+        {
+            
+            if(!isset($alreadyHandles[$sheet]))
+            {
+                $alreadyHandles[$sheet] = 1;
+                $HeadingsAndResults = $this->getSheetResultsAndAnalyzeForSheet($sheet);
+
+                $title = $this->database->getSheetJSON($sheet);
+
+                presentResults($HeadingsAndResults[0], $HeadingsAndResults[1], "Results for: ". $title["title"]);
+                echo "<br>";
+                echo "<br>";
+            }
+        }
     }
 }
 

@@ -203,6 +203,18 @@ class Application
     
     function rest_put_sheetforcontext(array $array)
     {
+        $participantId = $this->database->insertQueryParticipant();
+        
+        $sheetresults = json_decode(base64_decode($array[1]),true);
+        
+        foreach($sheetresults as $key => $value)
+        {
+            $sheetID = $this->database->getSheetIDforModuleID($key);
+            
+            $this->database->insertSheetResults($participantId, $sheetID, array($key => $value));
+        }
+        
+        
         echo json_encode(array("success" => true));
     }
 

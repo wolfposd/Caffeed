@@ -2,10 +2,10 @@
 
 
 
-function showOverview($sheet)
+function showOverview($sheet, $contexts = false)
 {
     ?>
-    Please select a sheet for inspection:<p></p>
+    <p>Please select a sheet for inspection:</p>
     <ul>
     <?php foreach($sheet as $sheetinfo) { ?>
         <li>
@@ -14,13 +14,31 @@ function showOverview($sheet)
         </li>
     <?php }?>
     </ul>
+    <br>
+    <br>
+    <br>
+    <p>Or select a context group for inspection<p>
     <?php 
+    
+    if($contexts)
+    {
+           ?> <ul>
+           <?php foreach($contexts as $context) { 
+           ?>
+                <li>
+                    <p><a href="?view=session/overview&sub=analyze&ct=<?php echo $context["contextid"];?>"><?php echo $context["groupname"];?></a><br>
+                </li>
+            
+            <?php } ?>
+            </ul>
+            <?php 
+    }
 }
 
-function presentResults($headings, $analyzes)
+function presentResults($headings, $analyzes, $resultsText = "Results")
 {
     ?>
-    <h1>Results</h1>
+    <h3><?php echo $resultsText ?></h3>
 	<?php 
 	   foreach($headings as $index => $heading) {
        $classname = str_replace("module", "", $heading["class"]);
@@ -40,8 +58,7 @@ function presentResults($headings, $analyzes)
 		</div>
 	</div>
 </div>
-	<?php }?>
-<?php
+<?php }
 }
 
 ?>

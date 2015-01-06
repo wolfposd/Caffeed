@@ -59,7 +59,7 @@ class listmodule extends AbstractModule
     {
         $values = $this->countSameElements($results);
         $count = array();
-
+        
         foreach ($mappings as $index => $map)
         {
             if(isset($values[$index]))
@@ -70,6 +70,15 @@ class listmodule extends AbstractModule
             {
                 $count[$index] = 0;
             }
+        }
+        //Additional filtering
+        foreach ($values as $countValueKey => $countValue)
+        {
+           $index =  array_search($countValueKey, $mappings);
+           if($index !== false)
+           {
+               $count[$index] += $countValue;
+           }
         }
         
         ob_start();

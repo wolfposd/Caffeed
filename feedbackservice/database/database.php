@@ -177,6 +177,29 @@ class database
         }
     }
     
+    function getRestIDforSheetID($sheet_id)
+    {
+        $query = "SELECT rest_id FROM fb_question_sheet WHERE sheet_id = ? LIMIT 1";
+        
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s",$sheet_id);
+        
+        $ok = $stmt->execute();
+        $result = false;
+        if($ok)
+        {
+            $stmt->bind_result($restid);
+            while ($stmt->fetch())
+            {
+                $result = $restid;
+                break;
+            }
+            $stmt->close();
+        }
+        
+        return $result;
+    }
+    
     
     function getSheetJSONbyID($sheet_id)
     {
@@ -266,7 +289,7 @@ class database
     {
         $useremail = $this->mysqli->real_escape_string($useremail);
         $query = "SELECT COUNT(*) FROM fb_question_sheet, fb_feedback_user 
-                WHERE fb_feedback_user.user_id = fb_question_sheet.user_id AND fb_feedback_user.user_email = '$useremail'";
+                WHERE fb_feedback_user.user_id = fb_question_sheet.user_id AND fb_feedback_user.user_email = '$useremail' AND isfullsheet = 1";
         
         $result = $this->mysqli->query($query);
         if($result === false)
@@ -281,6 +304,29 @@ class database
             return $num;
         }
     }
+    
+    function getSheetIDforModuleID($moduleID)
+    {
+        $query = "SELECT sheet_id FROM fb_question_sheet_module WHERE id = ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s",$moduleID);
+        
+        $ok = $stmt->execute();
+        $result = false;
+        if($ok)
+        {
+            $stmt->bind_result($restid);
+            while ($stmt->fetch())
+            {
+                $result = $restid;
+                break;
+            }
+            $stmt->close();
+        }
+        
+        return $result;
+    }
+    
 
     function getSheetIdsForUser($useremail)
     {
@@ -323,7 +369,25 @@ class database
         
         return false;
     }
-
+    
+    
+    
+    /**
+     * Inserts a new result-record for this sheet-id
+     * @param int $sheetid
+     * @return int the id for this participant
+     */
+    function insertQueryParticipant($sheetid = -1)
+    {
+        $queryParticipant = "INSERT INTO fb_question_sheet_participation (sheet_id) VALUES ($sheetid)";
+        
+        $this->mysqli->query($queryParticipant);
+        
+        $participantid = $this->mysqli->insert_id;
+        
+        return $participantid;
+    }
+    
     function insertResultsForSheet($sheetid, array $sheetresults)
     {
         $sheetid = $this->mysqli->real_escape_string($sheetid);
@@ -335,31 +399,34 @@ class database
             $sid = $sid[0];
             $result->free();
             
-            $queryParticipant = "INSERT INTO fb_question_sheet_participation (sheet_id) VALUES ($sid)";
+            $participantid = $this->insertQueryParticipant($sid);
             
-            $this->mysqli->query($queryParticipant);
-            
-            $participantid = $this->mysqli->insert_id;
-            
-            $query = "INSERT INTO fb_question_sheet_results (sheet_id, module_id, participant_id, result) VALUES ";
-            
-            $queryinserts = array();
-            
-            foreach($sheetresults as $moduleid => $result)
-            {
-                $moduleid = $this->mysqli->real_escape_string($moduleid);
-                $result = $this->mysqli->real_escape_string($result);
-                
-                $queryinserts[] = "($sid, $moduleid, $participantid, '$result')";
-            }
-            
-            $result = $this->mysqli->query($query . implode(",", $queryinserts));
-            
+            $result = $this->insertSheetResults($participantid, $sid, $sheetresults);
             return $result;
         }
         
         return false;
     }
+    
+    function insertSheetResults($participantid, $sheetid, array $sheetresults)
+    {
+        $query = "INSERT INTO fb_question_sheet_results (sheet_id, module_id, participant_id, result) VALUES ";
+        
+        $queryinserts = array();
+        
+        foreach($sheetresults as $moduleid => $result)
+        {
+            $moduleid = $this->mysqli->real_escape_string($moduleid);
+            $result = $this->mysqli->real_escape_string($result);
+        
+            $queryinserts[] = "($sheetid, $moduleid, $participantid, '$result')";
+        }
+        
+        $result = $this->mysqli->query($query . implode(",", $queryinserts));
+        
+        return $result;
+    }
+    
 
     function getNumberOfResults($user)
     {
@@ -404,6 +471,76 @@ class database
         }
 
         return false;
+    }
+    
+    
+    function getContextTriggerNameForID($groupid)
+    {
+        $query = "SELECT groupname FROM fb_trigger_group WHERE id = ?";
+        
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $groupid);
+        $ok = $stmt->execute();
+        $result = false;
+        
+        if($ok)
+        {
+            $stmt->bind_result( $groupname);
+            while ($stmt->fetch())
+            {
+                $result = $groupname;
+                break;
+            }
+            $stmt->close();
+        }
+        
+        return $result;
+    }
+    
+    function getContextTriggerGroups($username)
+    {
+        $query = "SELECT G.id, G.groupname FROM fb_trigger_group as G, fb_feedback_user as U WHERE G.owner = U.user_id 
+                AND U.user_email = ?";
+        
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $username);
+        $ok = $stmt->execute();
+        $result = array();
+        
+        if($ok)
+        {
+            $stmt->bind_result($contextid, $groupname);
+            while ($stmt->fetch())
+            {
+                $result[] = array("contextid" => $contextid, "groupname" => $groupname);
+            }
+            $stmt->close();
+        }
+        
+        return $result;    
+    }
+    
+    function getContextTriggerExtraForGroupID($groupid)
+    {
+        $query = "SELECT extra FROM fb_trigger where groupid = ? ORDER BY priority DESC";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $groupid);
+        
+        $ok = $stmt->execute();
+        $result = array();
+        
+        if($ok)
+        {
+            
+            $stmt->bind_result($extra);
+            while ($stmt->fetch())
+            {
+                $result[] = json_decode($extra, true);
+            }
+            $stmt->close();
+        }
+        
+        return $result;
     }
     
     

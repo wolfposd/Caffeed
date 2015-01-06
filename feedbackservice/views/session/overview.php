@@ -73,7 +73,7 @@ class Overview
             $sheetResults = $this->database->getNumberOfResults($_SESSION["user"]);
             
             echo "<p>Welcome back, " . $_SESSION["user"] . "!</p>";
-            echo "<p>You have $count sheets</p>";
+            echo "<p>You have created $count full sheets</p>";
             
             if($count > 0)
             {
@@ -89,7 +89,6 @@ class Overview
             }
             
             echo "<p>You have currently $sheetResults results for inspection</p>";
-            echo "<p>...</p>";
         }
     }
 

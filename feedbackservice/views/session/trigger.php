@@ -33,13 +33,11 @@ class Trigger
 
 	function display()
 	{
-		echo "This is the Trigger<br>";
-		
-		
-		$sheets = $this->database->getDynamicSheetsForUser($_SESSION["user"]);
-		
-		
-		echo json_encode($sheets);
+	    echo "NYI";
+	    
+// 		echo "This is the Trigger<br>";
+// 		$sheets = $this->database->getDynamicSheetsForUser($_SESSION["user"]);
+// 		echo json_encode($sheets);
 	}
 
 	/**
