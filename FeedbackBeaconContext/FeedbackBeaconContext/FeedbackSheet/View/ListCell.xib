@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="list" id="08H-q3-pGX" customClass="ListCell" customModule="DynamicFeedbackSheets" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="08H-q3-pGX" id="Qfo-r6-78O">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eIj-hp-3mc">
+                        <rect key="frame" x="20" y="20" width="280" height="17"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="voN-8y-GAY">
+                        <rect key="frame" x="20" y="51" width="280" height="29"/>
+                        <segments>
+                            <segment title="First"/>
+                            <segment title="Second"/>
+                        </segments>
+                        <connections>
+                            <action selector="selectSegment:" destination="08H-q3-pGX" eventType="valueChanged" id="EbQ-KS-UX1"/>
+                        </connections>
+                    </segmentedControl>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="centerX" secondItem="voN-8y-GAY" secondAttribute="centerX" id="0eC-3N-amX"/>
+                    <constraint firstAttribute="trailing" secondItem="eIj-hp-3mc" secondAttribute="trailing" constant="20" symbolic="YES" id="7GG-kd-HRL"/>
+                    <constraint firstItem="eIj-hp-3mc" firstAttribute="top" secondItem="Qfo-r6-78O" secondAttribute="top" constant="20" symbolic="YES" id="Efq-Nl-YBm"/>
+                    <constraint firstItem="voN-8y-GAY" firstAttribute="top" secondItem="eIj-hp-3mc" secondAttribute="bottom" constant="14" id="PJV-kD-8FX"/>
+                    <constraint firstItem="eIj-hp-3mc" firstAttribute="leading" secondItem="Qfo-r6-78O" secondAttribute="leading" constant="20" symbolic="YES" id="gE0-gZ-isS"/>
+                    <constraint firstAttribute="bottom" secondItem="voN-8y-GAY" secondAttribute="bottom" constant="20" symbolic="YES" id="gcS-Bm-xqj"/>
+                    <constraint firstAttribute="trailing" secondItem="voN-8y-GAY" secondAttribute="trailing" constant="20" symbolic="YES" id="h1g-al-49N"/>
+                    <constraint firstAttribute="centerX" secondItem="eIj-hp-3mc" secondAttribute="centerX" id="hKo-w5-0Z3"/>
+                    <constraint firstItem="voN-8y-GAY" firstAttribute="leading" secondItem="Qfo-r6-78O" secondAttribute="leading" constant="20" symbolic="YES" id="iU6-h2-Lh5"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="descriptionLabel" destination="eIj-hp-3mc" id="3pm-Cm-9xl"/>
+                <outlet property="listControl" destination="voN-8y-GAY" id="TAy-7l-k8u"/>
+            </connections>
+            <point key="canvasLocation" x="537" y="492"/>
+        </tableViewCell>
+    </objects>
+</document>
