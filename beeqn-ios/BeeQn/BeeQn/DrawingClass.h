@@ -17,6 +17,18 @@
 
 
 /**
+ *  Draws all possible matching positions on an image
+ *
+ *  @param image   image to draw on
+ *  @param arrayOfBCCoordinate the array of BCCoordinates
+ *
+ *  @return modified image
+ */
++(UIImage*) image:(UIImage*) image drawAllPossibleLocationsOnImage:(NSArray*) arrayOfBCCoordinate;
+
+
+
+/**
  *  Draws a red little circle on the image
  *
  *  @param image      the image to draw on
@@ -60,5 +72,18 @@
  *  @return modified image
  */
 +(UIImage*) image:(UIImage*) image drawDistanceCircleOfBeacon:(Coordinate) coordinate color:(UIColor*) color;
+
+
+/**
+ *  Draws a rectangle
+ *
+ *  @param image     image to draw on
+ *  @param rectangle coordinates to use
+ *
+ *  @return modified image
+ */
++(UIImage*) image:(UIImage*) image drawRectangle:(CGRect) rectangle;
++(UIImage*) image:(UIImage*) image drawRectangle:(CGRect) rectangle width:(float) width;
++(UIImage*) image:(UIImage*) image drawRectangle:(CGRect) rectangle width:(float) width color:(UIColor*) color;
 
 @end

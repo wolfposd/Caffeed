@@ -37,12 +37,18 @@
 		792C0A5F1917D0A500EC69C1 /* DoublePair.m in Sources */ = {isa = PBXBuildFile; fileRef = 792C0A5E1917D0A500EC69C1 /* DoublePair.m */; };
 		7941316219111FD800A7AA29 /* Trilateration.m in Sources */ = {isa = PBXBuildFile; fileRef = 7941316119111FD800A7AA29 /* Trilateration.m */; };
 		794800AB18FE872B00A5C3F1 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794800AA18FE872B00A5C3F1 /* CoreText.framework */; };
+		794AD17D19E6B56900170EE4 /* PresentationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 794AD17B19E6B56900170EE4 /* PresentationViewController.m */; };
+		794AD17E19E6B56900170EE4 /* PresentationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 794AD17C19E6B56900170EE4 /* PresentationViewController.xib */; };
+		794AD18019E6B66000170EE4 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 794AD17F19E6B66000170EE4 /* background@2x.png */; };
 		795F834E1907EE62006967B4 /* DebugViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 795F834C1907EE62006967B4 /* DebugViewController.m */; };
 		795F834F1907EE62006967B4 /* DebugViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 795F834D1907EE62006967B4 /* DebugViewController.xib */; };
 		795F83521907EEA8006967B4 /* PSBorderButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 795F83511907EEA8006967B4 /* PSBorderButton.m */; };
 		795F83561907EFE6006967B4 /* IndoorTrackingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 795F83541907EFE6006967B4 /* IndoorTrackingViewController.m */; };
 		795F83571907EFE6006967B4 /* IndoorTrackingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 795F83551907EFE6006967B4 /* IndoorTrackingViewController.xib */; };
 		79A6C65118FD624300D2850A /* BQBeaconCounter.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A6C65018FD624300D2850A /* BQBeaconCounter.m */; };
+		79AFF46C1A0FF78200270BF0 /* TriangulationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AFF46A1A0FF78200270BF0 /* TriangulationViewController.m */; };
+		79AFF46D1A0FF78200270BF0 /* TriangulationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79AFF46B1A0FF78200270BF0 /* TriangulationViewController.xib */; };
+		79AFF4701A1001E300270BF0 /* BCCoordinate.m in Sources */ = {isa = PBXBuildFile; fileRef = 79AFF46F1A1001E300270BF0 /* BCCoordinate.m */; };
 		79B3A8651909172B0090A7D1 /* SubmitBeaconViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B3A8631909172B0090A7D1 /* SubmitBeaconViewController.m */; };
 		79B3A8661909172B0090A7D1 /* SubmitBeaconViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79B3A8641909172B0090A7D1 /* SubmitBeaconViewController.xib */; };
 		79B3A86919091ABB0090A7D1 /* BeeQn.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B3A86819091ABB0090A7D1 /* BeeQn.m */; };
@@ -113,6 +119,10 @@
 		7941316019111FD800A7AA29 /* Trilateration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Trilateration.h; sourceTree = "<group>"; };
 		7941316119111FD800A7AA29 /* Trilateration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Trilateration.m; sourceTree = "<group>"; };
 		794800AA18FE872B00A5C3F1 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		794AD17A19E6B56900170EE4 /* PresentationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentationViewController.h; sourceTree = "<group>"; };
+		794AD17B19E6B56900170EE4 /* PresentationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentationViewController.m; sourceTree = "<group>"; };
+		794AD17C19E6B56900170EE4 /* PresentationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PresentationViewController.xib; sourceTree = "<group>"; };
+		794AD17F19E6B66000170EE4 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		795F834B1907EE62006967B4 /* DebugViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DebugViewController.h; sourceTree = "<group>"; };
 		795F834C1907EE62006967B4 /* DebugViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DebugViewController.m; sourceTree = "<group>"; };
 		795F834D1907EE62006967B4 /* DebugViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DebugViewController.xib; sourceTree = "<group>"; };
@@ -123,6 +133,11 @@
 		795F83551907EFE6006967B4 /* IndoorTrackingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IndoorTrackingViewController.xib; sourceTree = "<group>"; };
 		79A6C64F18FD624300D2850A /* BQBeaconCounter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BQBeaconCounter.h; sourceTree = "<group>"; };
 		79A6C65018FD624300D2850A /* BQBeaconCounter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BQBeaconCounter.m; sourceTree = "<group>"; };
+		79AFF4691A0FF78200270BF0 /* TriangulationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriangulationViewController.h; sourceTree = "<group>"; };
+		79AFF46A1A0FF78200270BF0 /* TriangulationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TriangulationViewController.m; sourceTree = "<group>"; };
+		79AFF46B1A0FF78200270BF0 /* TriangulationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TriangulationViewController.xib; sourceTree = "<group>"; };
+		79AFF46E1A1001E300270BF0 /* BCCoordinate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCCoordinate.h; sourceTree = "<group>"; };
+		79AFF46F1A1001E300270BF0 /* BCCoordinate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCCoordinate.m; sourceTree = "<group>"; };
 		79B3A8621909172B0090A7D1 /* SubmitBeaconViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubmitBeaconViewController.h; sourceTree = "<group>"; };
 		79B3A8631909172B0090A7D1 /* SubmitBeaconViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubmitBeaconViewController.m; sourceTree = "<group>"; };
 		79B3A8641909172B0090A7D1 /* SubmitBeaconViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubmitBeaconViewController.xib; sourceTree = "<group>"; };
@@ -204,12 +219,16 @@
 		79092DEC18F54B1D00EA63D5 /* BeeQn */ = {
 			isa = PBXGroup;
 			children = (
+				794AD17F19E6B66000170EE4 /* background@2x.png */,
 				79FFE01D18FDDEC400D170D6 /* Additional */,
 				79092DED18F54B1D00EA63D5 /* Supporting Files */,
 				79B60D0218F6C2530008BE61 /* BeeQn */,
 				79092DF818F54B1D00EA63D5 /* Images.xcassets */,
 				79092DF518F54B1D00EA63D5 /* AppDelegate.h */,
 				79092DF618F54B1D00EA63D5 /* AppDelegate.m */,
+				794AD17A19E6B56900170EE4 /* PresentationViewController.h */,
+				794AD17B19E6B56900170EE4 /* PresentationViewController.m */,
+				794AD17C19E6B56900170EE4 /* PresentationViewController.xib */,
 				795F834B1907EE62006967B4 /* DebugViewController.h */,
 				795F834C1907EE62006967B4 /* DebugViewController.m */,
 				795F834D1907EE62006967B4 /* DebugViewController.xib */,
@@ -217,6 +236,7 @@
 				795F83591907F048006967B4 /* IndoorTracking */,
 				79B3A861190917150090A7D1 /* SubmitBeacon */,
 				792C0A541917894F00EC69C1 /* SingleBeaconTracking */,
+				79AFF4631A0FF6DD00270BF0 /* TriangulationTest */,
 			);
 			path = BeeQn;
 			sourceTree = "<group>";
@@ -272,8 +292,20 @@
 				792C0A5B1917C18300EC69C1 /* DrawingClass.m */,
 				792C0A5D1917D0A500EC69C1 /* DoublePair.h */,
 				792C0A5E1917D0A500EC69C1 /* DoublePair.m */,
+				79AFF46E1A1001E300270BF0 /* BCCoordinate.h */,
+				79AFF46F1A1001E300270BF0 /* BCCoordinate.m */,
 			);
 			name = IndoorTracking;
+			sourceTree = "<group>";
+		};
+		79AFF4631A0FF6DD00270BF0 /* TriangulationTest */ = {
+			isa = PBXGroup;
+			children = (
+				79AFF4691A0FF78200270BF0 /* TriangulationViewController.h */,
+				79AFF46A1A0FF78200270BF0 /* TriangulationViewController.m */,
+				79AFF46B1A0FF78200270BF0 /* TriangulationViewController.xib */,
+			);
+			name = TriangulationTest;
 			sourceTree = "<group>";
 		};
 		79B3A860190916A40090A7D1 /* SingleBeaconDetection */ = {
@@ -421,7 +453,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794AD17E19E6B56900170EE4 /* PresentationViewController.xib in Resources */,
 				79FFE01C18FDD31D00D170D6 /* WebViewViewController.xib in Resources */,
+				79AFF46D1A0FF78200270BF0 /* TriangulationViewController.xib in Resources */,
 				79B60D0418F6D8930008BE61 /* BeeQnCellBig.xib in Resources */,
 				79092DF118F54B1D00EA63D5 /* InfoPlist.strings in Resources */,
 				79092E1918F54B9500EA63D5 /* MainViewController.xib in Resources */,
@@ -430,6 +464,7 @@
 				795F834F1907EE62006967B4 /* DebugViewController.xib in Resources */,
 				79092DF918F54B1D00EA63D5 /* Images.xcassets in Resources */,
 				79092E2018F55B9600EA63D5 /* BQListViewController.xib in Resources */,
+				794AD18019E6B66000170EE4 /* background@2x.png in Resources */,
 				792C0A591917897500EC69C1 /* SingleBeaconTrackingViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,7 +491,9 @@
 				7941316219111FD800A7AA29 /* Trilateration.m in Sources */,
 				792C0A581917897500EC69C1 /* SingleBeaconTrackingViewController.m in Sources */,
 				79092E1F18F55B9600EA63D5 /* BQListViewController.m in Sources */,
+				79AFF46C1A0FF78200270BF0 /* TriangulationViewController.m in Sources */,
 				37C6501BBC2F3EFDCEBE1F0D /* BeeQnListItem.m in Sources */,
+				794AD17D19E6B56900170EE4 /* PresentationViewController.m in Sources */,
 				795F834E1907EE62006967B4 /* DebugViewController.m in Sources */,
 				79B3A86C190945780090A7D1 /* Crypto.m in Sources */,
 				37C653531A307044ADDA5041 /* BeeQnService.m in Sources */,
@@ -469,6 +506,7 @@
 				79B60D0718F6D9750008BE61 /* BeeQnCellBig.m in Sources */,
 				79B3A8651909172B0090A7D1 /* SubmitBeaconViewController.m in Sources */,
 				79FFE01B18FDD31D00D170D6 /* WebViewViewController.m in Sources */,
+				79AFF4701A1001E300270BF0 /* BCCoordinate.m in Sources */,
 				37C65B7E5B42B95B6C9936DC /* BeeQnLocationManager.m in Sources */,
 				37C6534B216D74F38FB9D2B2 /* BeeQnError.m in Sources */,
 				37C653D53478709650020289 /* NSString+Base64.m in Sources */,

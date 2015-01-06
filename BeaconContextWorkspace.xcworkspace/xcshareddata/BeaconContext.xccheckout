@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>42B50081-6C6D-43A7-9832-558AC2457E31</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BeaconContext</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3AEED6D4CA4FAB046723F5A482EA3CC3CAC5CA90</key>
+		<string>https://github.com/wolfposd/masterthesis.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>BeaconContext/BeaconContext.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3AEED6D4CA4FAB046723F5A482EA3CC3CAC5CA90</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/wolfposd/masterthesis.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3AEED6D4CA4FAB046723F5A482EA3CC3CAC5CA90</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3AEED6D4CA4FAB046723F5A482EA3CC3CAC5CA90</string>
+			<key>IDESourceControlWCCName</key>
+			<string>masterthesis</string>
+		</dict>
+	</array>
+</dict>
+</plist>

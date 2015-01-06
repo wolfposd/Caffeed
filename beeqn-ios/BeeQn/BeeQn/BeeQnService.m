@@ -389,7 +389,13 @@ static NSString* baseURL = @"http://beeqn.informatik.uni-hamburg.de/rest.php/";
      {
          if(!error)
          {
-             NSLog(@"BeeQNService:TestingData:Response %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+             if([self.delegate respondsToSelector:@selector(service:insertedTestDataWithResult:)])
+             {
+                 [self performOnMain:^()
+                  {
+                      [self.delegate service:self insertedTestDataWithResult:data];
+                  }];
+             }
          }
      }];
 }

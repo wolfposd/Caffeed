@@ -12,7 +12,6 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    
     self.layer.borderWidth = 1;
     self.layer.borderColor = self.titleLabel.textColor.CGColor; //[UIColor blueColor].CGColor;
     self.layer.cornerRadius = 8;

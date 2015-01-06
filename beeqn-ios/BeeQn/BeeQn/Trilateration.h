@@ -9,6 +9,26 @@
 #import <Foundation/Foundation.h>
 
 
+
+typedef struct {
+    double x;
+    double y;
+    double minDistance;
+    double maxDistance;
+
+} CoordinateDistance;
+
+CoordinateDistance CoordinateDistanceMake(double x , double y, double minD, double maxD);
+
+typedef struct
+{
+    CoordinateDistance d1;
+    CoordinateDistance d2;
+    CoordinateDistance d3;
+} CoordinateDistanceTriple;
+
+CoordinateDistanceTriple CoordinateDistanceTripleMake(CoordinateDistance d1, CoordinateDistance d2, CoordinateDistance d3);
+
 typedef struct {
     double x1;
     double y1;

@@ -9,6 +9,7 @@
                 <outlet property="circleProgress" destination="m4L-DK-Y6d" id="sjW-Ar-W2f"/>
                 <outlet property="distanceTextField" destination="83Y-qU-Osr" id="s8r-D5-1IJ"/>
                 <outlet property="outputTextView" destination="6lh-Jk-JK4" id="LSc-uA-Hve"/>
+                <outlet property="statusLabel" destination="H8b-wF-fEI" id="ftl-2o-Mbj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -46,6 +47,13 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="H8b-wF-fEI" userLabel="Label - StatusLabel">
+                    <rect key="frame" x="20" y="528" width="280" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <gestureRecognizers/>

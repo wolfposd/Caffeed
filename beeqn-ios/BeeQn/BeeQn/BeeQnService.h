@@ -45,6 +45,8 @@ typedef enum
 
 - (void)service:(id)beeqnservice insertedBeaconsWithResult:(NSArray*) result;
 
+- (void)service:(id)beeqnservice insertedTestDataWithResult:(NSData*) result;
+
 /**
  *  Service has found a List of UUIDS.
  *

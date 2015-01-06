@@ -7,7 +7,7 @@
 
 
 @interface BeeQnError ()
-@property (nonatomic, retain) NSString* localizedDescription;
+@property (nonatomic, retain, readwrite) NSString* locDec;
 @end
 
 
@@ -16,8 +16,14 @@
 + (BeeQnError*)errorWith:(int)code message:(NSString*)message
 {
     BeeQnError* error = [[BeeQnError alloc] initWithDomain:@"beeqn" code:code userInfo:nil];
-    error.localizedDescription = message;
+    error.locDec = message;
     return error;
+}
+
+
+-(NSString *)localizedDescription
+{
+    return self.locDec;
 }
 
 @end

@@ -9,6 +9,25 @@
 #import "Trilateration.h"
 
 
+CoordinateDistance CoordinateDistanceMake(double x , double y, double minD, double maxD)
+{
+    CoordinateDistance d;
+    d.x = x;
+    d.y = y;
+    d.minDistance = minD;
+    d.maxDistance = maxD;
+    return d;
+}
+
+CoordinateDistanceTriple CoordinateDistanceTripleMake(CoordinateDistance d1, CoordinateDistance d2, CoordinateDistance d3)
+{
+    CoordinateDistanceTriple t;
+    t.d1 = d1;
+    t.d2 = d2;
+    t.d3 = d3;
+    return t;
+}
+
 Coordinate CoordinateMake(double x , double y, double distance)
 {
     Coordinate c;
@@ -195,17 +214,7 @@ BOOL CoordinateIsInRect(Coordinate coord, Rectangle rect)
         double t4 = [[ez objectAtIndex:i] doubleValue] * zval;
         double triptx = t1+t2+t3+t4;
         [triPt addObject:[NSNumber numberWithDouble:triptx]];
-    }
-    
-//    NSLog(@"ex %@",ex);
-//    NSLog(@"i %f",ival);
-//    NSLog(@"ey %@",ey);
-//    NSLog(@"d %f",d);
-//    NSLog(@"j %f",jval);
-//    NSLog(@"x %f",xval);
-//    NSLog(@"y %f",yval);
-//    NSLog(@"y %f",yval);
-//    NSLog(@"final result %@",triPt);    
+    } 
     
     return CoordinateMake([triPt[0] doubleValue], [triPt[1] doubleValue], 0);
 }

@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *distanceTextField;
 @property (weak, nonatomic) IBOutlet UITextView *outputTextView;
 @property (weak, nonatomic) IBOutlet BQCircleProgress *circleProgress;
+@property (weak, nonatomic) IBOutlet UILabel *statusLabel;
 
 @end
 
@@ -99,6 +100,20 @@
 -(void)manager:(BeeQnLocationManager *)manager hasFoundBeaconsTimes:(int)times fromMaximumSearch:(int)maximum
 {
     [self.circleProgress setCurrentValue:times maximumValue:times update:YES];
+}
+
+-(void)service:(id)beeqnservice insertedTestDataWithResult:(NSData *)result
+{
+    NSString* string = [[NSString alloc] initWithData:result encoding:NSUTF8StringEncoding];
+    
+    if([string rangeOfString:@"success"].location != NSNotFound)
+    {
+        self.statusLabel.text = @"Success";
+    }
+    else
+    {
+        self.statusLabel.text = @"Failure";
+    }
 }
 
 

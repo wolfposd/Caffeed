@@ -33,7 +33,8 @@
 @implementation BeeQnLocationManager
 
 
-#define MAXIMUM_BEACON_SEARCHES_DEFAULT 10
+#define MAXIMUM_BEACON_SEARCHES_DEFAULT 5
+// #define MAXIMUM_BEACON_SEARCHES_DEFAULT 10
 #define FACTOR_FOR_BEACON_FIND_MAX 4
 
 - (id)init
@@ -98,6 +99,7 @@
 - (void)stopFindingBeacons
 {
     self.numDetections = 0;
+    [self.beaconCounter resetCount];
     if (self.isBeaconFetchInProgress)
     {
         self.isBeaconFetchInProgress = NO;

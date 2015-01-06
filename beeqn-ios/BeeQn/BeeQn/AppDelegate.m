@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "DebugViewController.h"
+#import "PresentationViewController.h"
 
 
 @implementation AppDelegate
@@ -20,6 +21,11 @@
 
     UINavigationController* nav = [[UINavigationController alloc]
             initWithRootViewController:[[DebugViewController alloc] initWithNibName:nil bundle:nil]];
+    
+    
+    
+//    UINavigationController* nav = [[UINavigationController alloc]
+//                                   initWithRootViewController:[[PresentationViewController alloc] initWithNibName:nil bundle:nil]];
 
     self.window.rootViewController = nav;
 

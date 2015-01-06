@@ -12,6 +12,9 @@
 #import "IndoorTrackingViewController.h"
 #import "SubmitBeaconViewController.h"
 #import "SingleBeaconTrackingViewController.h"
+#import "PresentationViewController.h"
+#import "TriangulationViewController.h"
+
 
 @interface DebugViewController ()
 
@@ -46,6 +49,15 @@
 - (IBAction)singleBeaconTrackingAction:(id)sender
 {
      [self.navigationController pushViewController:[[SingleBeaconTrackingViewController alloc] initWithNibName:nil bundle:nil] animated:YES];
+}
+- (IBAction)presentationAction:(id)sender
+{
+    id cont = [[UINavigationController alloc] initWithRootViewController:[[PresentationViewController alloc] initWithNibName:nil bundle:nil]];
+    [self presentViewController:cont animated:YES completion:nil];
+}
+- (IBAction)triangulationTestAction:(id)sender
+{    
+    [self.navigationController pushViewController:[[TriangulationViewController alloc] initWithNibName:nil bundle:nil] animated:YES];
 }
 
 @end
