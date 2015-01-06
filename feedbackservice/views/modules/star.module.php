@@ -54,7 +54,7 @@ class star extends AbstractModule
         
         $average = round($average/$countresults, 1);
         
-        return "Avarage is: " .  $average;
+        return "Average is: " .  $average;
     }
 }
 ?>

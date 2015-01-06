@@ -93,6 +93,7 @@ class Application
                 if(isset($this->sheet["error"]))
                 {
                     // echo error;
+                    echo $this->sheet["error"];
                 }
                 else
                 {
@@ -156,6 +157,12 @@ class Application
         echo "unsuccessful";
     }
 
+    
+    function rest_get_submitsheetforcontext(array $array)
+    {
+        $this->rest_put_sheetforcontext($array);
+    }
+    
     function rest_get_sheetforcontext(array $array)
     {
         $contextInformation = json_decode(base64_decode($array[1]) ,true);
@@ -169,7 +176,8 @@ class Application
         
         $sheetIds = array();
         
-        include_once 'views/triggers/BeaconTrigger.php';
+        include_once 'views/triggers/BeaconTrigger.php'; //TODO - include by $trigger["type"]
+        
         foreach ($triggers as $trigger)
         {
             if(isset($trigger["extra"]["beacon"]))
@@ -177,7 +185,7 @@ class Application
                 $beacon = $this->database->getBeaconForBeaconId($trigger["extra"]["beacon"]);
                 $trigger["extra"]["beacon"] = $beacon;
             }
-            $bt = new BeaconTrigger($trigger["extra"]);
+            $bt = new BeaconTrigger($trigger["extra"]); //TODO - instantiate by $trigger["type"]
             
             $bt->putContextInformation($contextInformation);
             
@@ -191,6 +199,11 @@ class Application
         $sheetIds = stripSheetsFromDescriptiveElementsForContext($sheetIds);
         
         echo json_encode($sheetIds);
+    }
+    
+    function rest_put_sheetforcontext(array $array)
+    {
+        echo json_encode(array("success" => true));
     }
 
 }
