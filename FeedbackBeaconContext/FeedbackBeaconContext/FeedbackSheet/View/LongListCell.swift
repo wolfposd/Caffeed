@@ -17,6 +17,7 @@ class LongListCell: ModuleCell, UIPickerViewDataSource, UIPickerViewDelegate {
     override var module: FeedbackSheetModule? {
     willSet {
         if let list = newValue as? ListModule {
+            textField.placeholder = list.text
             listPicker.reloadAllComponents()
         }
     }
@@ -74,6 +75,10 @@ class LongListCell: ModuleCell, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     // MARK: UIPickerViewDelegate
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        return (module as? ListModule)?.elements[row];
+    }
     
     func pickerView(pickerView: UIPickerView!, didSelectRow row: Int, inComponent component: Int) {
         if let longList = module as? ListModule {

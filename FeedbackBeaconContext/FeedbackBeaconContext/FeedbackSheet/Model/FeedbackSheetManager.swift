@@ -155,6 +155,7 @@ public class FeedbackSheetManager : NSObject {
             var tString = dict["type"] as? String;
             tString = tString?.stringByReplacingOccurrencesOfString("module", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
             
+            NSLog("%@", tString! as String);
             
             type = FeedbackSheetModuleType.init(rawValue: tString!);
 //            type = FeedbackSheetModuleType.fromRaw(dict["type"] as String)
@@ -168,7 +169,16 @@ public class FeedbackSheetManager : NSObject {
         }
         
         let text = dict["text"] as? String
+        
+        NSLog("%@", text! as String);
+        
         let elements = dict["elements"] as? Array<String>
+        
+        if(elements != nil)
+        {
+            NSLog("%@", elements! as Array<String>);
+        }
+        
         let length = dict["length"] as? Int
         let min = dict["min"] as? Double
         let max = dict["max"] as? Double

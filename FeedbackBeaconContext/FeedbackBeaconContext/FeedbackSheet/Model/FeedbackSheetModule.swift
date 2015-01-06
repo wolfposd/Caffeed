@@ -10,8 +10,8 @@ import Foundation
 
 enum FeedbackSheetModuleType: String {
     // Visible Modules
-    case List = "listmodule"
-    case LongList = "long-list"
+    case List = "list"
+    case LongList = "longlist"
     case TextField = "textfield"
     case TextArea = "textarea"
     case Checkbox = "checkbox"
