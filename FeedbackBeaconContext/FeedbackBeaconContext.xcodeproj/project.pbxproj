@@ -22,7 +22,9 @@
 		79202FE21A07B3D0002FD3DA /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79202FE11A07B3D0002FD3DA /* Social.framework */; };
 		794256AF1A077CB3001B5098 /* FSViewControllerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794256AE1A077CB3001B5098 /* FSViewControllerHelper.swift */; };
 		7954D6521A011B4A00616581 /* FileLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7954D6511A011B4A00616581 /* FileLog.m */; };
-		7956054D1A5C25F0005D477A /* BDKNotifyHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7956054C1A5C25F0005D477A /* BDKNotifyHUD.m */; };
+		7981ADFB1A5D89EF00A7C584 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7981ADFA1A5D89EF00A7C584 /* ProgressHUD.m */; };
+		7981ADFE1A5D89F800A7C584 /* progresshud-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7981ADFC1A5D89F800A7C584 /* progresshud-error@2x.png */; };
+		7981ADFF1A5D89F800A7C584 /* progresshud-success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7981ADFD1A5D89F800A7C584 /* progresshud-success@2x.png */; };
 		799779651A011373005D53D9 /* BeaconOrderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 799779641A011373005D53D9 /* BeaconOrderer.m */; };
 		79E8924D19FFE74D00ED3073 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E8924C19FFE74D00ED3073 /* main.m */; };
 		79E8925019FFE74D00ED3073 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E8924F19FFE74D00ED3073 /* AppDelegate.m */; };
@@ -102,8 +104,10 @@
 		794256AE1A077CB3001B5098 /* FSViewControllerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSViewControllerHelper.swift; sourceTree = "<group>"; };
 		7954D6501A011B4A00616581 /* FileLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileLog.h; sourceTree = "<group>"; };
 		7954D6511A011B4A00616581 /* FileLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileLog.m; sourceTree = "<group>"; };
-		7956054B1A5C25F0005D477A /* BDKNotifyHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDKNotifyHUD.h; sourceTree = "<group>"; };
-		7956054C1A5C25F0005D477A /* BDKNotifyHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDKNotifyHUD.m; sourceTree = "<group>"; };
+		7981ADF91A5D89EF00A7C584 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		7981ADFA1A5D89EF00A7C584 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
+		7981ADFC1A5D89F800A7C584 /* progresshud-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progresshud-error@2x.png"; sourceTree = "<group>"; };
+		7981ADFD1A5D89F800A7C584 /* progresshud-success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progresshud-success@2x.png"; sourceTree = "<group>"; };
 		799779631A011373005D53D9 /* BeaconOrderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconOrderer.h; sourceTree = "<group>"; };
 		799779641A011373005D53D9 /* BeaconOrderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconOrderer.m; sourceTree = "<group>"; };
 		79E8924719FFE74D00ED3073 /* FeedbackBeaconContext.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeedbackBeaconContext.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -206,6 +210,8 @@
 				79202FC21A07A40E002FD3DA /* camera.png */,
 				79202FC41A07A40E002FD3DA /* star.png */,
 				79202FC61A07A40E002FD3DA /* starHiglighted.png */,
+				7981ADFC1A5D89F800A7C584 /* progresshud-error@2x.png */,
+				7981ADFD1A5D89F800A7C584 /* progresshud-success@2x.png */,
 			);
 			path = images;
 			sourceTree = "<group>";
@@ -289,8 +295,8 @@
 				79E892E019FFEA7800ED3073 /* FeedbackSheetGet.m */,
 				799779631A011373005D53D9 /* BeaconOrderer.h */,
 				799779641A011373005D53D9 /* BeaconOrderer.m */,
-				7956054B1A5C25F0005D477A /* BDKNotifyHUD.h */,
-				7956054C1A5C25F0005D477A /* BDKNotifyHUD.m */,
+				7981ADF91A5D89EF00A7C584 /* ProgressHUD.h */,
+				7981ADFA1A5D89EF00A7C584 /* ProgressHUD.m */,
 			);
 			path = Beacon;
 			sourceTree = "<group>";
@@ -488,6 +494,8 @@
 				79E8928419FFE7A300ED3073 /* BCBeaconContextViewController.xib in Resources */,
 				79E892C719FFE88800ED3073 /* DateCell.xib in Resources */,
 				79E8925B19FFE74D00ED3073 /* LaunchScreen.xib in Resources */,
+				7981ADFE1A5D89F800A7C584 /* progresshud-error@2x.png in Resources */,
+				7981ADFF1A5D89F800A7C584 /* progresshud-success@2x.png in Resources */,
 				79202FD01A07A40E002FD3DA /* starHiglighted.png in Resources */,
 				79E892CB19FFE88800ED3073 /* LongListCell.xib in Resources */,
 				79202FD81A07A44A002FD3DA /* ArrowNextPage@2x.png in Resources */,
@@ -542,6 +550,7 @@
 				79E892C119FFE88800ED3073 /* SliderModule.swift in Sources */,
 				79E892D119FFE88800ED3073 /* StarRatingCell.swift in Sources */,
 				79E8928519FFE7A300ED3073 /* BCBeaconMonitor.m in Sources */,
+				7981ADFB1A5D89EF00A7C584 /* ProgressHUD.m in Sources */,
 				79E892C319FFE88800ED3073 /* ToSModule.swift in Sources */,
 				7954D6521A011B4A00616581 /* FileLog.m in Sources */,
 				79E892CC19FFE88800ED3073 /* ModuleCell.swift in Sources */,
@@ -549,7 +558,6 @@
 				79E892C419FFE88800ED3073 /* CheckboxCell.swift in Sources */,
 				79E892D719FFE88800ED3073 /* TextFieldCell.swift in Sources */,
 				79E892BF19FFE88800ED3073 /* DescriptionModule.swift in Sources */,
-				7956054D1A5C25F0005D477A /* BDKNotifyHUD.m in Sources */,
 				79E8928719FFE7A300ED3073 /* BCSave.m in Sources */,
 				79E892CD19FFE88800ED3073 /* PhotoCell.swift in Sources */,
 				79E892BE19FFE88800ED3073 /* FeedbackSheetPage.swift in Sources */,

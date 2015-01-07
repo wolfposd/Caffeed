@@ -8,7 +8,8 @@
 
 #import "FSTableViewController.h"
 #import "FeedbackSheetGet.h"
-#import "BDKNotifyHUD.h"
+#import "ProgressHUD.h"
+
 
 
 @interface FSTableViewController ()<UITableViewDataSource, UITableViewDelegate, ModuleCellDelegate, FeedbackSheetGetDelegate>
@@ -21,7 +22,7 @@
 
 @property (nonatomic, retain) FeedbackSheetGet* rest;
 
-@property (nonatomic,retain) BDKNotifyHUD* notifyHUD;
+//@property (nonatomic,retain) BDKNotifyHUD* notifyHUD;
 @property (nonatomic) CGRect frameForNotify;
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -174,40 +175,11 @@
 
 -(void) submitButtonTouchUpInside:(id) sender
 {
-    //    do stuff with:
-    //    self.responseDictionary
+    [ProgressHUD show:@"Submitting"];
     
-    NSLog(@"%@", self.responseDictionary);
-    
-    
-    NSLog(@"%@", @"submitting feedbacksheet");
-    
-    
-    UIActivityIndicatorView* activity = [[UIActivityIndicatorView alloc] init];
-    [activity setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [activity startAnimating];
-    CGRect rect = activity.frame;
-    rect.size.height = rect.size.height*2;
-    activity.frame = rect;
-    
-
-    UIButton* button = sender;
-    CGRect frame = button.superview.frame;
-    frame.size.width = 300;
-    frame.size.height = 500;
-    
-    frame.origin.x = (self.view.frame.size.width - frame.size.width) / 2;
-    frame.origin.y = frame.origin.y - 200;
-    
-    self.frameForNotify = frame;
-    
-    self.notifyHUD = [BDKNotifyHUD notifyHUDWithView:activity text:@"Submitting..." frame:frame];
-    [self.view addSubview:self.notifyHUD];
-    [self.notifyHUD presentWithSpeed:0.5 onCompletion:^(){
-        self.rest = [[FeedbackSheetGet alloc] init];
-        self.rest.delegate = self;
-        [self.rest submitSheetResult:self.responseDictionary];
-    }];
+    self.rest = [[FeedbackSheetGet alloc] init];
+    self.rest.delegate = self;
+    [self.rest submitSheetResult:self.responseDictionary];
     
     
 }
@@ -250,39 +222,31 @@
 
 -(void) feedbacksheetget:(id) get submittedSheetDataWithSuccess:(BOOL) success
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"%@", @"data submit success");
-        
-        if(self.notifyHUD)
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+       
+        if(success)
         {
-            [self.notifyHUD removeFromSuperview];
-            self.notifyHUD = nil;
+            [ProgressHUD showSuccess:@"Submission was successfull" hide:NO];
+        }
+        else
+        {
+            [ProgressHUD showError:@"Submission was not successfull" hide:NO];
         }
         
-        self.notifyHUD = [BDKNotifyHUD notifyHUDWithText: success ? @"Submission was successfull" : @"Submission was not successfull"];
-        CGRect notifframe = self.notifyHUD.frame;
-        CGRect frame = self.frameForNotify;
-        frame.origin.x = (self.view.frame.size.width -  notifframe.size.width) / 2;
-        self.notifyHUD.frame = frame;
-        
-        [self.view addSubview:self.notifyHUD];
-        
-        [self.notifyHUD presentWithDuration:3.0 speed:0.5 completion:^(){
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [ProgressHUD dismiss];
             if(success)
             {
                 [self.navigationController popViewControllerAnimated:YES];
             }
-        }];
+        });
     });
 }
 
 -(void) feedbacksheetget:(id)get downloadFailure:(NSError*) error
 {
-    if(self.notifyHUD)
-    {
-        [self.notifyHUD removeFromSuperview];
-        self.notifyHUD = nil;
-    }
+    [ProgressHUD dismiss];
 }
 
 
