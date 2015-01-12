@@ -56,9 +56,9 @@ function hash_SHA512($message, $customkey = false)
     return hash_hmac('SHA512', $message, $customkey);
 }
 
-function show_succes_or_error($success, $successTitle, $successMessage, $errorTitle,$errorMessage)
+function show_success_or_error($success, $successTitle, $successMessage, $errorTitle,$errorMessage)
 {
-	if($success)
+	if($success === true)
 	{
 		show_message_dialog_with_text($successTitle,$successMessage, $success);
 	}
@@ -72,7 +72,10 @@ function show_message_dialog_with_text($message, $text="", $successOrError = tru
 {
 	$type = $successOrError === true  ? "success" : "danger";
 
-	echo "<div class='container alert alert-$type center span4' align='center'><h4>$message</h4><p>$text</p></div>";
+	echo "<div class='container alert alert-$type alert-dismissible center col-sm-12' align='center'>
+	<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+	<h4>$message</h4><p>$text</p>
+	</div>";
 }
 
 /**

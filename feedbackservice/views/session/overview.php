@@ -53,6 +53,12 @@ class Overview
                         $this->content = new Trigger($this->database);
                         break;
                     }
+                case "beacons" :
+                    {
+                        include_once 'beacons.php';
+                        $this->content = new Beacons($this->database);
+                        break;
+                    }
             }
             if($this->content)
             {
@@ -75,19 +81,6 @@ class Overview
             echo "<p>Welcome back, " . $_SESSION["user"] . "!</p>";
             echo "<p>You have created $count full sheets</p>";
             
-            if($count > 0)
-            {
-                echo "<p>Your Sheets:</p>";
-                echo "<ul>";
-                foreach($this->database->getSheetInfosForUser($_SESSION["user"]) as $sheetid)
-                {
-                    echo "<li>
-                    <a href='?view=sheet&sheet=$sheetid[0]'><label>$sheetid[1]</label>  $sheetid[0]</a>
-                    </li>";
-                }
-                echo "</ul>";
-            }
-            
             echo "<p>You have currently $sheetResults results for inspection</p>";
         }
     }
@@ -100,12 +93,13 @@ class Overview
                         $this->makeSideEntry("Profile", "profile")
                 ),
                 array(
-                        $this->makeSideEntry("Create Sheet", "create"),
-                        $this->makeSideEntry("Analyze Sheet", "analyze"),
-                        $this->makeSideEntry("Preview Sheet", "preview")
+                        $this->makeSideEntry("Create", "create"),
+                        $this->makeSideEntry("Preview", "preview"),
+                        $this->makeSideEntry("Analyze", "analyze")
                 ),
                 array(
-                        $this->makeSideEntry("Create Contextgroup", "trigger")
+                        $this->makeSideEntry("Create Contextgroup", "trigger"),
+                        $this->makeSideEntry("Manage Beacons", "beacons")
                 )
         );
     }

@@ -33,7 +33,22 @@ class Preview
 
 	function display()
 	{
-		echo "This is the Preview Page";
+	    $count = $this->database->getSheetCountForUser($_SESSION["user"]);
+        $sheetResults = $this->database->getNumberOfResults($_SESSION["user"]);
+        
+        if($count > 0)
+        {
+            echo "<p>Your Sheets:</p>";
+            echo "<ul>";
+            foreach($this->database->getSheetInfosForUser($_SESSION["user"]) as $sheetid)
+            {
+                echo "<li class='well'>
+                <p><label>$sheetid[1]</label><br>
+                <a href='?view=sheet&sheet=$sheetid[0]' target='_blank'>Preview Sheet</a></p>
+                </li>";
+            }
+            echo "</ul>";
+        }
 	}
 
 	/**

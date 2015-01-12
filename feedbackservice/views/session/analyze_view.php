@@ -9,8 +9,10 @@ function showOverview($sheet, $contexts = false)
     <ul>
     <?php foreach($sheet as $sheetinfo) { ?>
         <li>
-            <p><a href="?view=session/overview&sub=analyze&sheet=<?php echo $sheetinfo[0];?>"><?php echo $sheetinfo[0];?></a><br>
-            Title: <b><?php echo $sheetinfo[1];?></b> <br>Date: <?php echo $sheetinfo[2];?></p>
+            <p class="well">
+            Title: <b><?php echo $sheetinfo[1];?></b> <br>Date: <?php echo $sheetinfo[2];?><br>
+            <a href="?view=session/overview&sub=analyze&sheet=<?php echo $sheetinfo[0];?>">Inspect Results</a>
+            </p>
         </li>
     <?php }?>
     </ul>
@@ -26,7 +28,7 @@ function showOverview($sheet, $contexts = false)
            <?php foreach($contexts as $context) { 
            ?>
                 <li>
-                    <p><a href="?view=session/overview&sub=analyze&ct=<?php echo $context["contextid"];?>"><?php echo $context["groupname"];?></a><br>
+                    <p class="well"><a href="?view=session/overview&sub=analyze&ct=<?php echo $context["contextid"];?>"><?php echo $context["groupname"];?></a><br>
                 </li>
             
             <?php } ?>

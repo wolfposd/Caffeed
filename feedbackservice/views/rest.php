@@ -354,7 +354,7 @@ function show()
     			    </ol>
     			    <p>It could look like this:</p>
     			    <div style="border: 2px solid #000;" class="text-center">
-                        <p class="text-center"><b>CAF-FOPAS ToS</b></p>
+                        <p class="text-center"><b>CAF-Feed ToS</b></p>
     			        <textarea rows="5" cols="60" id="tos1" readonly="readonly">By reading this you agree to the terms of service</textarea>
     			        <span><button class="btn btn-success">Accept</button> <button class="btn btn-danger">Decline</button></span>
     			    </div>
@@ -561,7 +561,7 @@ function basicTOSJsonCodeSnippet()
     echo '{
   "type": "tos",
   "id": "tos1",
-  "title":"CAF-FOPAS ToS",
+  "title":"CAF-Feed ToS",
   "text": "By reading this you agree<br>&#09;to the terms of service",
 }';
 }

@@ -141,7 +141,7 @@ class Analyze
     {
         $sheetRestIds = $this->getSheetIdsForTriggerGroup($_GET["ct"]);
         $name = $this->database->getContextTriggerNameForID($_GET["ct"]);
-        echo "<h2>Dynamic results for".$name."</h2>";
+        echo "<h2>Dynamic results for ".$name."</h2>";
              
         $alreadyHandles = array();
         

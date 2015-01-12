@@ -46,7 +46,7 @@ class listmodule extends AbstractModule
     {
         include_once 'views/modules/basiceditor.php';
         
-        echo basiceditor("List Module","listmodule", '<p>Elements: (seperated by &lt;newline&gt;)</p><textarea rows="5" cols="40" name="module_XXXX_elements"></textarea>');
+        echo basiceditor("List Module","listmodule", '<p>Elements: (separated by &lt;newline&gt;)</p><textarea rows="5" cols="40" name="module_XXXX_elements"></textarea>');
     }
     
     public function getElements()

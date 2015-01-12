@@ -115,6 +115,32 @@ class database
         
         return false;
     }
+    
+    function getUserIDFromEmail($username)
+    {
+        $query = "SELECT user_id FROM fb_feedback_user WHERE user_email = ? LIMIT 1";
+        $stmt = $this->mysqli->prepare($query);
+        
+        echo $this->mysqli->error;
+        
+        $stmt->bind_param("s", $username);
+        
+        $ok = $stmt->execute();
+        $result = false;
+        
+        if($ok)
+        {
+            $stmt->bind_result($userid);
+            while ($stmt->fetch())
+            {
+                $result = $userid;
+                break;
+            }
+            $stmt->close();
+        }
+        
+        return $result;
+    }
 
     function isLoginCorrect($user, $pwd)
     {
@@ -175,6 +201,30 @@ class database
         {
             return false;
         }
+    }
+    
+    
+    function getSheetInfosByID($sheet_id)
+    {
+        $query = "SELECT * FROM fb_question_sheet WHERE sheet_id = ? LIMIT 1";
+        
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s",$sheet_id);
+        
+        $ok = $stmt->execute();
+        $result = false;
+        if($ok)
+        {
+            $stmt->bind_result($id, $owner, $restid, $title, $date, $full);
+            while ($stmt->fetch())
+            {
+                $result = array("id"=>$id, "owner"=>$owner, "restid"=>$restid, "title"=> $title, "date"=>$date, "full" => $full);
+                break;
+            }
+            $stmt->close();
+        }
+        
+        return $result;
     }
     
     function getRestIDforSheetID($sheet_id)
@@ -627,9 +677,35 @@ class database
         return $result;
     }
     
+    
+    function insertGroup($groupname, $beacon, $useremail)
+    {
+        $query = "INSERT INTO fb_trigger_group (groupname, beaconid, owner) VALUES
+                    (?, 
+                    (SELECT id from fb_beacon WHERE uuid= ? and major=? and minor=?), 
+                    (SELECT user_id FROM fb_feedback_user WHERE user_email = ?)
+                    )";
+        
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("sssss", $groupname, $beacon->uuid, $beacon->major, $beacon->minor, $useremail);
+        $ok = $stmt->execute();
+        
+        if($ok === false)
+        {
+            $ok = $stmt->error;
+            if(strpos($ok, "Duplicate") !== false)
+            {
+                $ok = "The beacon is already in use somewhere else";
+            }
+        }
+        $stmt->close();
+        
+        return $ok;
+    }
+    
     function getTriggersForGroupId($groupid)
     {
-        $query = "SELECT type, extra from fb_trigger WHERE groupid = ? ORDER BY priority DESC";
+        $query = "SELECT type, extra, priority,id from fb_trigger WHERE groupid = ? ORDER BY priority DESC";
         $stmt = $this->mysqli->prepare($query);
         
         $stmt->bind_param("s", $groupid);
@@ -639,11 +715,91 @@ class database
 
         if($ok)
         {
-            $stmt->bind_result($type, $extra);
+            $stmt->bind_result($type, $extra, $prio, $id);
             while ($stmt->fetch())
             {
                 $extra = json_decode($extra,true);
-                $result[] = array("type" => $type,"extra" => $extra);
+                $result[] = array("type" => $type,"extra" => $extra, "priority" => $prio, "id"=>$id);
+            }
+            $stmt->close();
+        }
+        
+        return $result;
+    }
+    
+    
+    function inserTrigger($triggertype, $extra, $priority, $groupid)
+    {
+        $query = "INSERT INTO fb_trigger (type,groupid,priority,extra) VALUES (?,?,?,?)";
+        $stmt = $this->mysqli->prepare($query);
+        
+        $stmt->bind_param("ssss", $triggertype, $groupid, $priority, $extra);
+        
+        $ok = $stmt->execute();
+        
+        if($ok === false)
+        {
+            $ok = $stmt->error;
+        }
+        
+        $stmt->close();
+        return $ok;
+    }
+    
+    
+    function updateTrigger($triggerID, $extra)
+    {
+        $query = "UPDATE fb_trigger SET extra=? where id=?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("ss", $extra, $triggerID);
+        
+        $ok = $stmt->execute();
+        
+        if($ok === false)
+        {
+            $ok = $stmt->error;
+        }
+        $stmt->close();
+        
+        return $ok;
+    }
+    
+    function deleteTrigger($triggerID)
+    {
+        $query = "DELETE FROM fb_trigger WHERE id=? ";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $triggerID);
+        
+        $ok = $stmt->execute();
+        
+        if($ok === false)
+        {
+            $ok = $stmt->error;
+        }
+        $stmt->close();
+        
+        return $ok;
+    }
+    
+    
+    
+    function getBeaconsForUser($username)
+    {
+        require_once 'views/items/beacon.php';
+        
+        $query = "SELECT B.id, B.uuid, B.major, B.minor FROM fb_beacon as B, fb_feedback_user as U WHERE B.owner = U.user_id AND U.user_email= ?";
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s", $username);
+        
+        $ok = $stmt->execute();
+        $result = array();
+        
+        if($ok)
+        {
+            $stmt->bind_result($id, $uuid, $major, $minor);
+            while ($stmt->fetch())
+            {
+                $result[] = new Beacon($uuid, $major, $minor);
             }
             $stmt->close();
         }
@@ -664,7 +820,7 @@ class database
         
         if($ok)
         {
-            $stmt->bind_result($id, $uuid, $major, $minor);
+            $stmt->bind_result($id, $uuid, $major, $minor, $user);
             while ($stmt->fetch())
             {
                 $result = new Beacon($uuid, $major, $minor);
@@ -674,6 +830,21 @@ class database
         }
         
         return $result;
+    }
+    
+    function addBeaconForUser($beacon, $username)
+    {
+        $userid = $this->getUserIDFromEmail($username);
+        if($userid !== false)
+        {
+            $query = "insert into fb_beacon ( uuid, major, minor, owner) VALUES (?,?,?,?)";
+            $stmt = $this->mysqli->prepare($query);
+            $stmt->bind_param("ssss",$beacon->uuid, $beacon->major, $beacon->minor, $userid);
+            $ok = $stmt->execute();
+            $stmt->close();
+            return $ok;        
+        }
+        return false;
     }
     
 }

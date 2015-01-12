@@ -198,6 +198,11 @@ class Application
         
         $sheetIds = stripSheetsFromDescriptiveElementsForContext($sheetIds);
         
+        
+        $title = $this->database->getContextTriggerNameForID($triggerGroupId);
+        
+        $sheetIds["title"] = $title;
+        
         echo json_encode($sheetIds);
     }
     
@@ -216,6 +221,37 @@ class Application
         
         
         echo json_encode(array("success" => true));
+    }
+    
+    
+    function rest_post_updatecontexttrigger(array $array)
+    {
+        $values = explode("&",$array[1]);
+
+        $res = array();
+        foreach ($values as $value)
+        {
+            $s = explode("=", $value);
+
+            $s[0] = str_replace("cg", "", $s[0]);
+            $res[$s[0]] = $s[1];
+        }
+        
+        $triggerid = $res["id"];
+        unset($res["id"]);
+
+        $updateOK = $this->database->updateTrigger($triggerid, json_encode($res));
+        
+        show_success_or_error($updateOK, "Success", "Trigger updated", "Failure", "Couldn't update<br>Reason:".$updateOK);
+    }
+
+    function rest_post_deletecontexttrigger(array $array)
+    {
+        $triggerID = $array[1];
+
+        $deleteOK = $this->database->deleteTrigger($triggerID);
+
+        echo json_encode(array("delete"=>$deleteOK));
     }
 
 }
