@@ -79,6 +79,24 @@ function makeThreePanelInputGroupWithContent($placeholder, $inputname, $required
 <?php 
 }
 
+function makeThreePanelInputGroupWithContentAndButtonToTarget($placeholder, $inputname, $required, $input, $targetName, $targetJS)
+{
+    ?>
+<div class="row" style="padding-bottom:20px;">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="<?php echo $placeholder?>" name="<?php echo $inputname;?>" id="form<?php echo $inputname;?>"
+        <?php
+         if ($required) echo " required=\"required\"";
+         if ($inputname!="") echo " id=\"$inputname\"";
+         if($input!="") echo " value=\"$input\"";
+         ?>>
+        <span class="input-group-addon" id=""><?php echo $placeholder ?></span>
+        <a href="#" class="btn input-group-addon" onclick="<?php echo $targetJS;?>"><?php echo $targetName?> <span class="glyphicon glyphicon-list"></span></a>
+    </div>
+</div>
+<?php 
+}
+
 function makeThreePanelInputGroup($placeholder, $inputname, $required,  $idforinput="")
 {
 ?>
@@ -122,7 +140,15 @@ function display_edit_mode_for_group($groupname, $triggers)
                        <?php 
                        foreach ($trigger["extra"] as $name => $value)
                        {
-                           if($name != "sheetinfo")
+                           if($name == "beacon")
+                           {
+                               makeThreePanelInputGroupWithContentAndButtonToTarget($name, "cg".$name, true, "".$value, "", "showdiv('hiddenbeaconlist');return false;");
+                           }
+                           else if($name == "sheetid")
+                           {
+                               makeThreePanelInputGroupWithContentAndButtonToTarget($name, "cg".$name, true, "".$value, "", "showdiv('hiddensheetlist');return false;");
+                           }
+                           else if($name != "sheetinfo")
                            {
                                makeThreePanelInputGroupWithContent($name, "cg".$name, true, "".$value);
                            }
@@ -182,6 +208,66 @@ function display_edit_mode_for_group($groupname, $triggers)
    
    <?php 
 }
+
+
+
+function hiddenBeaconList(array $beacons)
+{
+    ?>
+    <div id="hiddenbeaconlist" style="display: none;" title="Your Beacons">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>UUID</th>
+                <th>Major</th>
+                <th>Minor</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach($beacons as $beacon) { ?>
+            <tr>
+                <td><?php echo $beacon->id?></td>
+                <td><?php echo $beacon->uuid ?></td>
+                <td><?php echo $beacon->major?></td>
+                <td><?php echo $beacon->minor?></td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    </div>
+    <?php 
+}
+
+function hiddenSheetList(array $sheets)
+{
+    ?>
+    <div id="hiddensheetlist" style="display: none;" title="Your Sheets">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach($sheets as $sheet) { ?>
+            <tr>
+                <td><?php echo $sheet["id"]?></td>
+                <td><?php echo $sheet["title"] ?></td>
+            </tr>
+        <?php } ?>
+        </tbody>
+    </table>
+    </div>
+    <?php 
+}
+
+
+
+
+
+
 
 
 

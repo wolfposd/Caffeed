@@ -57,6 +57,8 @@ class listmodule extends AbstractModule
     
     public function analyzehtml($results, $mappings = array())
     {
+        $numOfResults = sizeof($results);
+        
         $values = $this->countSameElements($results);
         $count = array();
         
@@ -71,11 +73,12 @@ class listmodule extends AbstractModule
                 $count[$index] = 0;
             }
         }
-        //Additional filtering
+        
+        
         foreach ($values as $countValueKey => $countValue)
         {
            $index =  array_search($countValueKey, $mappings);
-           if($index !== false)
+           if($index !== false && $index !== 0)
            {
                $count[$index] += $countValue;
            }
@@ -83,11 +86,29 @@ class listmodule extends AbstractModule
         
         ob_start();
         ?>
-        <ul>
-        <?php foreach ($count as $index => $value) { ?>
-            <li><?php echo $mappings[$index];?> <span class="badge"><?php echo $value?></span></li>
+        <?php foreach ($count as $index => $value) { 
+            $percent = $value * 100 / $numOfResults;
+            
+            $percent = round($percent,1);
+            ?>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="progress">
+                      <?php if($percent > 0) { ?>
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="<?php echo $percent?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $percent?>%;">
+                        <?php echo $mappings[$index];?> (<?php echo $value?>)  - <?php echo $percent?> %
+                      </div>
+                      <?php } else {?>
+                      <div class="progress-bar progress-bar-none" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">
+                          <?php echo $mappings[$index];?> (<?php echo "".$value?>)  - <?php echo $percent?> %
+                      </div>
+                      <div class="progress-bar progress-bar-none" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">
+                      </div>
+                      <?php }?>
+                    </div>
+                </div>
+            </div>
         <?php } ?>
-        </ul>
         <?php 
         return ob_get_clean();
     }

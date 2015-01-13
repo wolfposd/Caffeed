@@ -203,6 +203,28 @@ class database
         }
     }
     
+    function getAllSheetsForUser($username)
+    {
+        $query = "SELECT sheet_id, sheet_title, rest_id FROM fb_question_sheet as q, fb_feedback_user as u WHERE  q.user_id = u.user_id AND u.user_email = ?";
+        
+        $stmt = $this->mysqli->prepare($query);
+        $stmt->bind_param("s",$username);
+        
+        $ok = $stmt->execute();
+        $result = array();
+        if($ok)
+        {
+            $stmt->bind_result($id,$title,$rest);
+            while ($stmt->fetch())
+            {
+                $result[] = array("id"=>$id, "title"=>$title , "restid" => $rest);
+            }
+            $stmt->close();
+        }
+        
+        return $result;
+    }
+    
     
     function getSheetInfosByID($sheet_id)
     {
@@ -799,7 +821,9 @@ class database
             $stmt->bind_result($id, $uuid, $major, $minor);
             while ($stmt->fetch())
             {
-                $result[] = new Beacon($uuid, $major, $minor);
+                $b = new Beacon($uuid, $major, $minor);
+                $b->id = $id;
+                $result[] = $b;
             }
             $stmt->close();
         }

@@ -123,6 +123,14 @@ class Trigger
 	    
 	    include_once 'views/session/trigger_view.php';
         display_edit_mode_for_group($name, $triggers); 
+        
+        
+        $beacons = $this->database->getBeaconsForUser($_SESSION["user"]);
+        hiddenBeaconList($beacons);
+        
+        $sheets = $this->database->getAllSheetsForUser($_SESSION["user"]);
+        
+        hiddenSheetList($sheets);
 	}
 	
 	function handleNormalMode()
@@ -169,7 +177,9 @@ class Trigger
 	{
 	    ob_start();
 	    ?>
-	    </script><script type="text/javascript">
+	    </script>
+	    <script src="js/jquery-ui.min.js"></script>
+	    <script type="text/javascript">
 	    function updateTrigger(identifier)
 	    {
 	        var formid = $(identifier).data("sheet");
@@ -201,6 +211,9 @@ class Trigger
 			}).fail(function() {
 				$("#messagediv"+sheetid).html("an error occured");
 			});
+	    }
+	    function showdiv(whichDiv) {
+	    	$("#"+whichDiv).show().dialog({ modal: true, maxHeight: 600, minWidth: 600 });
 	    }
 	    </script><script>
 	    <?php 	    

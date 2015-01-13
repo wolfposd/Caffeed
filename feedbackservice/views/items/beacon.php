@@ -6,6 +6,8 @@ class Beacon
     public $major;
     public $minor;
 
+    public $id;
+
     function __construct($uuid, $major, $minor)
     {
         $this->uuid = $uuid;
@@ -42,4 +44,11 @@ class Beacon
     {
         return "Beacon[".$this->uuid . "-" . $this->major . "-" . $this->minor ."]";
     }
+
+    function toStringFormat()
+    {
+        return $this->uuid . " - " . $this->major . " - " . $this->minor;
+    }
+
 }
+

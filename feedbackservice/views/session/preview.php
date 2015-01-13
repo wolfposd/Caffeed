@@ -49,6 +49,10 @@ class Preview
             }
             echo "</ul>";
         }
+        else
+        {
+            echo "<p>Sorry, there are no sheets to preview</p>";
+        }
 	}
 
 	/**
