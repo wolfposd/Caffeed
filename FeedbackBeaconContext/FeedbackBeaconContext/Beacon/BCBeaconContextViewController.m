@@ -14,7 +14,6 @@
 #import "FeedbackSheetGet.h"
 #import "BeaconOrderer.h"
 #import "FileLog.h"
-#import "FeedbackSheetGet.h"
 #import "FSTableViewController.h"
 
 @interface BCBeaconContextViewController ()<CLLocationManagerDelegate, FeedbackSheetGetDelegate>
@@ -360,10 +359,7 @@
 }
 - (IBAction)submitTouchUpInside:(id)sender
 {
- 
-    
-    NSString* contextjson = @"{\"beacons\":[{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":48148,\"minor\":31883,\"seen\":\"2014-10-10 12:09:09\",\"type\":\"enter\"},{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":48148,\"minor\":31883,\"seen\":\"2014-10-10 12:25:09\",\"type\":\"exit\"},{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":48148,\"minor\":31883,\"seen\":\"2014-10-10 15:09:09\",\"type\":\"exit\"},{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":48148,\"minor\":31883,\"seen\":\"2014-10-10 14:25:09\",\"type\":\"enter\"},{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":1,\"minor\":2,\"seen\":\"2014-10-10 15:09:09\",\"type\":\"exit\"},{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":1,\"minor\":2,\"seen\":\"2014-10-10 14:25:09\",\"type\":\"enter\"}]}";
-    
+    NSString* contextjson = @"{\"beacons\":[{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":48148,\"minor\":31883,\"seen\":\"2014-10-10 12:09:09\",\"type\":\"enter\"},{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":48148,\"minor\":31883,\"seen\":\"2014-10-10 12:25:09\",\"type\":\"exit\"},{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":48148,\"minor\":31883,\"seen\":\"2014-10-10 15:09:09\",\"type\":\"exit\"},{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":48148,\"minor\":31883,\"seen\":\"2014-10-10 14:25:09\",\"type\":\"enter\"},{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":1,\"minor\":1,\"seen\":\"2014-10-10 15:09:09\",\"type\":\"exit\"},{\"uuid\":\"B9407F30F5F8466EAFF925556B57FE6D\",\"major\":1,\"minor\":1,\"seen\":\"2014-10-10 14:25:09\",\"type\":\"enter\"}]}";
     
     [self.feedbacksheetget loadSheetForContext:contextjson];
 }

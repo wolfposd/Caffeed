@@ -175,6 +175,8 @@
 
 -(void) submitButtonTouchUpInside:(id) sender
 {
+    [self.view endEditing:YES];
+    
     [ProgressHUD show:@"Submitting"];
     
     self.rest = [[FeedbackSheetGet alloc] init];
