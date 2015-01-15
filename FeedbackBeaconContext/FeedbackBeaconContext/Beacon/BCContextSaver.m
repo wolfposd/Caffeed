@@ -39,8 +39,24 @@
     
     NSMutableDictionary* beaconDict = [NSMutableDictionary new];
     
-    [beaconDict setObject:beacon.major forKey:@"major"];
-    [beaconDict setObject:beacon.minor forKey:@"minor"];
+    
+    if(!beacon.major)
+    {
+        [beaconDict setObject:[NSNumber numberWithInt:0] forKey:@"major"];
+    }
+    else
+    {
+        [beaconDict setObject:beacon.major forKey:@"major"];
+    }
+    if(!beacon.minor)
+    {
+        [beaconDict setObject:[NSNumber numberWithInt:0] forKey:@"minor"];
+    }
+    else
+    {
+        [beaconDict setObject:beacon.minor forKey:@"minor"];
+    }
+    
     [beaconDict setObject:beacon.seenNormalized forKey:@"seen"];
     [beaconDict setObject:beacon.typeNormalized forKey:@"type"];
     [beaconDict setObject:beacon.uuidNormalized forKey:@"uuid"];

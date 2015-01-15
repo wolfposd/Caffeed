@@ -16,6 +16,15 @@
 #import "FileLog.h"
 #import "FSTableViewController.h"
 
+#import "BCContextSaver.h"
+
+
+#define START_STOP_BEACON @"start_stop"
+
+#define MODE_WAITING_FOR_START 0
+#define MODE_WAITING_FOR_END 1
+
+
 @interface BCBeaconContextViewController ()<CLLocationManagerDelegate, FeedbackSheetGetDelegate>
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
@@ -25,7 +34,10 @@
 
 @property (nonatomic, strong) NSMutableDictionary* beaconOrderer;
 
+@property (nonatomic, strong) BCContextSaver* contextSaver;
 
+
+@property (nonatomic) int currentMode;
 
 @end
 
@@ -41,6 +53,8 @@
         _beaconOrderer = [NSMutableDictionary new];
         _feedbacksheetget = [FeedbackSheetGet new];
         _feedbacksheetget.delegate = self;
+        _contextSaver = [[BCContextSaver alloc] init];
+        _currentMode = MODE_WAITING_FOR_START;
     }
     return self;
 }
@@ -144,6 +158,53 @@
     BeaconOrderer* order = [self.beaconOrderer objectForKey:region.identifier];
     
     [order addBeacon:beacon];
+    
+    
+    if(self.currentMode == MODE_WAITING_FOR_END)
+    {
+        [self.contextSaver foundBeacon:beacon];
+    }
+    
+    
+    if(type == BCBeaconSeenTypeEnter && [beacon.name isEqual:START_STOP_BEACON])
+    {
+        // we have a winrar
+        
+        int amount =  order.amountOfBeaconEnters;
+        if(amount == 1)
+        {
+            // clear and start
+            self.currentMode = MODE_WAITING_FOR_END;
+            [self.contextSaver foundBeacon:beacon];
+            
+            NSLog(@"%@", @"/nStarting to clear");
+            for(NSString* key in self.beaconOrderer)
+            {
+                if([key isEqual:region.identifier])
+                {
+                    continue;
+                }
+                
+                BeaconOrderer* o = [self.beaconOrderer objectForKey:key];
+                [o clear];
+                NSLog(@"Clearing for Key: %@", key);
+            }
+            
+        }
+        else if (amount >= 2)
+        {
+            // submit
+            BCBeacon* copyOfEnterAsExit = [BCBeacon beaconWith:beaconregion.proximityUUID.UUIDString major:beaconregion.major minor:beaconregion.minor seen:[NSDate date] type:BCBeaconSeenTypeExit];
+            [self.contextSaver foundBeacon:copyOfEnterAsExit];
+            
+            
+            NSLog(@"============================================================\nFound the context:\n%@", self.contextSaver.jsonString);
+        }
+        
+        
+    }
+    
+    
 }
 
 
@@ -164,12 +225,23 @@
     // B9407F30-F5F8-466E-AFF9-25556B57FE6D 48148 31883 esti009
     // B9407F30-F5F8-466E-AFF9-25556B57FE6D 32018 41230	esti010
     
-    NSUUID* uuid = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
-    CLBeaconRegion* esti008 = [[CLBeaconRegion alloc] initWithProximityUUID:uuid major:18475 minor:24286 identifier:@"esti008"];
-    CLBeaconRegion* esti009 = [[CLBeaconRegion alloc] initWithProximityUUID:uuid major:48148 minor:31883 identifier:@"esti009"];
-    CLBeaconRegion* esti010 = [[CLBeaconRegion alloc] initWithProximityUUID:uuid major:32018 minor:41230 identifier:@"esti010"];
+
+
     
-    for(CLBeaconRegion* region in @[esti008, esti009, esti010])
+    // 8492e75f-4fd6-469d-b132-043fe94921d8 - 2261 - 17710
+    
+    
+    NSUUID* estimote_virtual_uuid = [[NSUUID alloc] initWithUUIDString:@"8492e75f-4fd6-469d-b132-043fe94921d8"];
+    NSUUID* estimote_uuid = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
+    CLBeaconRegion* esti008 = [[CLBeaconRegion alloc] initWithProximityUUID:estimote_uuid major:18475 minor:24286 identifier:@"esti008"];
+    CLBeaconRegion* esti009 = [[CLBeaconRegion alloc] initWithProximityUUID:estimote_uuid major:48148 minor:31883 identifier:@"esti009"];
+    CLBeaconRegion* esti010 = [[CLBeaconRegion alloc] initWithProximityUUID:estimote_uuid major:32018 minor:41230 identifier:@"esti010"];
+    
+    
+    CLBeaconRegion* startRegion = [[CLBeaconRegion alloc] initWithProximityUUID:estimote_virtual_uuid identifier:START_STOP_BEACON];
+    
+    
+    for(CLBeaconRegion* region in @[startRegion, esti008, esti009, esti010])
     {
         region.notifyEntryStateOnDisplay = YES;
         region.notifyOnEntry = YES;

@@ -24,19 +24,27 @@
 
 +(BCBeacon*) beaconWith:(NSString*) uuid major:(NSNumber*) major minor:(NSNumber*) minor
 {
-    BCBeacon* b = [[BCBeacon alloc] init];
-    b.major = major;
-    b.minor = minor;
-    b.uuid = uuid;
-    return b;
+   return [self beaconWith:uuid major:major minor:minor seen:[NSDate date] type:BCBeaconSeenTypeUnknown];
 }
 
 +(BCBeacon*) beaconWith:(NSString*) uuid major:(NSNumber*) major minor:(NSNumber*) minor seen:(NSDate*) seen type:(BCBeaconSeenType) type
 {
     BCBeacon* b = [[BCBeacon alloc] init];
-    b.major = major;
-    b.minor = minor;
+    
     b.uuid = uuid;
+    
+    b.major = major;
+    if(!b.major)
+    {
+        b.major = [NSNumber numberWithInt:0];
+    }
+    
+    b.minor = minor;
+    if(!b.minor)
+    {
+        b.minor = [NSNumber numberWithInt:0];
+    }
+    
     b.type = type;
     b.seen = seen;
     return b;

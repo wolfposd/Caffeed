@@ -16,4 +16,13 @@
 
 -(NSArray*) savedBeacons;
 
+
+-(int) amountOfBeaconEnters;
+-(int) amountOfBeaconExits;
+
+/**
+ *  removes all entries
+ */
+-(void) clear;
+
 @end

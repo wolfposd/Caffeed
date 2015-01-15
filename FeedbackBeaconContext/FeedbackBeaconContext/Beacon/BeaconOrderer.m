@@ -37,12 +37,12 @@
     {
         if(lastObject.type == BCBeaconSeenTypeEnter && beacon.type == BCBeaconSeenTypeExit)
         {
-            [FileLog log:[NSString stringWithFormat:@"Adding Beacon %@", beacon.name]];
+            [FileLog log:[NSString stringWithFormat:@"1:Adding Beacon %@", beacon.name]];
             [self.beacons addObject:beacon];
         }
         else if(beacon.type == BCBeaconSeenTypeEnter)
         {
-            [FileLog log:[NSString stringWithFormat:@"Adding Beacon %@", beacon.name]];
+            [FileLog log:[NSString stringWithFormat:@"2:Adding Beacon %@", beacon.name]];
             [self.beacons addObject:beacon];
         }
         else
@@ -53,7 +53,7 @@
     }
     else if(beacon.type == BCBeaconSeenTypeEnter)
     {
-        [FileLog log:[NSString stringWithFormat:@"Adding Beacon %@ ", beacon.name]];
+        [FileLog log:[NSString stringWithFormat:@"3:Adding Beacon %@ ", beacon.name]];
         [self.beacons addObject:beacon];
     }
     else
@@ -67,5 +67,36 @@
 {
     return self.beacons;
 }
+
+
+
+-(int)amountOfBeaconEnters
+{
+    return [self amountOfBeaconType:BCBeaconSeenTypeEnter];
+}
+
+-(int)amountOfBeaconExits
+{
+    return [self amountOfBeaconType:BCBeaconSeenTypeExit];
+}
+
+-(int) amountOfBeaconType:(BCBeaconSeenType) type
+{
+    int amount = 0;
+    for(BCBeacon* beacon in self.beacons)
+    {
+        if(beacon.type == type)
+        {
+            amount++;
+        }
+    }
+    return amount;
+}
+
+-(void) clear
+{
+    [self.beacons removeAllObjects];
+}
+
 
 @end
