@@ -10,6 +10,7 @@
 
 #import "BCBeaconContextViewController.h"
 #import "FeedbackBeaconContext-Swift.h"
+#import "BCProductionControllerTableViewController.h"
 
 
 @interface ViewController ()
@@ -36,7 +37,12 @@
 //    [self presentViewController: controller animated:NO completion:NULL];
 //    
     
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController: [[BCBeaconContextViewController alloc] init]];
+    
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController: [[BCProductionControllerTableViewController alloc] init]];
+    
+    
+    
+    //UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController: [[BCBeaconContextViewController alloc] init]];
     
     [self presentViewController:nav animated:NO completion:NULL];
 }

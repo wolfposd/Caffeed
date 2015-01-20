@@ -25,6 +25,9 @@
 		7981ADFB1A5D89EF00A7C584 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 7981ADFA1A5D89EF00A7C584 /* ProgressHUD.m */; };
 		7981ADFE1A5D89F800A7C584 /* progresshud-error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7981ADFC1A5D89F800A7C584 /* progresshud-error@2x.png */; };
 		7981ADFF1A5D89F800A7C584 /* progresshud-success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7981ADFD1A5D89F800A7C584 /* progresshud-success@2x.png */; };
+		798B7C6B1A6E6E34002D80B4 /* BCProductionControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 798B7C6A1A6E6E34002D80B4 /* BCProductionControllerTableViewController.m */; };
+		798B7C6D1A6E82F2002D80B4 /* bluetooth.png in Resources */ = {isa = PBXBuildFile; fileRef = 798B7C6C1A6E82F2002D80B4 /* bluetooth.png */; };
+		798B7C6F1A6E841F002D80B4 /* caffeed.png in Resources */ = {isa = PBXBuildFile; fileRef = 798B7C6E1A6E841F002D80B4 /* caffeed.png */; };
 		799779651A011373005D53D9 /* BeaconOrderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 799779641A011373005D53D9 /* BeaconOrderer.m */; };
 		79E8924D19FFE74D00ED3073 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E8924C19FFE74D00ED3073 /* main.m */; };
 		79E8925019FFE74D00ED3073 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E8924F19FFE74D00ED3073 /* AppDelegate.m */; };
@@ -108,6 +111,10 @@
 		7981ADFA1A5D89EF00A7C584 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
 		7981ADFC1A5D89F800A7C584 /* progresshud-error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progresshud-error@2x.png"; sourceTree = "<group>"; };
 		7981ADFD1A5D89F800A7C584 /* progresshud-success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "progresshud-success@2x.png"; sourceTree = "<group>"; };
+		798B7C691A6E6E34002D80B4 /* BCProductionControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCProductionControllerTableViewController.h; sourceTree = "<group>"; };
+		798B7C6A1A6E6E34002D80B4 /* BCProductionControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BCProductionControllerTableViewController.m; sourceTree = "<group>"; };
+		798B7C6C1A6E82F2002D80B4 /* bluetooth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluetooth.png; sourceTree = "<group>"; };
+		798B7C6E1A6E841F002D80B4 /* caffeed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = caffeed.png; sourceTree = "<group>"; };
 		799779631A011373005D53D9 /* BeaconOrderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BeaconOrderer.h; sourceTree = "<group>"; };
 		799779641A011373005D53D9 /* BeaconOrderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BeaconOrderer.m; sourceTree = "<group>"; };
 		79E8924719FFE74D00ED3073 /* FeedbackBeaconContext.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FeedbackBeaconContext.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -200,6 +207,8 @@
 		79202FB31A079D08002FD3DA /* images */ = {
 			isa = PBXGroup;
 			children = (
+				798B7C6C1A6E82F2002D80B4 /* bluetooth.png */,
+				798B7C6E1A6E841F002D80B4 /* caffeed.png */,
 				79202FD21A07A44A002FD3DA /* ArrowLastPage@2x.png */,
 				79202FD31A07A44A002FD3DA /* ArrowNextPage@2x.png */,
 				79202FD41A07A44A002FD3DA /* camera@2x.png */,
@@ -284,6 +293,8 @@
 			isa = PBXGroup;
 			children = (
 				79E892DB19FFEA4100ED3073 /* Utility */,
+				798B7C691A6E6E34002D80B4 /* BCProductionControllerTableViewController.h */,
+				798B7C6A1A6E6E34002D80B4 /* BCProductionControllerTableViewController.m */,
 				79E8927319FFE7A300ED3073 /* BCBeaconContextViewController.h */,
 				79E8927419FFE7A300ED3073 /* BCBeaconContextViewController.m */,
 				79E8927519FFE7A300ED3073 /* BCBeaconContextViewController.xib */,
@@ -483,10 +494,12 @@
 				79202FCC1A07A40E002FD3DA /* camera.png in Resources */,
 				79202FDB1A07A44A002FD3DA /* starHiglighted@2x.png in Resources */,
 				79202FC81A07A40E002FD3DA /* ArrowLastPage.png in Resources */,
+				798B7C6D1A6E82F2002D80B4 /* bluetooth.png in Resources */,
 				79E892DA19FFE88800ED3073 /* ToSCell.xib in Resources */,
 				79E8925619FFE74D00ED3073 /* Main.storyboard in Resources */,
 				79202FCE1A07A40E002FD3DA /* star.png in Resources */,
 				79E892C519FFE88800ED3073 /* CheckboxCell.xib in Resources */,
+				798B7C6F1A6E841F002D80B4 /* caffeed.png in Resources */,
 				79E892D019FFE88800ED3073 /* SliderCell.xib in Resources */,
 				79202FDA1A07A44A002FD3DA /* star@2x.png in Resources */,
 				79E892D619FFE88800ED3073 /* TextAreaCell.xib in Resources */,
@@ -540,6 +553,7 @@
 				79E8928819FFE7A300ED3073 /* BorderButton.m in Sources */,
 				79E8928219FFE7A300ED3073 /* BCBeacon.m in Sources */,
 				79E8928A19FFE7A300ED3073 /* NSString+Base64.m in Sources */,
+				798B7C6B1A6E6E34002D80B4 /* BCProductionControllerTableViewController.m in Sources */,
 				79E892C619FFE88800ED3073 /* DateCell.swift in Sources */,
 				79E892CA19FFE88800ED3073 /* LongListCell.swift in Sources */,
 				79E8928619FFE7A300ED3073 /* BCContextSaver.m in Sources */,
