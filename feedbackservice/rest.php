@@ -165,14 +165,23 @@ class Application
     
     function rest_get_sheetforcontext(array $array)
     {
-        $contextInformation = json_decode(base64_decode($array[1]) ,true);
+
+        $arrayIndex = $array[1] == "sheetforcontext" ? 2 : 1;
+        
+        $contextInformation = json_decode(base64_decode($array[$arrayIndex]) ,true);
         $beacons = $contextInformation["beacons"];
         $uuid = $beacons[0]["uuid"];
-
-        $triggerGroupId  = $this->database->getGroupIdForBeacons($uuid);
-
-        $triggers  = $this->database->getTriggersForGroupId($triggerGroupId);
+        $major = $beacons[0]["major"];
+        $minor = $beacons[0]["minor"];
         
+        
+       // echo $uuid."-".$major."-".$minor."   ";
+
+        $triggerGroupId  = $this->database->getGroupIdForBeacons($uuid,$major,$minor);
+        
+       // echo $triggerGroupId;
+        
+        $triggers  = $this->database->getTriggersForGroupId($triggerGroupId);
         
         $sheetIds = array();
         

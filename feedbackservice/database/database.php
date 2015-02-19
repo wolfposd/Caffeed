@@ -673,13 +673,13 @@ class database
     }
     
     
-    function getGroupIdForBeacons($beaconuuid)
+    function getGroupIdForBeacons($beaconuuid, $beaconMajor, $beaconMinor)
     {
-        $query = "SELECT g.id FROM fb_beacon as b, fb_trigger_group as g WHERE b.id = g.beaconid AND b.uuid = ? LIMIT 1";
+        $query = "SELECT g.id FROM fb_beacon as b, fb_trigger_group as g WHERE b.id = g.beaconid AND b.uuid = ? AND b.major = ? AND b.minor = ? LIMIT 1";
         
         $stmt = $this->mysqli->prepare($query);
         
-        $stmt->bind_param("s", $beaconuuid);
+        $stmt->bind_param("sss", $beaconuuid, $beaconMajor, $beaconMinor);
         
         $ok = $stmt->execute();
         
